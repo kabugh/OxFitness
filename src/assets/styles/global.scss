@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Martel+Sans:200,300,400,700,800,900&display=swap");
 @import './_mixins.scss';
 @import './_vars.scss';
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Martel", sans-serif;
+  box-sizing: border-box;
 }
 h1,
 h2,
@@ -22,6 +24,9 @@ li {
 }
 section {
   overflow-x: hidden;
+  &.view {
+    padding-top: 12vh;
+  }
 }
 button {
   padding: 14px 26px;
@@ -41,6 +46,14 @@ button {
     cursor: pointer;
     color: black;
     background-color: white;
+  }
+  &.dark {
+    color: black;
+    border-color: black;
+    &:hover {
+      color: white;
+      background-color: black;
+    }
   }
 }
 .unselectable {

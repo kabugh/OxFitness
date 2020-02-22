@@ -3,6 +3,10 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import VueYoutube from "vue-youtube";
+import axios from "axios";
+
+Vue.use(VueYoutube);
 
 Vue.config.productionTip = false;
 

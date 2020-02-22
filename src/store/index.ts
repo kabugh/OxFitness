@@ -1,11 +1,22 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isNavOpen: false
+  },
+  mutations: {
+    setNav(state, payload) {
+      state.isNavOpen = payload;
+    }
+  },
   actions: {},
-  modules: {}
+  modules: {},
+  getters: {
+    isNavOpen(state) {
+      return state.isNavOpen;
+    }
+  }
 });
