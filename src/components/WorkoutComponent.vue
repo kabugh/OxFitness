@@ -5,16 +5,18 @@
       ref="youtube"
       :video-id="videoId"
       :player-vars="playerVars"
-      @ended="playVideo"
-      @click="playVideo"
     ></youtube>
+    <!-- @ended="playVideo" -->
+    <!-- @click="playVideo" -->
     <LoadingComponent v-else></LoadingComponent>
   </section>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import LoadingComponent from "@/components/LoadingComponent";
-
+import LoadingComponent from "@/components/LoadingComponent.vue";
+interface ytplayer {
+  player: Object;
+}
 @Component({
   components: {
     LoadingComponent
@@ -35,14 +37,13 @@ export default class Workout extends Vue {
   created() {
     this.videoId = this.$attrs.videoUrl;
   }
+  // get player() {
+  //   return this.$refs.youtube.player;
+  // }
 
-  get player() {
-    return this.$refs.youtube.player;
-  }
-
-  async playVideo() {
-    await this.player.playVideo();
-  }
+  // async playVideo() {
+  //   await this.player.playVideo();
+  // }
 }
 </script>
 <style lang="scss">

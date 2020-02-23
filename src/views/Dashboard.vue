@@ -38,18 +38,15 @@
       </div>
       <LoadingComponent v-else></LoadingComponent>
     </div>
-    <!-- <TheFooter></TheFooter> -->
   </section>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LoadingComponent from "../components/LoadingComponent.vue";
-import TheFooter from "../components/TheFooter.vue";
 
 @Component({
   components: {
-    LoadingComponent,
-    TheFooter
+    LoadingComponent
   }
 })
 export default class Dashboard extends Vue {

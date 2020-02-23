@@ -19,9 +19,9 @@
             class="selection__item"
           >
             <h2>{{ item.title }}</h2>
-            <button type="button" @click="$router.push('/dashboard')">
-              {{ item.button }}
-            </button>
+            <router-link tag="button" type="button" to="/dashboard">{{
+              item.button
+            }}</router-link>
           </li>
         </ul>
       </div>

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import VueRouter, { Route } from "vue-router";
 import Home from "../views/Home.vue";
 import AuthGuard from "./authGuard";
 
@@ -10,6 +10,14 @@ const routes = [
     path: "/",
     name: "home",
     component: Home
+  },
+  {
+    path: "/authentication",
+    name: "authentication",
+    component: () =>
+      import(
+        /* webpackChunkName: "authentication" */ "../views/authentication/Authentication.vue"
+      )
   },
   {
     path: "/dashboard",

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheNavbar></TheNavbar>
-    <TheOverlay v-if="isNavOpen"></TheOverlay>
+    <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
     <router-view />
   </div>
 </template>
@@ -20,6 +20,9 @@ import TheOverlay from "./components/TheOverlay.vue";
 export default class App extends Vue {
   get isNavOpen() {
     return this.$store.getters.isNavOpen;
+  }
+  get user() {
+    return this.$store.getters.user;
   }
 }
 </script>

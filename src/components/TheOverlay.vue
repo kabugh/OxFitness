@@ -10,14 +10,16 @@
           /> -->
         </div>
         <div class="account__details">
-          <!-- <h1>{{ $attrs.user.email }}</h1> -->
+          <h1>{{ $attrs.user.email }}</h1>
           <h2>ABC Company my desc</h2>
         </div>
       </div>
       <ul class="overlay__items">
         <li class="item" v-for="(item, index) in navItems" :key="index">
           <i class="item__icon material-icons md-36">{{ item.icon }}</i>
-          <div class="item__title">{{ item.title }}</div>
+          <div class="item__title" @click="$router.push(item.link)">
+            {{ item.title }}
+          </div>
         </li>
       </ul>
     </div>
@@ -30,15 +32,18 @@ export default {
     navItems: [
       {
         title: "My profile",
-        icon: "account_circle"
+        icon: "account_circle",
+        link: "/profile"
       },
       {
         title: "Notifications",
-        icon: "markunread_mailbox"
+        icon: "markunread_mailbox",
+        link: "/dashboard"
       },
       {
         title: "Settings",
-        icon: "settings"
+        icon: "settings",
+        link: "/"
       }
     ]
   }),
