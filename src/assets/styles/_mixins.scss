@@ -8,3 +8,10 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+@mixin placeholder {
+  font-size: 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgb(161, 161, 161);
+}

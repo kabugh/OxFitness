@@ -6,7 +6,9 @@ import store from "./store";
 import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
 import axios from "axios";
+import Gravatar from "vue-gravatar";
 
+Vue.component("v-gravatar", Gravatar);
 Vue.use(VueYoutube);
 
 Vue.config.productionTip = false;

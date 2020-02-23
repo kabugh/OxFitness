@@ -1,6 +1,6 @@
 <template>
   <section class="dashboard view">
-    <div class="dashboard__container">
+    <div class="dashboard__container container">
       <div class="videos__container" v-if="videos.length > 0">
         <div
           class="video__wrapper"
@@ -91,15 +91,8 @@ export default class Dashboard extends Vue {
 <style lang="scss">
 @import "@/assets/styles/global.scss";
 .dashboard {
-  width: 100%;
-  min-height: 100vh;
-  color: black;
   .dashboard__container {
-    @include flex;
     flex-direction: column;
-    padding: 2vh 6vw;
-    width: 100%;
-    height: 100%;
     h2 {
       text-align: center;
       padding: 2vh 0;

@@ -22,10 +22,26 @@ ul {
 li {
   list-style-type: none;
 }
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 section {
   overflow-x: hidden;
   &.view {
     padding-top: 12vh;
+    width: 100%;
+    min-height: 100vh;
+  }
+  > .container {
+    @include flex;
+    flex-direction: column;
+    padding: 4vh 6vw;
+    width: 100%;
+    height: 100%;
   }
 }
 button {
@@ -56,6 +72,45 @@ button {
     }
   }
 }
+
+input:not([type="range"]) {
+  padding: 16px 8px 8px 8px;
+  border: 0;
+  border-bottom: 2px solid black;
+  font-size: 16px;
+  font-weight: bolder;
+  font-family: inherit;
+  letter-spacing: inherit;
+  &:disabled {
+    color: $secondaryColor;
+    border-bottom-style: dotted;
+    border-bottom-color: $secondaryColor;
+  }
+  ::placeholder {
+    @include placeholder();
+  }
+  &::-webkit-input-placeholder {
+    @include placeholder();
+  }
+  &:-moz-placeholder {
+    @include placeholder();
+    opacity: 1;
+  }
+  &::-moz-placeholder {
+    @include placeholder();
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    @include placeholder();
+  }
+  &::-ms-input-placeholder {
+    @include placeholder();
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
 .unselectable {
   user-select: none;
   -moz-user-select: none;
@@ -71,4 +126,19 @@ button {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 }

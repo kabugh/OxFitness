@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="$route.path !== '/'">
+  <nav v-if="$route.path !== '/' && $route.path !== '/authentication'">
     <div
       class="back__wrapper"
       v-if="$route.path !== '/' && $route.path !== '/dashboard'"
@@ -9,7 +9,7 @@
     </div>
     <ul v-else></ul>
     <div class="logowhite">
-      <h3>OxFit</h3>
+      <h3 @click="$router.push('/dashboard')">OxFit</h3>
     </div>
     <div class="burger__wrapper">
       <div

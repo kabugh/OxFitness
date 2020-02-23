@@ -2,27 +2,27 @@
   <section class="signUp">
     <div class="signUp__container">
       <div class="form__wrapper">
-        <form action @submit.prevent="onSignUp">
+        <form action @submit.prevent="onSignUp" autocomplete="false">
           <input
             type="text"
             v-model="email"
             :disabled="disableInputs"
             placeholder="Email"
-            autocomplete="off"
+            autocomplete="false"
           />
           <input
             type="password"
             v-model="password"
             :disabled="disableInputs"
             placeholder="Password"
-            autocomplete="off"
+            autocomplete="false"
           />
           <input
             type="password"
             v-model="confirmPassword"
             :disabled="disableInputs"
             placeholder="Confirm password"
-            autocomplete="off"
+            autocomplete="false"
           />
           <button
             type="submit"
@@ -98,6 +98,9 @@ export default class Login extends Vue {
         > input {
           margin-top: 20px;
           min-height: 5vh;
+          &:disabled {
+            color: $brandColor;
+          }
         }
         button {
           margin-top: 4vh;

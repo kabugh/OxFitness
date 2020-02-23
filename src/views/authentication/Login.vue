@@ -2,20 +2,20 @@
   <section class="login">
     <div class="login__container">
       <div class="form__wrapper">
-        <form action @submit.prevent="onSignIn">
+        <form action @submit.prevent="onSignIn" autocomplete="false">
           <input
             type="text"
             v-model="email"
             :disabled="disableInputs"
             placeholder="Email"
-            autocomplete="off"
+            autocomplete="false"
           />
           <input
             type="password"
             v-model="password"
             :disabled="disableInputs"
             placeholder="Password"
-            autocomplete="off"
+            autocomplete="false"
           />
           <button type="submit">login</button>
         </form>

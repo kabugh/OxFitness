@@ -3,8 +3,8 @@
     <div class="logo__wrapper">
       <!-- <img src="@/assets/icons/iconLogo.png" alt="logo" class="unselectable" /> -->
       <div class="text__wrapper">
-        <h1>sliced</h1>
-        <h3>pizza company</h3>
+        <h1>OxFit</h1>
+        <h3>Your daily workouts</h3>
       </div>
     </div>
     <div class="authentication__wrapper">
@@ -74,17 +74,15 @@ export default class Authentication extends Vue {
     }
     h1 {
       font-size: 4rem;
-      font-weight: 900;
+      font-weight: 600;
       letter-spacing: -1px;
       text-align: center;
-      text-shadow: 1px 1px 1px rgba(83, 83, 83, 0.6);
     }
     h3 {
       text-align: center;
       letter-spacing: 4px;
-      font-weight: 800;
+      font-weight: 400;
       font-size: 1.25rem;
-      text-shadow: 0.5px 0.5px 0.5px rgba(83, 83, 83, 0.3);
     }
   }
   .authentication__wrapper {
@@ -117,6 +115,7 @@ export default class Authentication extends Vue {
         &.highlighted {
           color: $brandColor;
           font-size: 0.9rem;
+          text-decoration: underline;
         }
         &:last-child {
           margin-top: 10px;
