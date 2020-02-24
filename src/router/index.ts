@@ -27,7 +27,17 @@ const routes = [
     beforeEnter: AuthGuard
   },
   {
-    path: "/workout/:id",
+    path: "/plans/:workoutType",
+    name: "workouts",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ "../views/workouts/Workouts.vue"
+      ),
+    beforeEnter: AuthGuard,
+    props: true
+  },
+  {
+    path: "/plans/:workoutType/:id",
     name: "workoutPage",
     component: () =>
       import(
@@ -37,7 +47,7 @@ const routes = [
     props: true
   },
   {
-    path: "/workout",
+    path: "/plans",
     redirect: { name: "dashboard" }
   },
   {

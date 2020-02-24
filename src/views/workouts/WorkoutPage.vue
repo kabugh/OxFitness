@@ -1,8 +1,10 @@
 <template>
   <section class="workoutPage view">
     <div class="workoutPage__container">
-      <h1>{{ currentVideo.title }}</h1>
-      <WorkoutComponent :videoUrl="currentVideo.youtubeId"></WorkoutComponent>
+      <h1>{{ currentWorkout.fields.dayOfTheWeek }}</h1>
+      <WorkoutComponent
+        :videoUrl="currentWorkout.fields.videoId"
+      ></WorkoutComponent>
     </div>
   </section>
 </template>
@@ -17,7 +19,7 @@ import WorkoutComponent from "@/components/WorkoutComponent.vue";
   }
 })
 export default class WorkoutPage extends Vue {
-  currentVideo = this.$attrs.video;
+  currentWorkout = this.$attrs.workout;
 }
 </script>
 <style lang="scss">

@@ -5,6 +5,12 @@ import router from "@/router/index";
 import { User } from "./models";
 
 import * as firebase from "firebase";
+let contentful = require("contentful");
+
+const client = contentful.createClient({
+  space: "biebxe7da1h8",
+  accessToken: "4P62X4-zP1xxjkt6LRaRTNYAiueVs4hrg6FLTQy-GYQ"
+});
 
 Vue.use(Vuex);
 
@@ -15,7 +21,9 @@ export default new Vuex.Store({
     user: null,
     loading: false,
     authError: null,
-    error: null
+    error: null,
+
+    workoutCategories: [] as any[]
   },
   mutations: {
     setNav(state, payload) {
@@ -110,6 +118,23 @@ export default new Vuex.Store({
           router.push("/");
         })
         .catch(e => console.log(e));
+    },
+    fetchWorkouts({ commit, state }) {
+      if (state.workoutCategories.length <= 0) {
+        commit("setLoading", true);
+        commit("clearError");
+        client
+          .getEntries({
+            order: "sys.createdAt",
+            content_type: "workoutCategory"
+          })
+          .then((entries: { items: any[] }) => {
+            entries.items.forEach((element: { fields: any }) => {
+              state.workoutCategories.push(element.fields);
+            });
+            commit("setLoading", false);
+          });
+      }
     }
   },
   modules: {},
@@ -125,6 +150,9 @@ export default new Vuex.Store({
     },
     error(state) {
       return state.error;
+    },
+    workoutCategories(state) {
+      return state.workoutCategories;
     }
   }
 });
