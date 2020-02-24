@@ -44,7 +44,7 @@ import LoadingComponent from "../components/LoadingComponent.vue";
 })
 export default class Dashboard extends Vue {
   created() {
-    this.$store.dispatch("fetchWorkouts");
+    this.$store.dispatch("fetchWorkoutTypes");
   }
 
   get workoutCategories() {

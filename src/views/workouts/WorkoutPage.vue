@@ -1,6 +1,6 @@
 <template>
   <section class="workoutPage view">
-    <div class="workoutPage__container">
+    <div class="workoutPage__container" v-if="currentWorkout.fields">
       <h1>{{ currentWorkout.fields.dayOfTheWeek }}</h1>
       <WorkoutComponent
         :videoUrl="currentWorkout.fields.videoId"
@@ -19,7 +19,21 @@ import WorkoutComponent from "@/components/WorkoutComponent.vue";
   }
 })
 export default class WorkoutPage extends Vue {
-  currentWorkout = this.$attrs.workout;
+  created() {
+    if (this.$attrs.workout) {
+      this.currentWorkout = this.$attrs.workout;
+    } else {
+      this.$store.dispatch("fetchWorkout", this.$route.params);
+    }
+  }
+
+  get currentWorkout() {
+    return this.$store.getters.currentWorkout;
+  }
+
+  set currentWorkout(value) {
+    this.$store.commit("setCurrentWorkout", value);
+  }
 }
 </script>
 <style lang="scss">

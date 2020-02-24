@@ -44,7 +44,7 @@ nav {
   width: 100%;
   min-height: 12vh;
   position: fixed;
-  background-color: white;
+  background-color: black;
   padding: 15px 6vw;
   z-index: 100;
   transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
@@ -77,7 +77,7 @@ nav {
   .logowhite {
     width: 10vw;
     height: 6vh;
-    // background-image: url("./assets/clearlogo.png");
+    color: white;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -105,9 +105,10 @@ nav {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      width: 64px;
-      height: 64px;
+      width: 36px;
+      height: 36px;
       margin-right: 15px;
+      transform: rotate(180deg);
     }
     .arrow:hover,
     .back:hover {
@@ -153,7 +154,7 @@ nav {
       position: absolute;
       height: 2px;
       width: 100%;
-      background: black;
+      background: white;
       opacity: 1;
       top: 0;
       -webkit-transform: rotate(0deg);

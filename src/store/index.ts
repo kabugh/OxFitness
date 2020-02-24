@@ -23,7 +23,9 @@ export default new Vuex.Store({
     authError: null,
     error: null,
 
-    workoutCategories: [] as any[]
+    workoutCategories: [] as any[],
+    workouts: [],
+    currentWorkout: {}
   },
   mutations: {
     setNav(state, payload) {
@@ -42,6 +44,12 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null;
+    },
+    setWorkouts(state, payload) {
+      state.workouts = payload;
+    },
+    setCurrentWorkout(state, payload) {
+      state.currentWorkout = payload;
     }
   },
   actions: {
@@ -119,7 +127,7 @@ export default new Vuex.Store({
         })
         .catch(e => console.log(e));
     },
-    fetchWorkouts({ commit, state }) {
+    fetchWorkoutTypes({ commit, state }) {
       if (state.workoutCategories.length <= 0) {
         commit("setLoading", true);
         commit("clearError");
@@ -134,6 +142,63 @@ export default new Vuex.Store({
             });
             commit("setLoading", false);
           });
+      }
+    },
+    fetchWorkoutType({ commit, state }, payload) {
+      if (state.workoutCategories.length <= 0) {
+        commit("setLoading", true);
+        commit("clearError");
+        client
+          .getEntries({
+            order: "sys.createdAt",
+            content_type: "workoutCategory",
+            "fields.category[match]": payload
+          })
+          .then((entries: { items: any[] }) => {
+            entries.items.forEach((element: { fields: any }) => {
+              state.workoutCategories.push(element.fields);
+            });
+            commit("setLoading", false);
+          });
+      } else {
+        let foundCategory = state.workoutCategories.find(
+          item => item.category === payload
+        );
+        commit("setWorkouts", foundCategory.workouts);
+        // state.workouts = [] ?
+      }
+    },
+    // TODO - fetch direct workout page
+    fetchWorkout({ commit, state }, payload) {
+      if (state.workoutCategories.length <= 0) {
+        commit("setLoading", true);
+        commit("clearError");
+        client
+          .getEntries({
+            order: "sys.createdAt",
+            content_type: "workoutCategory",
+            "fields.category[match]": payload.workoutType
+          })
+          .then((entries: { items: any[] }) => {
+            console.log(entries.items);
+            entries.items.forEach((element: { fields: any }) => {
+              state.workoutCategories.push(element.fields);
+            });
+            commit("setLoading", false);
+          });
+      } else {
+        let foundCategory = state.workoutCategories.find(
+          item => item.category === payload.workoutType
+        );
+        commit("setWorkouts", foundCategory.workouts);
+
+        let foundWorkout = state.workouts.find(
+          item => item.sys.id === payload.id
+        );
+
+        commit("setCurrentWorkout", foundWorkout);
+        state.workouts = [];
+        // state.currentWorkout = {};
       }
     }
   },
@@ -153,6 +218,12 @@ export default new Vuex.Store({
     },
     workoutCategories(state) {
       return state.workoutCategories;
+    },
+    workouts(state) {
+      return state.workouts;
+    },
+    currentWorkout(state) {
+      return state.currentWorkout;
     }
   }
 });

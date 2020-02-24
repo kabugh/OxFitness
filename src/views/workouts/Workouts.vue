@@ -58,10 +58,20 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
   }
 })
 export default class Workouts extends Vue {
-  workouts: Object[] = [];
-
   created() {
-    this.workouts = this.$attrs.workouts;
+    if (this.$attrs.workouts) {
+      this.workouts = this.$attrs.workouts;
+    } else {
+      this.$store.dispatch("fetchWorkoutType", this.$route.params.workoutType);
+    }
+  }
+
+  get workouts() {
+    return this.$store.getters.workouts;
+  }
+
+  set workouts(value) {
+    this.$store.commit("setWorkouts", value);
   }
 
   generateUUID() {
