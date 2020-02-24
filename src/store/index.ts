@@ -19,7 +19,9 @@ export default new Vuex.Store({
   },
   mutations: {
     setNav(state, payload) {
-      state.isNavOpen = payload;
+      if (state.user) {
+        state.isNavOpen = payload;
+      }
     },
     setUser(state, payload) {
       state.user = payload;
@@ -86,12 +88,23 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
-    signUserOut({ commit }) {
+    autoSignIn({ commit }, payload) {
+      const cachedUser: User = {
+        id: payload.uid,
+        email: payload.email,
+        imageURL: ""
+      };
+      commit("setUser", cachedUser);
+    },
+    signUserOut({ commit, state }) {
       commit("setLoading", true);
       firebase
         .auth()
         .signOut()
         .then(response => {
+          if (state.isNavOpen) {
+            commit("setNav", false);
+          }
           commit("setUser", null);
           commit("setLoading", false);
           router.push("/");

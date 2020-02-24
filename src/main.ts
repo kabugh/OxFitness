@@ -26,6 +26,12 @@ new Vue({
       messagingSenderId: process.env.VUE_APP_messagingSenderId,
       appId: process.env.VUE_APP_appId
     });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.$store.dispatch("autoSignIn", user);
+      }
+    });
   },
   render: h => h(App)
 }).$mount("#app");
