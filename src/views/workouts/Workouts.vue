@@ -1,14 +1,22 @@
 <template>
   <section class="workouts view">
     <div class="workouts__container container">
-      <h2>{{ $attrs.workoutType }} workouts</h2>
+      <div class="workout__description" v-if="$attrs.categoryDetails">
+        <h2>{{ $attrs.categoryDetails.title }}</h2>
+        <p>{{ $attrs.categoryDetails.description }}</p>
+      </div>
       <div class="videos__container" v-if="workouts.length > 0">
         <div
           class="video__wrapper"
           v-for="(workout, index) in workouts"
           :key="index"
         >
-          <h2>{{ workout.fields.dayOfTheWeek }}</h2>
+          <h2 v-if="$attrs.workoutType === 'daily'">
+            {{ workout.fields.dayOfTheWeek }}
+          </h2>
+          <h2 v-else-if="$attrs.workoutType === 'warm-up'">
+            {{ workout.fields.title }}
+          </h2>
           <img
             src="@/assets/sample.png"
             alt="video
@@ -101,6 +109,15 @@ export default class Workouts extends Vue {
 @import "@/assets/styles/global.scss";
 .workouts {
   .workouts__container {
+    .workout__description {
+      @include flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 2vh 0;
+      p {
+        margin-top: 2vh;
+      }
+    }
     .videos__container {
       max-width: 100%;
       display: grid;

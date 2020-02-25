@@ -65,9 +65,14 @@ export default new Vuex.Store({
             const newUser: User = {
               id: response.user.uid,
               email: payload.email,
+              premiumAccount: true,
               imageURL: ""
             };
             commit("setUser", newUser);
+            firebase
+              .database()
+              .ref("/users/" + newUser.id)
+              .push(newUser);
             router.push("/dashboard").catch(e => {});
             console.log("User created");
           }
@@ -86,14 +91,25 @@ export default new Vuex.Store({
         .signInWithEmailAndPassword(payload.email, payload.password)
         .then(response => {
           if (response && response.user) {
-            commit("setLoading", false);
             const newUser: User = {
               id: response.user.uid,
               email: payload.email,
+              premiumAccount: true,
               imageURL: ""
             };
+            firebase
+              .database()
+              .ref("/users/" + newUser.id)
+              .once("value")
+              .then(snapshot => {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                  if (newUser.id === value.id) {
+                    newUser.premiumAccount = value.premiumAccount;
+                  }
+                });
+              });
             commit("setUser", newUser);
-            // dispatch("loadOrders");
+            commit("setLoading", false);
             router.push("/dashboard").catch(e => {});
             console.log("Logged in");
           }
@@ -108,6 +124,7 @@ export default new Vuex.Store({
       const cachedUser: User = {
         id: payload.uid,
         email: payload.email,
+        premiumAccount: true,
         imageURL: ""
       };
       commit("setUser", cachedUser);

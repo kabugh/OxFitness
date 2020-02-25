@@ -2,9 +2,18 @@
   <section class="workoutPage view">
     <div class="workoutPage__container" v-if="currentWorkout.fields">
       <h1>{{ currentWorkout.fields.dayOfTheWeek }}</h1>
+      <h1>{{ currentWorkout.fields.title }}</h1>
       <WorkoutComponent
         :videoUrl="currentWorkout.fields.videoId"
       ></WorkoutComponent>
+      <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
+        <RichTextRenderer :document="currentWorkout.fields.programA" />
+        <RichTextRenderer
+          v-if="currentWorkout.fields.programB"
+          :document="currentWorkout.fields.programB"
+        />
+      </div>
+      <RichTextRenderer v-else :document="currentWorkout.fields.description" />
     </div>
   </section>
 </template>
@@ -12,9 +21,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import WorkoutComponent from "@/components/WorkoutComponent.vue";
+import RichTextRenderer from "contentful-rich-text-vue-renderer";
 
 @Component({
   components: {
+    RichTextRenderer,
     WorkoutComponent
   }
 })

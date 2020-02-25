@@ -16,18 +16,9 @@
         </div>
       </div>
       <ul class="overlay__items">
-        <li class="item" v-for="(item, index) in navItems" :key="index">
-          <!-- temporary solution, to be changed - v-if="$route.path !== item.link" -->
-          <i
-            v-if="$route.path !== item.link"
-            class="item__icon material-icons md-36"
-            >{{ item.icon }}</i
-          >
-          <div
-            v-if="$route.path !== item.link"
-            class="item__title"
-            @click="$router.push(item.link)"
-          >
+        <li class="item" v-for="(item, index) in filteredNavItems" :key="index">
+          <i class="item__icon material-icons md-36">{{ item.icon }}</i>
+          <div class="item__title" @click="$router.push(item.link)">
             {{ item.title }}
           </div>
         </li>
@@ -59,9 +50,19 @@ export default class TheOverlay extends Vue {
     {
       title: "Settings",
       icon: "settings",
-      link: "/"
+      link: "/plans/daily"
     }
   ];
+
+  get filteredNavItems() {
+    let fitleredItems = [];
+    this.navItems.forEach(item => {
+      if (this.$route.path !== item.link) {
+        fitleredItems.push(item);
+      }
+    });
+    return fitleredItems;
+  }
 
   closeOverlay() {
     document.body.classList.add("scrollbar");

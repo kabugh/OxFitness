@@ -3,7 +3,7 @@
     <div class="dashboard__container container">
       <div
         class="workouts__sections--container"
-        v-if="workoutCategories.length > 0 && !loading"
+        v-if="workoutCategories.length > 0 && !loading && user.premiumAccount"
       >
         <div
           class="workout__wrapper"
@@ -17,7 +17,11 @@
                 name: 'workouts',
                 params: {
                   workoutType: item.category,
-                  workouts: item.workouts
+                  workouts: item.workouts,
+                  categoryDetails: {
+                    title: item.title,
+                    description: item.description
+                  }
                 }
               })
             "
@@ -29,22 +33,31 @@
           </div>
         </div>
       </div>
+      <AccessDeniedComponent
+        v-else-if="!user.premiumAccount"
+      ></AccessDeniedComponent>
       <LoadingComponent v-else></LoadingComponent>
     </div>
   </section>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import AccessDeniedComponent from "../components/AccessDeniedComponent.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
 
 @Component({
   components: {
+    AccessDeniedComponent,
     LoadingComponent
   }
 })
 export default class Dashboard extends Vue {
   created() {
     this.$store.dispatch("fetchWorkoutTypes");
+  }
+
+  get user() {
+    return this.$store.getters.user;
   }
 
   get workoutCategories() {
