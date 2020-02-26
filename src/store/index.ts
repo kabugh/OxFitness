@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router/index";
-import { User } from "./models";
+import { User, Workout } from "./models";
 
 import * as firebase from "firebase";
 let contentful = require("contentful");
@@ -103,8 +103,8 @@ export default new Vuex.Store({
               .once("value")
               .then(snapshot => {
                 Object.entries(snapshot.val()).forEach(([key, value]) => {
-                  if (newUser.id === value.id) {
-                    newUser.premiumAccount = value.premiumAccount;
+                  if (newUser.id === (value as User).id) {
+                    newUser.premiumAccount = (value as User).premiumAccount;
                   }
                 });
               });
@@ -209,8 +209,9 @@ export default new Vuex.Store({
         );
         commit("setWorkouts", foundCategory.workouts);
 
+        console.log(state.workouts);
         let foundWorkout = state.workouts.find(
-          item => item.sys.id === payload.id
+          item => (item as Workout).sys.id === payload.id
         );
 
         commit("setCurrentWorkout", foundWorkout);
