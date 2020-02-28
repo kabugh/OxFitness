@@ -11,8 +11,38 @@
       <transition name="fade">
         <SignUp v-if="signUpTab" :class="{ active: signUpTab }" />
         <Login v-if="loginTab" :class="{ active: loginTab }" />
+        <PasswordRecovery
+          v-if="passwordRecoveryTab"
+          :class="{ active: passwordRecoveryTab }"
+        />
       </transition>
-      <div class="status" v-if="loginTab">
+      <div class="status" v-if="passwordRecoveryTab">
+        <h4>Remember your password?</h4>
+        <h4
+          class="highlighted"
+          @click="
+            loginTab = true;
+            signUpTab = false;
+            passwordRecoveryTab = false;
+          "
+        >
+          login
+        </h4>
+      </div>
+      <div class="status" v-else>
+        <h4>Forgot your password?</h4>
+        <h4
+          class="highlighted"
+          @click="
+            loginTab = false;
+            signUpTab = false;
+            passwordRecoveryTab = true;
+          "
+        >
+          Remind
+        </h4>
+      </div>
+      <!-- <div class="status" v-if="loginTab">
         <h4>Don't have an account?</h4>
         <h4
           class="highlighted"
@@ -23,8 +53,12 @@
         >
           Sign up
         </h4>
-      </div>
-      <div class="status" v-else-if="signUpTab">
+        <div class="passwordStatus__container">
+          <h4>Forgot your password?</h4>
+          <h4 class="highlighted">Remind</h4>
+        </div>
+      </div> -->
+      <!-- <div class="status" v-if="signUpTab">
         <h4>Already a member?</h4>
         <h4
           class="highlighted"
@@ -35,23 +69,30 @@
         >
           login
         </h4>
-      </div>
+        <div class="passwordStatus__container">
+          <h4>Forgot your password?</h4>
+          <h4 class="highlighted">Remind</h4>
+        </div>
+      </div> -->
     </div>
   </section>
 </template>
 <script lang="ts">
-import SignUp from "./SignUp.vue";
-import Login from "./Login.vue";
+import SignUp from "@/components/authentication/SignUp.vue";
+import Login from "@/components/authentication/Login.vue";
+import PasswordRecovery from "@/components/authentication/PasswordRecovery.vue";
 import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: {
     SignUp,
-    Login
+    Login,
+    PasswordRecovery
   }
 })
 export default class Authentication extends Vue {
   loginTab = true;
   signUpTab = false;
+  passwordRecoveryTab = false;
 }
 </script>
 <style lang="scss">
@@ -82,7 +123,7 @@ export default class Authentication extends Vue {
       text-align: center;
       letter-spacing: 4px;
       font-weight: 400;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
     }
   }
   .authentication__wrapper {
@@ -112,14 +153,16 @@ export default class Authentication extends Vue {
         letter-spacing: 2px;
         font-size: 0.8rem;
         white-space: nowrap;
+        margin-top: 10px;
+
         &.highlighted {
           color: $brandColor;
           font-size: 0.9rem;
           text-decoration: underline;
         }
-        &:last-child {
-          margin-top: 10px;
-        }
+      }
+      .passwordStatus__container {
+        margin-top: 20px;
       }
     }
   }

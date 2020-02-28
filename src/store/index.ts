@@ -73,7 +73,9 @@ export default new Vuex.Store({
               .database()
               .ref("/users/" + newUser.id)
               .push(newUser);
-            router.push("/dashboard").catch(e => {});
+            router.push("/dashboard").catch(e => {
+              console.log(e);
+            });
             console.log("User created");
           }
         })
@@ -110,7 +112,9 @@ export default new Vuex.Store({
               });
             commit("setUser", newUser);
             commit("setLoading", false);
-            router.push("/dashboard").catch(e => {});
+            router.push("/dashboard").catch(e => {
+              console.log(e);
+            });
             console.log("Logged in");
           }
         })
@@ -143,6 +147,25 @@ export default new Vuex.Store({
           router.push("/");
         })
         .catch(e => console.log(e));
+    },
+    changePassword({ commit, dispatch, state }, payload) {
+      commit("setLoading", true);
+      firebase
+        .auth()
+        .sendPasswordResetEmail(payload)
+        .then(() => {
+          commit("setLoading", false);
+          console.log("Email has been sent.");
+          if (state.user) {
+            dispatch("signUserOut");
+          } else {
+            router.push("/");
+          }
+        })
+        .catch(e => {
+          commit("setLoading", false);
+          commit("setError", e);
+        });
     },
     fetchWorkoutTypes({ commit, state }) {
       if (state.workoutCategories.length <= 0) {
@@ -197,7 +220,6 @@ export default new Vuex.Store({
             "fields.category[match]": payload.workoutType
           })
           .then((entries: { items: any[] }) => {
-            console.log(entries.items);
             entries.items.forEach((element: { fields: any }) => {
               state.workoutCategories.push(element.fields);
             });

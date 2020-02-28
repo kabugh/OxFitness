@@ -87,9 +87,11 @@ export default class Login extends Vue {
 <style lang="scss">
 @import "@/assets/styles/global.scss";
 .signUp,
-.login {
+.login,
+.passwordRecovery {
   .signUp__container,
-  .login__container {
+  .login__container,
+  .passwordRecovery__container {
     .form__wrapper {
       form {
         display: flex;
