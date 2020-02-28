@@ -102,13 +102,20 @@ export default class Dashboard extends Vue {
     }
     .workouts__sections--container {
       display: grid;
-      grid-template-columns: 100%;
-      grid-row-gap: 4vh;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
+        grid-template-columns: 100%;
+        grid-gap: 10vh;
+        .workout__wrapper {
+          min-height: 50vh;
+        }
+      }
+      grid-gap: 4vh;
       justify-content: center;
       align-items: center;
       color: white;
       .workout__wrapper {
-        width: 100%;
+        // width: 100%;
         height: 30vh;
         .thumbnail {
           width: 100%;

@@ -9,7 +9,7 @@
     </div>
     <ul v-else></ul>
     <div class="logowhite">
-      <h3 @click="$router.push('/dashboard')">OxFit</h3>
+      <h3>OxFit</h3>
     </div>
     <div class="burger__wrapper">
       <div
@@ -17,10 +17,11 @@
         id="nav-icon"
         :class="{ open: isNavOpen }"
         @click="isNavOpen = !isNavOpen"
+        v-if="$route.path !== '/features'"
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span v-if="$route.path !== '/features'"></span>
+        <span v-if="$route.path !== '/features'"></span>
+        <span v-if="$route.path !== '/features'"></span>
       </div>
     </div>
   </nav>

@@ -11,12 +11,6 @@
           v-for="(workout, index) in workouts"
           :key="index"
         >
-          <h2 v-if="$attrs.workoutType === 'daily'">
-            {{ workout.fields.dayOfTheWeek }}
-          </h2>
-          <h2 v-else-if="$attrs.workoutType === 'warm-up'">
-            {{ workout.fields.title }}
-          </h2>
           <img
             src="@/assets/sample.png"
             alt="video
@@ -33,6 +27,12 @@
               })
             "
           />
+          <h2 v-if="$attrs.workoutType === 'daily'">
+            {{ workout.fields.dayOfTheWeek }}
+          </h2>
+          <h2 v-else-if="$attrs.workoutType === 'warm-up'">
+            {{ workout.fields.title }}
+          </h2>
           <div class="button__wrapper">
             <button
               type="button"
@@ -121,18 +121,22 @@ export default class Workouts extends Vue {
     .videos__container {
       max-width: 100%;
       display: grid;
-      grid-template-columns: 100%;
-      @media (min-width: 500px) {
-        grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
+        grid-template-columns: 100%;
+        grid-gap: 10vh;
       }
-      grid-row-gap: 8vh;
+      // @media (min-width: 500px) {
+      //   grid-template-columns: 1fr;
+      // }
+      grid-gap: 4vh;
       justify-content: center;
       align-items: center;
+      padding: 4vh 0;
       .video__wrapper {
         // width: 100%;
         // @include flex;
         // flex-direction: column;
-        padding: 4vh 0;
         h2 {
           text-transform: capitalize;
           text-align: center;

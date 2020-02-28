@@ -38,19 +38,14 @@ import { Component, Vue } from "vue-property-decorator";
 export default class TheOverlay extends Vue {
   navItems = [
     {
-      title: "My profile",
-      icon: "account_circle",
-      link: "/profile"
-    },
-    {
-      title: "Notifications",
-      icon: "markunread_mailbox",
+      title: "Home",
+      icon: "home",
       link: "/dashboard"
     },
     {
-      title: "Settings",
-      icon: "settings",
-      link: "/plans/daily"
+      title: "My profile",
+      icon: "account_circle",
+      link: "/profile"
     }
   ];
 

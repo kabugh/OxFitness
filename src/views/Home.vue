@@ -19,9 +19,23 @@
             class="selection__item"
           >
             <h2>{{ item.title }}</h2>
-            <router-link tag="button" type="button" to="/dashboard">{{
-              item.button
-            }}</router-link>
+            <router-link
+              v-if="item.link"
+              tag="button"
+              type="button"
+              :to="{ path: item.link }"
+              >{{ item.button }}</router-link
+            >
+            <button
+              type="button"
+              v-else
+              @click="
+                navigateOutside(item.externalLink);
+                $router.push('/features');
+              "
+            >
+              {{ item.button }}
+            </button>
           </li>
         </ul>
       </div>
@@ -38,19 +52,26 @@ export default class Home extends Vue {
     {
       title: "Czym jest OxFit?",
       button: "Dowiedz się więcej",
-      image: "1.jpg"
+      image: "1.jpg",
+      link: "/features"
     },
     {
       title: "Chcę dołączyć do programu",
       button: "Zarejestruj się",
-      image: "2.jpg"
+      image: "2.jpg",
+      externalLink: "https://wod.guru/athlete-registration-form/wolow"
     },
     {
       title: "Należę do OxFit",
       button: "Zaloguj się",
-      image: "3.jpg"
+      image: "3.jpg",
+      link: "/dashboard"
     }
   ];
+
+  navigateOutside(link: string) {
+    window.open(link, "_blank");
+  }
 }
 </script>
 
@@ -111,6 +132,10 @@ export default class Home extends Vue {
             &:hover {
               background-color: white;
             }
+          }
+          a {
+            color: white;
+            text-decoration: none;
           }
         }
         @media (min-width: 1200px) {

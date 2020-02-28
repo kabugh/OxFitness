@@ -2,7 +2,9 @@
   <div id="app">
     <TheNavbar></TheNavbar>
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
-    <router-view />
+    <keep-alive include="Dashboard">
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <script lang="ts">

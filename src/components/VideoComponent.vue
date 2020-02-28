@@ -1,5 +1,5 @@
 <template>
-  <section class="workout">
+  <section class="video">
     <youtube
       v-if="isLoaded"
       ref="youtube"
@@ -22,7 +22,7 @@ interface ytplayer {
     LoadingComponent
   }
 })
-export default class Workout extends Vue {
+export default class VideoComponent extends Vue {
   videoId: String = "";
   isLoaded = true;
   playerVars = {
@@ -48,7 +48,7 @@ export default class Workout extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
-.workout {
+.video {
   @include flex;
   iframe {
     width: 100%;

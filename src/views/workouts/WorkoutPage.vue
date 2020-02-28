@@ -1,32 +1,44 @@
 <template>
   <section class="workoutPage view">
     <div class="workoutPage__container" v-if="currentWorkout.fields">
-      <h1>{{ currentWorkout.fields.dayOfTheWeek }}</h1>
-      <h1>{{ currentWorkout.fields.title }}</h1>
-      <WorkoutComponent
+      <h1 v-if="currentWorkout.fields.dayOfTheWeek">
+        {{ currentWorkout.fields.dayOfTheWeek }}
+      </h1>
+      <h1 v-if="currentWorkout.fields.title">
+        {{ currentWorkout.fields.title }}
+      </h1>
+      <VideoComponent
         :videoUrl="currentWorkout.fields.videoId"
-      ></WorkoutComponent>
-      <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
-        <RichTextRenderer :document="currentWorkout.fields.programA" />
+      ></VideoComponent>
+      <div class="routines__container">
+        <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
+          <RichTextRenderer
+            v-if="currentWorkout.fields.programA"
+            :document="currentWorkout.fields.programA"
+          />
+          <RichTextRenderer
+            v-if="currentWorkout.fields.programB"
+            :document="currentWorkout.fields.programB"
+          />
+        </div>
         <RichTextRenderer
-          v-if="currentWorkout.fields.programB"
-          :document="currentWorkout.fields.programB"
+          v-else
+          :document="currentWorkout.fields.description"
         />
       </div>
-      <RichTextRenderer v-else :document="currentWorkout.fields.description" />
     </div>
   </section>
 </template>
-
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import WorkoutComponent from "@/components/WorkoutComponent.vue";
+import VideoComponent from "@/components/VideoComponent.vue";
+import { BLOCKS } from "@contentful/rich-text-types";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
 
 @Component({
   components: {
     RichTextRenderer,
-    WorkoutComponent
+    VideoComponent
   }
 })
 export default class WorkoutPage extends Vue {
@@ -62,6 +74,16 @@ export default class WorkoutPage extends Vue {
     h1 {
       padding: 2vh 0 4vh 0;
       text-align: center;
+    }
+    .routines__container {
+      padding: 2vh 0;
+      ul,
+      ol {
+        padding-left: 3vh;
+        li {
+          list-style-type: square;
+        }
+      }
     }
   }
 }

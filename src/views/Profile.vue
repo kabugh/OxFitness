@@ -13,8 +13,17 @@
         </div>
       </div>
       <div class="details__container">
-        <h3>Email: {{ user.email }}</h3>
-        <h3>ID: {{ user.id }}</h3>
+        <h3><span>Email:</span> {{ user.email }}</h3>
+        <h3><span>ID:</span> {{ user.id }}</h3>
+        <div class="button__wrapper">
+          <h4>
+            Click the button below, if you forgot your password or you want to
+            change it.
+          </h4>
+          <button class="dark" type="button" @click="changePassword">
+            Change Password
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -26,6 +35,10 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Profile extends Vue {
   get user() {
     return this.$store.getters.user;
+  }
+
+  changePassword() {
+    this.$store.dispatch("changePassword", this.user.email);
   }
 }
 </script>
@@ -51,9 +64,21 @@ export default class Profile extends Vue {
       justify-content: center;
       align-items: center;
       margin: 4vh 0;
-      h3 {
+      h3,
+      h4 {
         font-weight: 400;
         text-align: center;
+        span {
+          font-weight: bolder;
+        }
+      }
+      .button__wrapper {
+        @include flex;
+        flex-direction: column;
+        padding: 2vh 0;
+        button {
+          margin-top: 2vh;
+        }
       }
     }
   }
