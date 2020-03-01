@@ -1,6 +1,6 @@
 <template>
   <section class="workoutPage view">
-    <div class="workoutPage__container" v-if="currentWorkout.fields">
+    <div class="workoutPage__container container" v-if="currentWorkout.fields">
       <h1 v-if="currentWorkout.fields.dayOfTheWeek">
         {{ currentWorkout.fields.dayOfTheWeek }}
       </h1>
@@ -76,7 +76,7 @@ export default class WorkoutPage extends Vue {
       text-align: center;
     }
     .routines__container {
-      padding: 2vh 0;
+      padding: 4vh 0;
       ul,
       ol {
         padding-left: 3vh;

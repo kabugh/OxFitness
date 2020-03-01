@@ -5,6 +5,13 @@ export interface User {
   imageURL?: string;
 }
 
+export interface Feature {
+  fields: Object;
+  sys: {
+    id: string;
+  };
+}
+
 export interface Workout {
   fields: Object;
   sys: {

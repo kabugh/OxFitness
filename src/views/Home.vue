@@ -2,9 +2,9 @@
   <section class="homePage">
     <div class="hero">
       <div class="hero__wrapper">
-        <h1>OxFit</h1>
+        <h1>Ox Fitness</h1>
         <h2>Train wherever you are</h2>
-        <button type="button">Select</button>
+        <button type="button" class="homeButton">Start a journey</button>
       </div>
     </div>
     <div class="selection">
@@ -94,13 +94,27 @@ export default class Home extends Vue {
       flex-direction: column;
       h1 {
         font-size: 3.5rem;
+        letter-spacing: 4px;
       }
       h2 {
         font-size: 1.5rem;
-        font-weight: 400;
+        font-weight: 300;
+        letter-spacing: 2px;
       }
       button {
         margin-top: 4vh;
+        &.homeButton {
+          background: #6b108e;
+          padding: 15px 40px;
+          color: #fff;
+          font-weight: 600;
+          font-size: 16px;
+          text-transform: uppercase;
+          border: none;
+          &:hover {
+            background: #80389c;
+          }
+        }
       }
     }
   }

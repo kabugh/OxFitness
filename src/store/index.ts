@@ -23,6 +23,8 @@ export default new Vuex.Store({
     authError: null,
     error: null,
 
+    features: [] as any[],
+
     workoutCategories: [] as any[],
     workouts: [],
     currentWorkout: {}
@@ -44,6 +46,9 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null;
+    },
+    setFeatures(state, payload) {
+      state.features = payload;
     },
     setWorkouts(state, payload) {
       state.workouts = payload;
@@ -167,6 +172,25 @@ export default new Vuex.Store({
           commit("setError", e);
         });
     },
+    fetchFeatures({ commit, state }, payload) {
+      if (state.features.length <= 0) {
+        commit("setLoading", true);
+        commit("clearError");
+        client
+          .getEntries({
+            order: "sys.createdAt",
+            content_type: "features"
+          })
+          .then((entries: { items: any[] }) => {
+            entries.items.forEach((element: { fields: any }) => {
+              state.features.push(element.fields);
+            });
+            commit("setLoading", false);
+          });
+      } else {
+        commit("setFeatures", state.features);
+      }
+    },
     fetchWorkoutTypes({ commit, state }) {
       if (state.workoutCategories.length <= 0) {
         commit("setLoading", true);
@@ -255,6 +279,9 @@ export default new Vuex.Store({
     },
     error(state) {
       return state.error;
+    },
+    features(state) {
+      return state.features;
     },
     workoutCategories(state) {
       return state.workoutCategories;
