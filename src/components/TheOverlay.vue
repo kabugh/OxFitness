@@ -1,6 +1,6 @@
 /* eslint-disable vue/no-use-v-if-with-v-for */
 <template>
-  <section ref="overlay" class="overlay view">
+  <section ref="overlay" class="overlay topView">
     <div class="overlay__wrapper">
       <div class="account__preview">
         <div class="account__avatar--wrapper">
@@ -12,7 +12,6 @@
         </div>
         <div class="account__details">
           <h1>{{ $attrs.user.email }}</h1>
-          <h2>{{ $attrs.user.id }}</h2>
         </div>
       </div>
       <ul class="overlay__items">
@@ -81,6 +80,8 @@ export default class TheOverlay extends Vue {
   z-index: 99;
   .overlay__wrapper {
     padding: 2vh 4vh 4vh 4vh;
+    @include flex;
+    flex-direction: column;
     .account__preview {
       @include flex;
       // display: grid;
@@ -118,8 +119,9 @@ export default class TheOverlay extends Vue {
     }
     .overlay__items {
       margin-top: 6vh;
-      @include flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: minmax(350px, 100%);
+      margin: 0 auto;
       .item {
         display: grid;
         grid-template-columns: auto auto;
@@ -129,6 +131,24 @@ export default class TheOverlay extends Vue {
         .item__title {
           font-size: 1.15rem;
           text-transform: capitalize;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    @media (min-width: 500px) {
+      .account__preview {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2vh;
+        .account__avatar--wrapper {
+          padding-bottom: 4vh;
+          .account__avatar {
+            width: 16vh;
+            height: 16vh;
+          }
         }
       }
     }

@@ -1,12 +1,12 @@
 <template>
-  <section class="profile view">
+  <section class="profile bottomView">
     <div class="profile__container container">
       <div class="avatar__wrapper">
         <div class="avatar__preview">
           <v-gravatar
             class="avatar"
-            hash="f3ada405ce890b6f8204094deb12d8a8"
-            alt="Nobody"
+            :hash="user.id"
+            alt="Profile image"
             :size="80"
             default-img="retro"
           />

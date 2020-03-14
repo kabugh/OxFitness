@@ -1,5 +1,5 @@
 <template>
-  <section class="workouts view">
+  <section class="workouts topView">
     <div class="workouts__container container">
       <div class="workout__description" v-if="$attrs.categoryDetails">
         <h2>{{ $attrs.categoryDetails.title }}</h2>
@@ -41,7 +41,8 @@
                 $router.push({
                   name: 'workoutPage',
                   params: {
-                    id: workout.id,
+                    workoutType: $attrs.workoutType,
+                    id: workout.sys.id,
                     workout: workout
                   }
                 })

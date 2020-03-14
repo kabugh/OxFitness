@@ -12,6 +12,12 @@
     </h2>
   </div>
 </template>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class AccessDeniedComponent extends Vue {}
+</script>
 <style lang="scss" scoped>
 .noAccess__container {
   padding: 4vh 0;

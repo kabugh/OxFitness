@@ -1,5 +1,14 @@
 <template>
-  <nav v-if="$route.path !== '/' && $route.path !== '/authentication'">
+  <nav
+    class="topNavbar"
+    v-if="
+      ($route.path !== '/' &&
+        $route.path !== '/authentication' &&
+        $route.path !== '/dashboard' &&
+        $route.path !== '/profile') ||
+        isNavOpen
+    "
+  >
     <div
       class="back__wrapper"
       v-if="$route.path !== '/' && $route.path !== '/dashboard'"
@@ -41,7 +50,7 @@ export default {
 };
 </script>
 <style lang="scss">
-nav {
+nav.topNavbar {
   width: 100%;
   min-height: 12vh;
   position: fixed;

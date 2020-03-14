@@ -1,5 +1,5 @@
 <template>
-  <section class="workoutPage view">
+  <section class="workoutPage topView">
     <div class="workoutPage__container container" v-if="currentWorkout.fields">
       <h1 v-if="currentWorkout.fields.dayOfTheWeek">
         {{ currentWorkout.fields.dayOfTheWeek }}

@@ -1,21 +1,28 @@
 <template>
   <div id="app">
-    <TheNavbar></TheNavbar>
+    <BottomNavbar></BottomNavbar>
+    <TopNavbar></TopNavbar>
+
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
-    <keep-alive include="Dashboard">
-      <router-view />
-    </keep-alive>
+
+    <transition name="fade" mode="out-in">
+      <keep-alive include="Dashboard">
+        <router-view />
+      </keep-alive>
+    </transition>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-import TheNavbar from "./components/TheNavbar.vue";
+import TopNavbar from "./components/TopNavbar.vue";
+import BottomNavbar from "./components/BottomNavbar.vue";
 import TheOverlay from "./components/TheOverlay.vue";
 
 @Component({
   components: {
-    TheNavbar,
+    TopNavbar,
+    BottomNavbar,
     TheOverlay
   }
 })
@@ -29,4 +36,14 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <section class="dashboard view">
+  <section class="dashboard bottomView">
     <div class="dashboard__container container">
       <div
         class="workouts__sections--container"
@@ -125,6 +125,10 @@ export default class Dashboard extends Vue {
           display: flex;
           justify-content: flex-start;
           align-items: flex-end;
+
+          &:hover {
+            cursor: pointer;
+          }
           h2 {
             padding: 0;
           }

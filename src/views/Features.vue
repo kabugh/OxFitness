@@ -1,5 +1,5 @@
 <template>
-  <section class="features view">
+  <section class="features topView">
     <div class="features__container container">
       <img
         src="@/assets/illustrations/fitness1.svg"
@@ -45,7 +45,7 @@
     </div>
   </section>
 </template>
-<script>
+<script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LoadingComponent from "../components/LoadingComponent.vue";
 

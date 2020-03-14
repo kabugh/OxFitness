@@ -34,8 +34,15 @@ a {
 }
 section {
   overflow-x: hidden;
-  &.view {
+  &.topView {
     padding-top: 12vh;
+    padding-bottom: 0;
+    width: 100%;
+    min-height: 100vh;
+  }
+  &.bottomView {
+    padding-bottom: 12vh;
+    padding-top: 0;
     width: 100%;
     min-height: 100vh;
   }
@@ -153,12 +160,16 @@ select:-webkit-autofill:focus {
       margin: 0 auto;
     }
   }
+  .authentication .authentication__container {
+    max-width: 50vw;
+    margin: 0 auto; 
+  }
 }
 
-@media (min-width: 1300px) and (min-height: 900px) {
+@media (min-width: 1300px) and (min-height: 700px) {
   section {
     > .container {
-      max-width: 70vw;
+      max-width: 60vw;
       margin: 0 auto;
     }
   }
@@ -167,6 +178,7 @@ select:-webkit-autofill:focus {
   }
   .illustration {
     max-width: 30vw !important;
+    max-height: 30vh;
   }
 }
 
@@ -177,12 +189,29 @@ select:-webkit-autofill:focus {
       margin: 0 auto;
     }
   }
+  .authentication .authentication__container {
+    max-width: 70vw;
+    margin: 0 auto; 
+  }
+}
+@media (orientation: landscape) and (max-width: 1500px) and (max-height: 800px) {
+  section {
+    > .container {
+      max-width: 70vw;
+      margin: 0 auto;
+    }
+  }
 }
 
 @media only screen and (orientation: landscape) and (max-height: 500px) {
   section {
-    &.view {
+    &.topView {
       padding-top: 28vh;
+      padding-bottom: 0;
+    }
+    &.bottomView {
+      padding-top: 0;
+      padding-bottom: 28vh;
     }
     > .container {
       max-width: 570px;
@@ -191,5 +220,44 @@ select:-webkit-autofill:focus {
   }
   nav {
     min-height: 20vh;
+  }
+  .illustration {
+    max-height: 40vh !important;
+  }
+  .authentication {
+    .logo__container .text__wrapper {
+      h1 {
+        font-size: 2rem;
+      }
+      h3 {
+        font-size: 1rem;
+      }
+    }
+     .authentication__container {
+      max-width: 570px;
+      margin: 0 auto;
+      .status {
+        display: flex;
+        h4.highlighted {
+          margin-left: 2vh;
+        }
+      }
+    }
+  }
+}
+@media only screen and (orientation: landscape) and (max-height: 400px) {
+  .authentication .authentication__container {
+    padding-top: 4vh;
+    max-width: 400px;
+    .login .login__container , .passwordRecover .passwordRecovery__container {
+      .form__wrapper form {
+        input { 
+          margin-top: 10px;
+          &:first-of-type {
+            margin-top: 5px;
+          }
+        }
+      }
+    }
   }
 }

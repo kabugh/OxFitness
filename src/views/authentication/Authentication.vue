@@ -1,13 +1,13 @@
 <template>
   <section class="authentication">
-    <div class="logo__wrapper">
+    <div class="logo__container">
       <!-- <img src="@/assets/icons/iconLogo.png" alt="logo" class="unselectable" /> -->
       <div class="text__wrapper">
         <h1>OxFit</h1>
         <h3>Your daily workouts</h3>
       </div>
     </div>
-    <div class="authentication__wrapper">
+    <div class="authentication__container">
       <transition name="fade">
         <SignUp v-if="signUpTab" :class="{ active: signUpTab }" />
         <Login v-if="loginTab" :class="{ active: loginTab }" />
@@ -101,7 +101,7 @@ export default class Authentication extends Vue {
   width: 100%;
   height: 100vh;
   position: relative;
-  .logo__wrapper {
+  .logo__container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -126,7 +126,7 @@ export default class Authentication extends Vue {
       font-size: 1.15rem;
     }
   }
-  .authentication__wrapper {
+  .authentication__container {
     width: 80%;
     margin: 0 auto;
     padding: 2vh 2vh;
