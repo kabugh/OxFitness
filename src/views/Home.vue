@@ -4,7 +4,9 @@
       <div class="hero__wrapper">
         <h1>Ox Fitness</h1>
         <h2>Train wherever you are</h2>
-        <button type="button" class="homeButton">Start a journey</button>
+        <button type="button" class="homeButton">
+          Start a journey
+        </button>
       </div>
     </div>
     <div class="selection">

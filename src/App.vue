@@ -2,12 +2,10 @@
   <div id="app">
     <BottomNavbar></BottomNavbar>
     <TopNavbar></TopNavbar>
-
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
-
     <transition name="fade" mode="out-in">
       <keep-alive include="Dashboard">
-        <router-view />
+        <router-view v-touch:swipe.left="user" />
       </keep-alive>
     </transition>
   </div>
