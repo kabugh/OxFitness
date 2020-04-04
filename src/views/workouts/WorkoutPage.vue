@@ -71,7 +71,7 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-      <q-btn label="Card" color="primary" @click="card = true" />
+      <q-btn label="Dodaj swój wynik" color="primary" @click="card = true" />
     </div>
   </section>
 </template>

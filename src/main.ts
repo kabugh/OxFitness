@@ -15,6 +15,7 @@ Vue.use(Vue2TouchEvents);
 
 import { Quasar } from "quasar";
 import "./quasar";
+import "./quasar";
 
 Vue.use(Quasar);
 

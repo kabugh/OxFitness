@@ -1,10 +1,17 @@
 <template>
   <section class="dashboard bottomView">
     <div class="dashboard__container container">
-      <div class="workouts__sections--container" v-if="user.premiumAccount">
+      <div
+        class="workouts__sections--container"
+        v-touch-swipe.mouse.right="swipeRight"
+        v-if="user.premiumAccount"
+      >
         <!-- workoutCategories.length > 0 && !loading && -->
         <q-pull-to-refresh @refresh="pullData">
-          <div class="workout__container" v-if="loading">
+          <div
+            class="workout__container"
+            v-if="loading || workoutCategories <= 0"
+          >
             <div
               class="workout__wrapper"
               v-for="(skeleton, n) in mockItems"
@@ -69,12 +76,18 @@ export default class Dashboard extends Vue {
     this.$store.dispatch("fetchWorkoutTypes");
   }
 
-  pullData(data: Function) {
-    this.$store.dispatch("fetchWorkoutTypes").then(() => {
-      // eslint-disable-next-line no-console
-      console.log("test");
-      data();
-    });
+  pullData(done: Function) {
+    this.pullMe();
+    done();
+  }
+
+  pullMe() {
+    this.$store.dispatch("fetchWorkoutTypes");
+  }
+
+  swipeRight({ evt, ...info }) {
+    // eslint-disable-next-line no-console
+    console.log(info);
   }
 
   get user() {

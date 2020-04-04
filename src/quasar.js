@@ -20,6 +20,8 @@ import {
   QRouteTab,
   QPullToRefresh,
   QSkeleton,
+  QInnerLoading,
+  TouchSwipe
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -39,7 +41,8 @@ Vue.use(Quasar, {
     QRouteTab,
     QPullToRefresh,
     QSkeleton,
+    QInnerLoading
   },
-  directives: { ClosePopup },
-  plugins: {},
+  directives: { ClosePopup, TouchSwipe },
+  plugins: {}
 });

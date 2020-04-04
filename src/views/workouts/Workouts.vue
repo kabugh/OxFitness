@@ -48,7 +48,7 @@
                 })
               "
             >
-              View more
+              Zobacz więcej
             </button>
           </div>
         </div>
