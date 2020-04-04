@@ -154,6 +154,7 @@ export default class Authentication extends Vue {
         font-size: 0.8rem;
         white-space: nowrap;
         margin-top: 10px;
+        font-weight: bolder;
 
         &.highlighted {
           color: $brandColor;

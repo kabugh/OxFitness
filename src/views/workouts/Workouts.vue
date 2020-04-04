@@ -53,7 +53,17 @@
           </div>
         </div>
       </div>
-      <LoadingComponent v-else></LoadingComponent>
+      <div class="videos__container" v-else>
+        <div
+          class="video__wrapper"
+          v-for="(mockItem, index) in mockItems"
+          :key="index"
+        >
+          <q-skeleton type="text" />
+          <q-skeleton type="QBtn" />
+        </div>
+      </div>
+      <!-- <LoadingComponent v-else></LoadingComponent> -->
     </div>
   </section>
 </template>
@@ -67,6 +77,7 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
   }
 })
 export default class Workouts extends Vue {
+  mockItems = 6;
   created() {
     if (this.$attrs.workouts) {
       this.workouts = this.$attrs.workouts;
@@ -115,8 +126,13 @@ export default class Workouts extends Vue {
       flex-direction: column;
       text-align: center;
       padding: 2vh 0;
+      h2 {
+        font-size: 2rem;
+        font-weight: bolder;
+      }
       p {
         margin-top: 2vh;
+        font-size: 1rem;
       }
     }
     .videos__container {
@@ -142,9 +158,15 @@ export default class Workouts extends Vue {
           text-transform: capitalize;
           text-align: center;
           padding: 2vh 0;
+          font-size: 1.5rem;
+          font-weight: bolder;
         }
         .thumbnail {
           width: 100%;
+        }
+        .q-skeleton--type-rect {
+          width: 100%;
+          height: 30vh;
         }
         .button__wrapper {
           @include flex;

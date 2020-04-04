@@ -3,11 +3,17 @@ module.exports = {
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "scss",
-      patterns: [path.resolve(__dirname, "./src/assets/styles/*.scss")]
+      patterns: ["/Users/jakubtkaczyk/Projects/oxfit/src/assets/styles/*.scss"]
+    },
+    quasar: {
+      importStrategy: "manual",
+      rtlSupport: true
     }
   },
 
   pwa: {
     themeColor: "#000000"
-  }
+  },
+
+  transpileDependencies: ["quasar"]
 };

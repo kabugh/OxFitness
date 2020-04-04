@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <h1>Loading..</h1>
+    <h2>Loading..</h2>
     <div class="spinner">
       <div class="mask">
         <div class="maskedCircle"></div>
@@ -21,6 +21,9 @@ export default {
   flex-direction: column;
   align-items: center;
   background-color: white;
+  h2 {
+    font-size: 1.75rem;
+  }
   .spinner {
     margin-top: 20px;
     width: 26px;

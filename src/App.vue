@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <BottomNavbar></BottomNavbar>
+    <BottomTabs></BottomTabs>
     <TopNavbar></TopNavbar>
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
     <transition name="fade" mode="out-in">
@@ -14,13 +14,13 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import TopNavbar from "./components/TopNavbar.vue";
-import BottomNavbar from "./components/BottomNavbar.vue";
+import BottomTabs from "./components/BottomTabs.vue";
 import TheOverlay from "./components/TheOverlay.vue";
 
 @Component({
   components: {
     TopNavbar,
-    BottomNavbar,
+    BottomTabs,
     TheOverlay
   }
 })

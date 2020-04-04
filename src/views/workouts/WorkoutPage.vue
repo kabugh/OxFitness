@@ -122,9 +122,14 @@ export default class WorkoutPage extends Vue {
     h1 {
       padding: 2vh 0 4vh 0;
       text-align: center;
+      font-size: 2rem;
+      font-weight: bolder;
     }
     .routines__container {
       padding: 4vh 0;
+      h3 {
+        font-size: 1.5rem;
+      }
       ul,
       ol {
         padding-left: 3vh;

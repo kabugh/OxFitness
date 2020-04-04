@@ -1,37 +1,48 @@
 <template>
   <section class="dashboard bottomView">
     <div class="dashboard__container container">
-      <div
-        class="workouts__sections--container"
-        v-if="workoutCategories.length > 0 && !loading && user.premiumAccount"
-      >
-        <div
-          class="workout__wrapper"
-          v-for="(item, index) in workoutCategories"
-          :key="index"
-        >
-          <div
-            class="thumbnail"
-            @click="
-              $router.push({
-                name: 'workouts',
-                params: {
-                  workoutType: item.category,
-                  workouts: item.workouts,
-                  categoryDetails: {
-                    title: item.title,
-                    description: item.description
-                  }
-                }
-              })
-            "
-            :style="{
-              backgroundImage: `url(${item.image.fields.file.url})`
-            }"
-          >
-            <h2>{{ item.title }}</h2>
+      <div class="workouts__sections--container" v-if="user.premiumAccount">
+        <!-- workoutCategories.length > 0 && !loading && -->
+        <q-pull-to-refresh @refresh="pullData">
+          <div class="workout__container" v-if="loading">
+            <div
+              class="workout__wrapper"
+              v-for="(skeleton, n) in mockItems"
+              :key="n"
+            >
+              <q-skeleton class="thumbnail" square />
+            </div>
           </div>
-        </div>
+          <div class="workout__container" v-else>
+            <div
+              class="workout__wrapper"
+              v-for="(item, index) in workoutCategories"
+              :key="index"
+            >
+              <div
+                class="thumbnail"
+                @click="
+                  $router.push({
+                    name: 'workouts',
+                    params: {
+                      workoutType: item.category,
+                      workouts: item.workouts,
+                      categoryDetails: {
+                        title: item.title,
+                        description: item.description
+                      }
+                    }
+                  })
+                "
+                :style="{
+                  backgroundImage: `url(${item.image.fields.file.url})`
+                }"
+              >
+                <h2>{{ item.title }}</h2>
+              </div>
+            </div>
+          </div>
+        </q-pull-to-refresh>
       </div>
       <AccessDeniedComponent
         v-else-if="!user.premiumAccount"
@@ -52,8 +63,18 @@ import LoadingComponent from "../components/LoadingComponent.vue";
   }
 })
 export default class Dashboard extends Vue {
+  mockItems = 3;
+
   created() {
     this.$store.dispatch("fetchWorkoutTypes");
+  }
+
+  pullData(data: Function) {
+    this.$store.dispatch("fetchWorkoutTypes").then(() => {
+      // eslint-disable-next-line no-console
+      console.log("test");
+      data();
+    });
   }
 
   get user() {
@@ -100,7 +121,10 @@ export default class Dashboard extends Vue {
       text-align: center;
       padding: 2vh 0;
     }
-    .workouts__sections--container {
+    .workouts__sections--container
+      .q-pull-to-refresh
+      .q-pull-to-refresh__content
+      .workout__container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
@@ -131,6 +155,7 @@ export default class Dashboard extends Vue {
           }
           h2 {
             padding: 0;
+            font-size: 1.75rem;
           }
         }
       }

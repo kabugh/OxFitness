@@ -72,6 +72,12 @@ export default class Profile extends Vue {
           font-weight: bolder;
         }
       }
+      h3 {
+        font-size: 1.25rem;
+      }
+      h4 {
+        font-size: 1rem;
+      }
       .button__wrapper {
         @include flex;
         flex-direction: column;

@@ -88,6 +88,11 @@ export default class Features extends Vue {
       .accessory__container {
         h1 {
           font-size: 1.75rem;
+          font-weight: bolder;
+        }
+        h2 {
+          font-size: 1.5rem;
+          font-weight: bolder;
         }
         .title__container {
           display: flex;
@@ -100,10 +105,12 @@ export default class Features extends Vue {
           }
           h2 {
             margin-left: 20px;
-            font-size: 1.25rem;
+            font-size: 1.25rem !important;
+            font-weight: bolder;
           }
         }
         p {
+          font-size: 1rem;
           padding: 2vh 0;
           line-height: 1.75;
           letter-spacing: normal;

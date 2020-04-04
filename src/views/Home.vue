@@ -2,8 +2,8 @@
   <section class="homePage">
     <div class="hero">
       <div class="hero__wrapper">
-        <h1>Ox Fitness</h1>
-        <h2>Train wherever you are</h2>
+        <h1 class="text-bold">Ox Fitness</h1>
+        <h2 class="text-bold">Train wherever you are</h2>
         <button type="button" class="homeButton">
           Start a journey
         </button>
@@ -95,12 +95,12 @@ export default class Home extends Vue {
       align-items: center;
       flex-direction: column;
       h1 {
-        font-size: 3.5rem;
+        font-size: 3.5rem !important;
         letter-spacing: 4px;
       }
       h2 {
-        font-size: 1.5rem;
-        font-weight: 300;
+        font-size: 1.5rem !important;
+        font-weight: 300 !important;
         letter-spacing: 2px;
       }
       button {
@@ -109,8 +109,8 @@ export default class Home extends Vue {
           background: #6b108e;
           padding: 15px 40px;
           color: #fff;
-          font-weight: 600;
-          font-size: 16px;
+          font-weight: 600 !important;
+          font-size: 16px !important;
           text-transform: uppercase;
           border: none;
           &:hover {
@@ -142,9 +142,13 @@ export default class Home extends Vue {
           padding: 6vh;
           h2 {
             font-size: 2rem;
+            line-height: 3rem;
+            font-weight: bolder;
           }
           button {
             background: transparent;
+            font-weight: 600 !important;
+            font-size: 16px !important;
             &:hover {
               background-color: white;
             }
