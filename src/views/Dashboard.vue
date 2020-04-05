@@ -1,11 +1,7 @@
 <template>
   <section class="dashboard bottomView">
     <div class="dashboard__container container">
-      <div
-        class="workouts__sections--container"
-        v-touch-swipe.mouse.right="swipeRight"
-        v-if="user.premiumAccount"
-      >
+      <div class="workouts__sections--container" v-if="user.premiumAccount">
         <!-- workoutCategories.length > 0 && !loading && -->
         <q-pull-to-refresh @refresh="pullData">
           <div
@@ -83,11 +79,6 @@ export default class Dashboard extends Vue {
 
   pullMe() {
     this.$store.dispatch("fetchWorkoutTypes");
-  }
-
-  swipeRight({ evt, ...info }) {
-    // eslint-disable-next-line no-console
-    console.log(info);
   }
 
   get user() {

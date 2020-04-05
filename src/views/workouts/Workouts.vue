@@ -5,7 +5,7 @@
         <h2>{{ $attrs.categoryDetails.title }}</h2>
         <p>{{ $attrs.categoryDetails.description }}</p>
       </div>
-      <div class="videos__container" v-if="workouts.length > 0">
+      <div class="videos__container" v-if="!loading">
         <div
           class="video__wrapper"
           v-for="(workout, index) in workouts"
@@ -55,12 +55,13 @@
       </div>
       <div class="videos__container" v-else>
         <div
-          class="video__wrapper"
+          class="video__wrapper skeleton"
           v-for="(mockItem, index) in mockItems"
           :key="index"
         >
+          <q-skeleton type="rect" />
           <q-skeleton type="text" />
-          <q-skeleton type="QBtn" />
+          <q-skeleton type="rect" />
         </div>
       </div>
       <!-- <LoadingComponent v-else></LoadingComponent> -->
@@ -92,6 +93,10 @@ export default class Workouts extends Vue {
 
   set workouts(value) {
     this.$store.commit("setWorkouts", value);
+  }
+
+  get loading() {
+    return this.$store.getters.loading;
   }
 
   generateUUID() {
@@ -146,14 +151,12 @@ export default class Workouts extends Vue {
       // @media (min-width: 500px) {
       //   grid-template-columns: 1fr;
       // }
-      grid-gap: 4vh;
+      grid-row-gap: 6vh;
+      grid-column-gap: 4vh;
       justify-content: center;
       align-items: center;
       padding: 4vh 0;
       .video__wrapper {
-        // width: 100%;
-        // @include flex;
-        // flex-direction: column;
         h2 {
           text-transform: capitalize;
           text-align: center;
@@ -164,9 +167,17 @@ export default class Workouts extends Vue {
         .thumbnail {
           width: 100%;
         }
-        .q-skeleton--type-rect {
-          width: 100%;
-          height: 30vh;
+        &.skeleton {
+          display: grid;
+          grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
+          grid-row-gap: 2vh;
+          > * {
+            min-width: 50%;
+          }
+          .q-skeleton--type-rect:last-of-type {
+            max-width: 50%;
+            margin: 0 auto;
+          }
         }
         .button__wrapper {
           @include flex;
