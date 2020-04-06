@@ -26,7 +26,7 @@
         id="nav-icon"
         :class="{ open: isNavOpen }"
         @click="isNavOpen = !isNavOpen"
-        v-if="$route.path !== '/features'"
+        v-if="$route.path !== '/features' && $route.path != '/faq'"
       >
         <span v-if="$route.path !== '/features'"></span>
         <span v-if="$route.path !== '/features'"></span>
@@ -102,6 +102,7 @@ nav.topNavbar {
     h3 {
       text-transform: uppercase;
       font-size: 18px;
+      font-weight: bolder;
     }
   }
   .back__wrapper {

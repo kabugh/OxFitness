@@ -27,7 +27,8 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
-  QAvatar
+  QAvatar,
+  Notify
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -56,5 +57,7 @@ Vue.use(Quasar, {
     QAvatar
   },
   directives: { ClosePopup, TouchSwipe },
-  plugins: {}
+  plugins: {
+    Notify
+  }
 });

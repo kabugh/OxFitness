@@ -3,13 +3,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router/index";
 import { User, Workout } from "./models";
+import { Notify } from "quasar";
 
 import * as firebase from "firebase";
 let contentful = require("contentful");
 
 const client = contentful.createClient({
-  space: "biebxe7da1h8",
-  accessToken: "4P62X4-zP1xxjkt6LRaRTNYAiueVs4hrg6FLTQy-GYQ"
+  space: process.env.VUE_APP_space,
+  accessToken: process.env.VUE_APP_accessToken
 });
 
 Vue.use(Vuex);
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     error: null,
 
     features: [] as any[],
+    faqItems: [] as any[],
 
     workoutCategories: [] as any[],
     workouts: [],
@@ -49,6 +51,9 @@ export default new Vuex.Store({
     },
     setFeatures(state, payload) {
       state.features = payload;
+    },
+    setFaqs(state, payload) {
+      state.faqItems = payload;
     },
     setWorkouts(state, payload) {
       state.workouts = payload;
@@ -166,6 +171,10 @@ export default new Vuex.Store({
           } else {
             router.push("/");
           }
+          Notify.create({
+            type: "positive",
+            message: `Wiadomość wysłana na email.`
+          });
         })
         .catch(e => {
           commit("setLoading", false);
@@ -189,6 +198,25 @@ export default new Vuex.Store({
           });
       } else {
         commit("setFeatures", state.features);
+      }
+    },
+    fetchFaq({ commit, state }) {
+      if (state.faqItems.length <= 0) {
+        commit("setLoading", true);
+        commit("clearError");
+        client
+          .getEntries({
+            order: "sys.createdAt",
+            content_type: "faqsCategory"
+          })
+          .then((entries: { items: any[] }) => {
+            entries.items.forEach((element: { fields: any }) => {
+              state.faqItems.push(element.fields);
+            });
+            commit("setLoading", false);
+          });
+      } else {
+        commit("setFaqs", state.faqItems);
       }
     },
     fetchWorkoutTypes({ commit, state }) {
@@ -282,6 +310,9 @@ export default new Vuex.Store({
     },
     features(state) {
       return state.features;
+    },
+    faqItems(state) {
+      return state.faqItems;
     },
     workoutCategories(state) {
       return state.workoutCategories;

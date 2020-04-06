@@ -159,6 +159,7 @@ export default class Dashboard extends Vue {
           }
           h2 {
             padding: 0;
+            font-weight: bolder;
             font-size: 1.75rem;
           }
         }

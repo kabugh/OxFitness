@@ -17,7 +17,7 @@
         <h3><span>ID:</span> {{ user.id }}</h3>
         <div class="button__wrapper">
           <h4>
-            Kliknij w przycisk poniej, jeśli zapomniałeś swojego hasła lub
+            Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasła lub
             potrzebujesz je zmienieć.
           </h4>
           <button class="dark" type="button" @click="changePassword">

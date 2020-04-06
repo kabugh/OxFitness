@@ -18,6 +18,11 @@ const routes = [
       import(/* webpackChunkName: "features" */ "../views/Features.vue")
   },
   {
+    path: "/faq",
+    name: "faq",
+    component: () => import(/* webpackChunkName: "faq" */ "../views/Faq.vue")
+  },
+  {
     path: "/authentication",
     name: "authentication",
     component: () =>

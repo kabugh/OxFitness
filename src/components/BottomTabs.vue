@@ -7,8 +7,8 @@
   >
     <q-tabs
       v-model="tab"
-      class="bg-grey-8 text-grey-5 shadow-2"
-      active-color="primary"
+      class="bg-black text-grey-6 shadow-2"
+      active-color="bg-gray-1"
       indicator-color="primary"
       switch-indicator
       align="justify"
