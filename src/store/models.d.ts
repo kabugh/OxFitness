@@ -13,8 +13,17 @@ export interface Feature {
 }
 
 export interface Workout {
-  fields: Object;
+  fields: WorkoutContent;
   sys: {
     id: string;
   };
+}
+
+export interface WorkoutContent {
+  date: string;
+  dayOfTheWeek: string;
+  videoId: string;
+  programA?: Object;
+  programB?: Object;
+  description?: Object;
 }

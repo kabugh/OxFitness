@@ -27,12 +27,15 @@
               })
             "
           />
-          <h2 v-if="$attrs.workoutType === 'daily'">
-            {{ workout.fields.dayOfTheWeek }}
-          </h2>
-          <h2 v-else-if="$attrs.workoutType === 'warm-up'">
-            {{ workout.fields.title }}
-          </h2>
+          <div class="title__container">
+            <h2 v-if="$attrs.workoutType === 'daily'">
+              {{ workout.fields.dayOfTheWeek }}
+            </h2>
+            <h2 v-else-if="$attrs.workoutType === 'warm-up'">
+              {{ workout.fields.title }}
+            </h2>
+            <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
+          </div>
           <div class="button__wrapper">
             <button
               type="button"
@@ -157,15 +160,23 @@ export default class Workouts extends Vue {
       align-items: center;
       padding: 4vh 0;
       .video__wrapper {
-        h2 {
+        .title__container {
           text-transform: capitalize;
           text-align: center;
-          padding: 2vh 0;
-          font-size: 1.5rem;
-          font-weight: bolder;
+          h2 {
+            padding: 2vh 0;
+            font-size: 1.5rem;
+            font-weight: bolder;
+          }
+          h3 {
+            font-size: 1.25rem;
+          }
         }
         .thumbnail {
           width: 100%;
+          &:hover {
+            cursor: pointer;
+          }
         }
         &.skeleton {
           display: grid;

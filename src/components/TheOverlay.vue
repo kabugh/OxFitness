@@ -14,7 +14,7 @@
           <h1>{{ $attrs.user.email }}</h1>
         </div>
       </div>
-      <ul class="overlay__items">
+      <!-- <ul class="overlay__items">
         <li class="item" v-for="(item, index) in filteredNavItems" :key="index">
           <i class="item__icon material-icons md-36">{{ item.icon }}</i>
           <div class="item__title" @click="$router.push(item.link)">
@@ -27,7 +27,15 @@
             Log out
           </div>
         </li>
-      </ul>
+      </ul> -->
+      <q-list>
+        <q-item clickable>
+          <q-item-section avatar>
+            <q-avatar rounded color="purple" text-color="white" icon="home" />
+          </q-item-section>
+          <q-item-section>Test</q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </section>
 </template>

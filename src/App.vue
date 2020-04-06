@@ -3,11 +3,11 @@
     <BottomTabs></BottomTabs>
     <TopNavbar></TopNavbar>
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
-    <transition name="fade" mode="out-in">
-      <keep-alive include="Dashboard">
-        <router-view v-touch:swipe.left="user" />
-      </keep-alive>
-    </transition>
+    <!-- <transition name="fade" mode="out-in"> -->
+    <keep-alive include="Dashboard">
+      <router-view v-touch:swipe.left="user" />
+    </keep-alive>
+    <!-- </transition> -->
   </div>
 </template>
 <script lang="ts">

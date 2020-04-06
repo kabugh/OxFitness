@@ -21,7 +21,13 @@ import {
   QPullToRefresh,
   QSkeleton,
   QInnerLoading,
-  TouchSwipe
+  TouchSwipe,
+  QList,
+  QExpansionItem,
+  QItem,
+  QItemSection,
+  QItemLabel,
+  QAvatar
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -41,7 +47,13 @@ Vue.use(Quasar, {
     QRouteTab,
     QPullToRefresh,
     QSkeleton,
-    QInnerLoading
+    QInnerLoading,
+    QList,
+    QExpansionItem,
+    QItem,
+    QItemSection,
+    QItemLabel,
+    QAvatar
   },
   directives: { ClosePopup, TouchSwipe },
   plugins: {}

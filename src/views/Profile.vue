@@ -17,11 +17,11 @@
         <h3><span>ID:</span> {{ user.id }}</h3>
         <div class="button__wrapper">
           <h4>
-            Click the button below, if you forgot your password or you want to
-            change it.
+            Kliknij w przycisk poniej, jeśli zapomniałeś swojego hasła lub
+            potrzebujesz je zmienieć.
           </h4>
           <button class="dark" type="button" @click="changePassword">
-            Change Password
+            Zmień hasło
           </button>
         </div>
       </div>

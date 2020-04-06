@@ -1,77 +1,96 @@
 <template>
   <section class="workoutPage topView">
     <div class="workoutPage__container container" v-if="currentWorkout.fields">
-      <h1 v-if="currentWorkout.fields.dayOfTheWeek">
-        {{ currentWorkout.fields.dayOfTheWeek }}
-      </h1>
-      <h1 v-if="currentWorkout.fields.title">
-        {{ currentWorkout.fields.title }}
-      </h1>
+      <div class="title__container">
+        <h1 v-if="currentWorkout.fields.dayOfTheWeek">
+          {{ currentWorkout.fields.dayOfTheWeek }}
+        </h1>
+        <h1 v-if="currentWorkout.fields.title">
+          {{ currentWorkout.fields.title }}
+        </h1>
+        <h2 v-if="currentWorkout.fields.date">
+          {{ currentWorkout.fields.date }}
+        </h2>
+      </div>
       <VideoComponent
         :videoUrl="currentWorkout.fields.videoId"
       ></VideoComponent>
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
-          <RichTextRenderer
+          <!-- <RichTextRenderer
             v-if="currentWorkout.fields.programA"
             :document="currentWorkout.fields.programA"
           />
           <RichTextRenderer
             v-if="currentWorkout.fields.programB"
             :document="currentWorkout.fields.programB"
-          />
+          /> -->
         </div>
         <RichTextRenderer
           v-else
           :document="currentWorkout.fields.description"
         />
       </div>
-      <q-dialog v-model="card">
-        <q-card class="my-card">
-          <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+      <q-list bordered>
+        <q-expansion-item
+          group="accordion"
+          icon="explore"
+          :label="buildTitle(index)"
+          header-class="text-primary"
+          v-for="(item, index) in accordionItems"
+          :key="index"
+        >
+          <q-card>
+            <q-card-section>
+              <RichTextRenderer :document="item" />
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
 
-          <q-card-section>
-            <q-btn
-              fab
-              color="primary"
-              icon="place"
-              class="absolute"
-              style="top: 0; right: 12px; transform: translateY(-50%);"
-            />
+        <q-separator />
+      </q-list>
 
-            <div class="row no-wrap items-center">
-              <div class="col text-h6 ellipsis">
-                Cafe Basilico
+      <div class="results__container" v-if="$attrs.workoutType === 'daily'">
+        <h2>
+          Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczy!
+        </h2>
+
+        <q-dialog v-model="card">
+          <q-card class="my-card">
+            <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+            <q-card-section>
+              <div class="row no-wrap items-center">
+                <div class="col text-h6 ellipsis">
+                  Cafe Basilico
+                </div>
+                <div
+                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
+                ></div>
               </div>
-              <div
-                class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-              >
-                <q-icon name="place" />
-                250 ft
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <div class="text-subtitle1">
+                Dodaj swój wynik
               </div>
-            </div>
+              <div class="text-caption text-grey"></div>
+            </q-card-section>
 
-            <q-rating v-model="stars" :max="5" size="32px" />
-          </q-card-section>
+            <q-separator />
 
-          <q-card-section class="q-pt-none">
-            <div class="text-subtitle1">
-              $・Italian, Cafe
-            </div>
-            <div class="text-caption text-grey">
-              Small plates, salads & sandwiches in an intimate setting.
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions align="right">
-            <q-btn v-close-popup flat color="primary" label="Reserve" />
-            <q-btn v-close-popup flat color="primary" round icon="event" />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-      <q-btn label="Dodaj swój wynik" color="primary" @click="card = true" />
+            <q-card-actions align="right">
+              <q-btn v-close-popup flat color="primary" label="Reserve" />
+              <q-btn v-close-popup flat color="primary" round icon="event" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <q-btn label="Dodaj swój wynik" color="primary" @click="card = true" />
+      </div>
+    </div>
+    <div class="workoutPage__container container" v-else>
+      <q-skeleton type="text" />
+      <q-skeleton type="rect" />
+      <q-skeleton type="text" />
     </div>
   </section>
 </template>
@@ -80,6 +99,7 @@ import { Component, Vue } from "vue-property-decorator";
 import VideoComponent from "@/components/VideoComponent.vue";
 import { BLOCKS } from "@contentful/rich-text-types";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
+import { WorkoutContent } from "@/store/models";
 
 @Component({
   components: {
@@ -94,9 +114,36 @@ export default class WorkoutPage extends Vue {
     } else {
       this.$store.dispatch("fetchWorkout", this.$route.params);
     }
+    this.initialiseAccordionItems();
   }
   card = false;
   stars = 3;
+  accordionItems = {};
+
+  initialiseAccordionItems() {
+    this.findItemInObject("programA", this.currentWorkout.fields);
+    this.findItemInObject("programB", this.currentWorkout.fields);
+  }
+
+  findItemInObject(itemName: string, chosenObject: any) {
+    for (let item in chosenObject) {
+      if (item.toString() === itemName) {
+        let foundItem: Object = chosenObject[item];
+        this.accordionItems = {
+          ...this.accordionItems,
+          [item]: foundItem
+        };
+      }
+    }
+  }
+
+  buildTitle(title: string) {
+    return `${title.slice(0, -1)} ${title.slice(-1)}`;
+  }
+
+  get loading() {
+    return this.$store.getters.loading;
+  }
 
   get currentWorkout() {
     return this.$store.getters.currentWorkout;
@@ -119,11 +166,25 @@ export default class WorkoutPage extends Vue {
     padding: 2vh 6vw;
     width: 100%;
     height: 100%;
-    h1 {
+    .title__container {
       padding: 2vh 0 4vh 0;
       text-align: center;
-      font-size: 2rem;
-      font-weight: bolder;
+      text-transform: capitalize;
+      h1 {
+        font-size: 2rem;
+        font-weight: bolder;
+      }
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .q-skeleton--type-text {
+      padding: 4vh 0 4vh 0;
+      margin: 0 0 4vh 0;
+    }
+    .q-skeleton--type-rect {
+      min-height: 40vh;
     }
     .routines__container {
       padding: 4vh 0;
@@ -136,6 +197,20 @@ export default class WorkoutPage extends Vue {
         li {
           list-style-type: square;
         }
+      }
+    }
+    .q-item__label {
+      text-transform: capitalize;
+    }
+    .results__container {
+      @include flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4vh 0;
+      h2 {
+        font-size: 1rem;
+        margin-bottom: 2vh;
       }
     }
   }
