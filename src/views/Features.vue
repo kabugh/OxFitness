@@ -4,6 +4,7 @@
       <img
         src="@/assets/illustrations/fitness1.svg"
         class="illustration unselectable"
+        v-if="features.length > 0"
       />
       <div class="articles__container" v-if="features.length > 0">
         <article class="article__container">
@@ -22,6 +23,7 @@
       <img
         src="@/assets/illustrations/fitness3.svg"
         class="illustration unselectable"
+        v-if="features.length > 0"
       />
       <div class="accessories__container" v-if="features.length > 0">
         <article
@@ -40,6 +42,18 @@
           </div>
           <RichTextRenderer :document="accessory.fields.description" />
         </article>
+      </div>
+      <img
+        src="@/assets/illustrations/fitness4.svg"
+        class="illustration unselectable"
+        v-if="features.length > 0"
+      />
+      <div class="additionalInfo__container" v-if="features.length > 0">
+        <h2>
+          Masz pytania? Sprawdź sekcję
+          <span class="faq" @click="$router.push('/faq')">FAQ</span>
+          lub skontaktuj się z nami.
+        </h2>
       </div>
       <LoadingComponent v-else></LoadingComponent>
     </div>
@@ -117,6 +131,18 @@ export default class Features extends Vue {
           text-align: left;
           span {
             font-weight: bolder;
+          }
+        }
+      }
+    }
+    .additionalInfo__container {
+      h2 {
+        font-size: 1rem;
+        font-weight: bolder;
+        span {
+          text-decoration: underline;
+          &:hover {
+            cursor: pointer;
           }
         }
       }
