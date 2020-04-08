@@ -5,9 +5,10 @@
     <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
     <!-- <transition name="fade" mode="out-in"> -->
     <keep-alive include="Dashboard">
-      <router-view v-touch:swipe.left="user" />
+      <router-view />
     </keep-alive>
     <!-- </transition> -->
+    <q-ajax-bar ref="bar" position="top" color="accent" size="5px" />
   </div>
 </template>
 <script lang="ts">

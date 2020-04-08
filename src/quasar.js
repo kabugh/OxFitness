@@ -31,7 +31,8 @@ import {
   Notify,
   QOptionGroup,
   QTabPanels,
-  QTabPanel
+  QTabPanel,
+  QAjaxBar
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -60,7 +61,8 @@ Vue.use(Quasar, {
     QAvatar,
     QOptionGroup,
     QTabPanels,
-    QTabPanel
+    QTabPanel,
+    QAjaxBar
   },
   directives: { ClosePopup, TouchSwipe },
   plugins: {

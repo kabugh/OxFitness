@@ -5,13 +5,8 @@ import router from "./router";
 import store from "./store";
 import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
-import axios from "axios";
-import Gravatar from "vue-gravatar";
-import Vue2TouchEvents from "vue2-touch-events";
 
-Vue.component("v-gravatar", Gravatar);
 Vue.use(VueYoutube);
-Vue.use(Vue2TouchEvents);
 
 import { Quasar } from "quasar";
 import "./quasar";

@@ -71,11 +71,22 @@
             </div>
           </div>
         </div>
+        <div class="archive__videos__container">
+          <h2>
+            Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
+            klikając poniżej.
+          </h2>
+          <div class="button__wrapper">
+            <button type="button" class="dark">Wróć</button>
+          </div>
+        </div>
       </div>
       <div class="videos__section__container" v-else>
         <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
           <q-tab
-            v-for="(element, index) in Object.keys(this.groupedWorkouts)"
+            v-for="(element, index) in Object.keys(
+              this.groupedWorkouts
+            ).reverse()"
             :name="element"
             :label="element"
             :key="index"
@@ -328,64 +339,80 @@ export default class Workouts extends Vue {
         padding: 4vh 0;
       }
     }
-    .videos__section__container .videos__section__wrapper {
-      > h2 {
-        font-size: 1.75rem;
-        font-weight: bolder;
-        text-transform: capitalize;
-        text-align: center;
-      }
-      .videos__container {
-        max-width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
-          grid-template-columns: 100%;
-          grid-gap: 10vh;
+    .videos__section__container {
+      .videos__section__wrapper {
+        > h2 {
+          font-size: 1.75rem;
+          font-weight: bolder;
+          text-transform: capitalize;
+          text-align: center;
         }
-        // @media (min-width: 500px) {
-        //   grid-template-columns: 1fr;
-        // }
-        grid-row-gap: 6vh;
-        grid-column-gap: 4vh;
-        justify-content: center;
+        .videos__container {
+          max-width: 100%;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
+            grid-template-columns: 100%;
+            grid-gap: 10vh;
+          }
+          // @media (min-width: 500px) {
+          //   grid-template-columns: 1fr;
+          // }
+          grid-row-gap: 6vh;
+          grid-column-gap: 4vh;
+          justify-content: center;
+          align-items: center;
+          padding: 4vh 0;
+          .video__wrapper {
+            .title__container {
+              text-transform: capitalize;
+              text-align: center;
+              h2 {
+                padding: 2vh 0;
+                font-size: 1.5rem;
+                font-weight: bolder;
+              }
+              h3 {
+                font-size: 1.25rem;
+              }
+            }
+            .thumbnail {
+              width: 100%;
+              &:hover {
+                cursor: pointer;
+              }
+            }
+            &.skeleton {
+              display: grid;
+              grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
+              grid-row-gap: 2vh;
+              > * {
+                min-width: 50%;
+              }
+              .q-skeleton--type-rect:last-of-type {
+                max-width: 50%;
+                margin: 0 auto;
+              }
+            }
+            .button__wrapper {
+              @include flex;
+              margin-top: 4vh;
+            }
+          }
+        }
+      }
+      .archive__videos__container {
+        @include flex;
+        flex-direction: column;
         align-items: center;
-        padding: 4vh 0;
-        .video__wrapper {
-          .title__container {
-            text-transform: capitalize;
-            text-align: center;
-            h2 {
-              padding: 2vh 0;
-              font-size: 1.5rem;
-              font-weight: bolder;
-            }
-            h3 {
-              font-size: 1.25rem;
-            }
-          }
-          .thumbnail {
-            width: 100%;
-            &:hover {
-              cursor: pointer;
-            }
-          }
-          &.skeleton {
-            display: grid;
-            grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
-            grid-row-gap: 2vh;
-            > * {
-              min-width: 50%;
-            }
-            .q-skeleton--type-rect:last-of-type {
-              max-width: 50%;
-              margin: 0 auto;
-            }
-          }
-          .button__wrapper {
-            @include flex;
-            margin-top: 4vh;
-          }
+        padding: 6vh 0;
+        h2 {
+          font-size: 1.25rem;
+          font-weight: bolder;
+          text-align: center;
+        }
+        .button__wrapper {
+          padding: 4vh 0;
         }
       }
     }

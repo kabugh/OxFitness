@@ -2,15 +2,7 @@
   <section class="profile bottomView">
     <div class="profile__container container">
       <div class="avatar__wrapper">
-        <div class="avatar__preview">
-          <v-gravatar
-            class="avatar"
-            :hash="user.id"
-            alt="Profile image"
-            :size="80"
-            default-img="retro"
-          />
-        </div>
+        <div class="avatar__preview"></div>
       </div>
       <div class="details__container">
         <h3><span>Email:</span> {{ user.email }}</h3>
@@ -20,9 +12,11 @@
             Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasła lub
             potrzebujesz je zmienieć.
           </h4>
-          <button class="dark" type="button" @click="changePassword">
-            Zmień hasło
-          </button>
+          <div class="wrapper">
+            <button class="dark" type="button" @click="changePassword">
+              Zmień hasło
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -81,6 +75,7 @@ export default class Profile extends Vue {
       .button__wrapper {
         @include flex;
         flex-direction: column;
+        align-items: center;
         padding: 2vh 0;
         button {
           margin-top: 2vh;

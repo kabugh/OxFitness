@@ -26,12 +26,13 @@
             :document="currentWorkout.fields.programB"
           /> -->
         </div>
-        <RichTextRenderer
+        <!-- <RichTextRenderer
           v-else
           :document="currentWorkout.fields.description"
-        />
+        /> -->
+        <div class="editor__container" v-html="receivedData" v-else></div>
       </div>
-      <q-list bordered>
+      <q-list bordered v-if="accordionItems.length > 0">
         <q-expansion-item
           group="accordion"
           icon="explore"
@@ -97,9 +98,16 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import VideoComponent from "@/components/VideoComponent.vue";
-import { BLOCKS } from "@contentful/rich-text-types";
+import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { WorkoutContent } from "@/store/models";
+
+const options = {
+  renderNode: {
+    [BLOCKS.HR]: (node, next) => `<br>`
+  }
+};
 
 @Component({
   components: {
@@ -115,10 +123,16 @@ export default class WorkoutPage extends Vue {
       this.$store.dispatch("fetchWorkout", this.$route.params);
     }
     this.initialiseAccordionItems();
+    this.receivedData = documentToHtmlString(
+      this.currentWorkout.fields.description,
+      options
+    );
   }
   card = false;
   stars = 3;
   accordionItems = {};
+
+  receivedData = {};
 
   initialiseAccordionItems() {
     this.findItemInObject("programA", this.currentWorkout.fields);
@@ -197,6 +211,9 @@ export default class WorkoutPage extends Vue {
         li {
           list-style-type: square;
         }
+      }
+      a {
+        color: black;
       }
     }
     .q-item__label {
