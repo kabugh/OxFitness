@@ -280,12 +280,13 @@ export default class Workouts extends Vue {
     return this.$store.getters.loading;
   }
 
-  groupWorkouts(arr: Array<Workout>, prop: string) {
+  groupWorkouts(arr: any, prop: any) {
     // display the latest accessories at the top
     if (this.$attrs.workoutType === "accessories") arr.reverse();
 
+    // temporarily casted as any :/
     const groups = arr.reduce(
-      (groups, item) => ({
+      (groups: any, item: any) => ({
         ...groups,
         [item.fields[prop]]: [...(groups[item.fields[prop]] || []), item]
       }),

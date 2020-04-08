@@ -105,7 +105,7 @@ import { WorkoutContent } from "@/store/models";
 
 const options = {
   renderNode: {
-    [BLOCKS.HR]: (node, next) => `<br>`
+    [BLOCKS.HR]: (node: any, next: any) => `<br>`
   }
 };
 
