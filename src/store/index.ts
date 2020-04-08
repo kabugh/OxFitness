@@ -242,7 +242,8 @@ export default new Vuex.Store({
         commit("clearError");
         client
           .getEntries({
-            order: "sys.createdAt",
+            order: "-sys.createdAt",
+            // order: "-sys.createdAt",
             content_type: "workoutCategory",
             "fields.category[match]": payload
           })

@@ -28,7 +28,10 @@ import {
   QItemSection,
   QItemLabel,
   QAvatar,
-  Notify
+  Notify,
+  QOptionGroup,
+  QTabPanels,
+  QTabPanel
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -54,7 +57,10 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
-    QAvatar
+    QAvatar,
+    QOptionGroup,
+    QTabPanels,
+    QTabPanel
   },
   directives: { ClosePopup, TouchSwipe },
   plugins: {

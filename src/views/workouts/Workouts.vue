@@ -5,75 +5,233 @@
         <h2>{{ $attrs.categoryDetails.title }}</h2>
         <p>{{ $attrs.categoryDetails.description }}</p>
       </div>
-      <div class="videos__container" v-if="!loading">
-        <div
-          class="video__wrapper"
-          v-for="(workout, index) in workouts"
-          :key="index"
-        >
-          <img
-            src="@/assets/sample.png"
-            alt="video
-          thumbnail"
-            class="thumbnail"
-            @click="
-              $router.push({
-                name: 'workoutPage',
-                params: {
-                  workoutType: $attrs.workoutType,
-                  id: workout.sys.id,
-                  workout: workout
-                }
-              })
-            "
-          />
-          <div class="title__container">
-            <h2 v-if="$attrs.workoutType === 'daily'">
-              {{ workout.fields.dayOfTheWeek }}
-            </h2>
-            <h2 v-else-if="$attrs.workoutType === 'warm-up'">
-              {{ workout.fields.title }}
-            </h2>
-            <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
-          </div>
-          <div class="button__wrapper">
-            <button
-              type="button"
-              class="dark"
-              @click="
-                $router.push({
-                  name: 'workoutPage',
-                  params: {
-                    workoutType: $attrs.workoutType,
-                    id: workout.sys.id,
-                    workout: workout
-                  }
-                })
-              "
+      <div
+        class="videos__section__container"
+        v-if="$attrs.workoutType === 'daily'"
+      >
+        <div class="videos__section__wrapper">
+          <div class="videos__container" v-if="!loading">
+            <div
+              class="video__wrapper"
+              v-for="(workout, index) in workouts"
+              :key="index"
             >
-              Zobacz więcej
-            </button>
+              <img
+                src="@/assets/sample.png"
+                alt="video
+          thumbnail"
+                class="thumbnail"
+                @click="
+                  $router.push({
+                    name: 'workoutPage',
+                    params: {
+                      workoutType: $attrs.workoutType,
+                      id: workout.sys.id,
+                      workout: workout
+                    }
+                  })
+                "
+              />
+              <div class="title__container">
+                <h2>
+                  {{ workout.fields.title }}
+                </h2>
+
+                <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
+              </div>
+              <div class="button__wrapper">
+                <button
+                  type="button"
+                  class="dark"
+                  @click="
+                    $router.push({
+                      name: 'workoutPage',
+                      params: {
+                        workoutType: $attrs.workoutType,
+                        id: workout.sys.id,
+                        workout: workout
+                      }
+                    })
+                  "
+                >
+                  Zobacz więcej
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="videos__container" v-else>
+            <div
+              class="video__wrapper skeleton"
+              v-for="(mockItem, index) in mockItems"
+              :key="index"
+            >
+              <q-skeleton type="rect" />
+              <q-skeleton type="text" />
+              <q-skeleton type="rect" />
+            </div>
           </div>
         </div>
       </div>
-      <div class="videos__container" v-else>
-        <div
-          class="video__wrapper skeleton"
-          v-for="(mockItem, index) in mockItems"
-          :key="index"
+      <div class="videos__section__container" v-else>
+        <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
+          <q-tab
+            v-for="(element, index) in Object.keys(this.groupedWorkouts)"
+            :name="element"
+            :label="element"
+            :key="index"
+          />
+        </q-tabs>
+        <q-tab-panels
+          v-model="tab"
+          animated
+          transition-prev="scale"
+          transition-next="scale"
+          class="videos__section__wrapper text-center"
         >
-          <q-skeleton type="rect" />
-          <q-skeleton type="text" />
-          <q-skeleton type="rect" />
-        </div>
+          <q-tab-panel
+            :name="i"
+            class="videos__section__wrapper"
+            v-for="(workouts, i) in groupedWorkouts"
+            :key="i"
+          >
+            <h2>{{ i }}</h2>
+            <div class="videos__container" v-if="!loading">
+              <div
+                class="video__wrapper"
+                v-for="(workout, index) in workouts"
+                :key="index"
+              >
+                <img
+                  src="@/assets/sample.png"
+                  alt="video thumbnail"
+                  class="thumbnail"
+                  @click="
+                    $router.push({
+                      name: 'workoutPage',
+                      params: {
+                        workoutType: $attrs.workoutType,
+                        id: workout.sys.id,
+                        workout: workout
+                      }
+                    })
+                  "
+                />
+                <div class="title__container">
+                  <h2>
+                    {{ workout.fields.title }}
+                  </h2>
+                  <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
+                </div>
+                <div class="button__wrapper">
+                  <button
+                    type="button"
+                    class="dark"
+                    @click="
+                      $router.push({
+                        name: 'workoutPage',
+                        params: {
+                          workoutType: $attrs.workoutType,
+                          id: workout.sys.id,
+                          workout: workout
+                        }
+                      })
+                    "
+                  >
+                    Zobacz więcej
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="videos__container" v-else>
+              <div
+                class="video__wrapper skeleton"
+                v-for="(mockItem, index) in mockItems"
+                :key="index"
+              >
+                <q-skeleton type="rect" />
+                <q-skeleton type="text" />
+                <q-skeleton type="rect" />
+              </div>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+        <!-- <div
+          class="videos__section__wrapper"
+          v-for="(workouts, i) in groupedWorkouts"
+          :key="i"
+        >
+          <h2>{{ i }}</h2>
+          <div class="videos__container" v-if="!loading">
+            <div
+              class="video__wrapper"
+              v-for="(workout, index) in workouts"
+              :key="index"
+            >
+              <img
+                src="@/assets/sample.png"
+                alt="video
+          thumbnail"
+                class="thumbnail"
+                @click="
+                  $router.push({
+                    name: 'workoutPage',
+                    params: {
+                      workoutType: $attrs.workoutType,
+                      id: workout.sys.id,
+                      workout: workout
+                    }
+                  })
+                "
+              />
+              <div class="title__container">
+                <h2 v-if="$attrs.workoutType === 'daily'">
+                  {{ workout.fields.dayOfTheWeek }}
+                </h2>
+                <h2 v-else-if="$attrs.workoutType === 'warm-up'">
+                  {{ workout.fields.title }}
+                </h2>
+                <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
+              </div>
+              <div class="button__wrapper">
+                <button
+                  type="button"
+                  class="dark"
+                  @click="
+                    $router.push({
+                      name: 'workoutPage',
+                      params: {
+                        workoutType: $attrs.workoutType,
+                        id: workout.sys.id,
+                        workout: workout
+                      }
+                    })
+                  "
+                >
+                  Zobacz więcej
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="videos__container" v-else>
+            <div
+              class="video__wrapper skeleton"
+              v-for="(mockItem, index) in mockItems"
+              :key="index"
+            >
+              <q-skeleton type="rect" />
+              <q-skeleton type="text" />
+              <q-skeleton type="rect" />
+            </div>
+          </div>
+        </div> -->
       </div>
-      <!-- <LoadingComponent v-else></LoadingComponent> -->
     </div>
   </section>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LoadingComponent from "../../components/LoadingComponent.vue";
+import { Workout } from "@/store/models";
 
 @Component({
   components: {
@@ -82,12 +240,21 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 })
 export default class Workouts extends Vue {
   mockItems = 6;
+  tab = "";
+
+  groupedWorkouts = this.groupWorkouts(this.workouts, "category");
+
   created() {
     if (this.$attrs.workouts) {
       this.workouts = this.$attrs.workouts;
     } else {
       this.$store.dispatch("fetchWorkoutType", this.$route.params.workoutType);
     }
+    this.groupedWorkouts = this.groupWorkouts(this.workouts, "category");
+  }
+
+  mounted() {
+    this.tab = Object.keys(this.groupedWorkouts)[0];
   }
 
   get workouts() {
@@ -100,6 +267,20 @@ export default class Workouts extends Vue {
 
   get loading() {
     return this.$store.getters.loading;
+  }
+
+  groupWorkouts(arr: Array<Workout>, prop: string) {
+    // display the latest accessories at the top
+    if (this.$attrs.workoutType === "accessories") arr.reverse();
+
+    const groups = arr.reduce(
+      (groups, item) => ({
+        ...groups,
+        [item.fields[prop]]: [...(groups[item.fields[prop]] || []), item]
+      }),
+      {}
+    );
+    return groups;
   }
 
   generateUUID() {
@@ -127,6 +308,7 @@ export default class Workouts extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
+@import "@/styles/quasar.variables.scss";
 .workouts {
   .workouts__container {
     .workout__description {
@@ -142,57 +324,68 @@ export default class Workouts extends Vue {
         margin-top: 2vh;
         font-size: 1rem;
       }
-    }
-    .videos__container {
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
-        grid-template-columns: 100%;
-        grid-gap: 10vh;
+      .workout__categories {
+        padding: 4vh 0;
       }
-      // @media (min-width: 500px) {
-      //   grid-template-columns: 1fr;
-      // }
-      grid-row-gap: 6vh;
-      grid-column-gap: 4vh;
-      justify-content: center;
-      align-items: center;
-      padding: 4vh 0;
-      .video__wrapper {
-        .title__container {
-          text-transform: capitalize;
-          text-align: center;
-          h2 {
-            padding: 2vh 0;
-            font-size: 1.5rem;
-            font-weight: bolder;
-          }
-          h3 {
-            font-size: 1.25rem;
-          }
+    }
+    .videos__section__container .videos__section__wrapper {
+      > h2 {
+        font-size: 1.75rem;
+        font-weight: bolder;
+        text-transform: capitalize;
+        text-align: center;
+      }
+      .videos__container {
+        max-width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
+          grid-template-columns: 100%;
+          grid-gap: 10vh;
         }
-        .thumbnail {
-          width: 100%;
-          &:hover {
-            cursor: pointer;
+        // @media (min-width: 500px) {
+        //   grid-template-columns: 1fr;
+        // }
+        grid-row-gap: 6vh;
+        grid-column-gap: 4vh;
+        justify-content: center;
+        align-items: center;
+        padding: 4vh 0;
+        .video__wrapper {
+          .title__container {
+            text-transform: capitalize;
+            text-align: center;
+            h2 {
+              padding: 2vh 0;
+              font-size: 1.5rem;
+              font-weight: bolder;
+            }
+            h3 {
+              font-size: 1.25rem;
+            }
           }
-        }
-        &.skeleton {
-          display: grid;
-          grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
-          grid-row-gap: 2vh;
-          > * {
-            min-width: 50%;
+          .thumbnail {
+            width: 100%;
+            &:hover {
+              cursor: pointer;
+            }
           }
-          .q-skeleton--type-rect:last-of-type {
-            max-width: 50%;
-            margin: 0 auto;
+          &.skeleton {
+            display: grid;
+            grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
+            grid-row-gap: 2vh;
+            > * {
+              min-width: 50%;
+            }
+            .q-skeleton--type-rect:last-of-type {
+              max-width: 50%;
+              margin: 0 auto;
+            }
           }
-        }
-        .button__wrapper {
-          @include flex;
-          margin-top: 4vh;
+          .button__wrapper {
+            @include flex;
+            margin-top: 4vh;
+          }
         }
       }
     }
