@@ -95,6 +95,7 @@
         <q-tab-panels
           v-model="tab"
           animated
+          swipeable
           transition-prev="scale"
           transition-next="scale"
           class="videos__section__wrapper text-center"
@@ -265,7 +266,9 @@ export default class Workouts extends Vue {
   }
 
   mounted() {
-    this.tab = Object.keys(this.groupedWorkouts)[0];
+    this.tab = Object.keys(this.groupedWorkouts)[
+      Object.keys(this.groupedWorkouts).length - 1
+    ];
   }
 
   get workouts() {

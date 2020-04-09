@@ -32,7 +32,11 @@ import {
   QOptionGroup,
   QTabPanels,
   QTabPanel,
-  QAjaxBar
+  QAjaxBar,
+  QTable,
+  QTh,
+  QTr,
+  QTd
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -62,7 +66,11 @@ Vue.use(Quasar, {
     QOptionGroup,
     QTabPanels,
     QTabPanel,
-    QAjaxBar
+    QAjaxBar,
+    QTable,
+    QTh,
+    QTr,
+    QTd
   },
   directives: { ClosePopup, TouchSwipe },
   plugins: {

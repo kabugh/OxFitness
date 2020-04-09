@@ -9,7 +9,7 @@
         <h3><span>ID:</span> {{ user.id }}</h3>
         <div class="button__wrapper">
           <h4>
-            Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasła lub
+            Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasło lub
             potrzebujesz je zmienieć.
           </h4>
           <div class="wrapper">

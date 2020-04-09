@@ -32,7 +32,7 @@
         /> -->
         <div class="editor__container" v-html="receivedData" v-else></div>
       </div>
-      <q-list bordered v-if="accordionItems.length > 0">
+      <q-list bordered v-if="Object.keys(this.accordionItems).length > 0">
         <q-expansion-item
           group="accordion"
           icon="explore"
@@ -47,7 +47,6 @@
             </q-card-section>
           </q-card>
         </q-expansion-item>
-
         <q-separator />
       </q-list>
 
@@ -86,6 +85,8 @@
           </q-card>
         </q-dialog>
         <q-btn label="Dodaj swój wynik" color="primary" @click="card = true" />
+
+        <RankingComponent />
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
@@ -98,8 +99,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import VideoComponent from "@/components/VideoComponent.vue";
-import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
+import LeaderboardComponent from "@/components/LeaderboardComponent.vue";
+
+import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { WorkoutContent } from "@/store/models";
 
@@ -111,8 +114,9 @@ const options = {
 
 @Component({
   components: {
+    VideoComponent,
     RichTextRenderer,
-    VideoComponent
+    LeaderboardComponent
   }
 })
 export default class WorkoutPage extends Vue {
