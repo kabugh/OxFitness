@@ -14,7 +14,7 @@
             type="password"
             v-model="password"
             :disabled="disableInputs"
-            placeholder="Password"
+            placeholder="Hasło"
             autocomplete="false"
           />
           <button type="submit">login</button>
@@ -52,7 +52,7 @@ export default class Login extends Vue {
   email: string = "";
   password: string = "";
 
-  get user() {
+  get user(): User {
     return this.$store.getters.user;
   }
   get disableInputs() {

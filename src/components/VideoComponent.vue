@@ -8,44 +8,75 @@
       ></youtube>
     </div>
     <q-skeleton v-if="!isLoaded" type="rect" />
-    <!-- <LoadingComponent ></LoadingComponent> -->
   </section>
 </template>
 <script>
-export default {
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class VideoComponent extends Vue {
+  videoId = "";
+  isLoaded = false;
+  playerVars = {
+    autoplay: 0,
+    controls: 1,
+    loop: 1,
+    enablejsapi: 1,
+    origin: "http://localhost:8080",
+    mute: false,
+    modestbranding: true
+  };
   created() {
     this.videoId = this.$attrs.videoUrl;
-  },
-  computed: {
-    player() {
-      return this.$refs.youtube.player;
-    }
-  },
+  }
   mounted() {
     this.isLoaded = false;
     window.setTimeout(() => {
       this.player.addEventListener("onReady", this.isReady());
     }, 1000);
-  },
-  methods: {
-    isReady() {
-      this.isLoaded = true;
-    }
-  },
-  data: () => ({
-    videoId: "",
-    isLoaded: false,
-    playerVars: {
-      autoplay: 0,
-      controls: 1,
-      loop: 1,
-      enablejsapi: 1,
-      origin: "http://localhost:8080",
-      mute: false,
-      modestbranding: true
-    }
-  })
-};
+  }
+  get player() {
+    return this.$refs.youtube.player;
+  }
+
+  isReady() {
+    this.isLoaded = true;
+  }
+}
+// export default {
+//   created() {
+//     this.videoId = this.$attrs.videoUrl;
+//   },
+//   computed: {
+//     player() {
+//       return this.$refs.youtube.player;
+//     }
+//   },
+//   mounted() {
+//     this.isLoaded = false;
+//     window.setTimeout(() => {
+//       this.player.addEventListener("onReady", this.isReady());
+//     }, 1000);
+//   },
+//   methods: {
+//     isReady() {
+//       this.isLoaded = true;
+//     }
+//   },
+//   data: () => ({
+//     videoId: "",
+//     isLoaded: false,
+//     playerVars: {
+//       autoplay: 0,
+//       controls: 1,
+//       loop: 1,
+//       enablejsapi: 1,
+//       origin: "http://localhost:8080",
+//       mute: false,
+//       modestbranding: true
+//     }
+//   })
+// };
 // export default class VideoComponent extends Vue {
 //   videoId: String = "";
 //   isLoaded = false;

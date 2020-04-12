@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-use-v-if-with-v-for */
 <template>
   <section ref="overlay" class="overlay topView">
     <div class="overlay__wrapper">
@@ -14,26 +13,31 @@
           <h1>{{ $attrs.user.email }}</h1>
         </div>
       </div>
-      <!-- <ul class="overlay__items">
-        <li class="item" v-for="(item, index) in filteredNavItems" :key="index">
-          <i class="item__icon material-icons md-36">{{ item.icon }}</i>
-          <div class="item__title" @click="$router.push(item.link)">
-            {{ item.title }}
-          </div>
-        </li>
-        <li class="item">
-          <i class="item__icon material-icons md-36">exit_to_app</i>
-          <div class="item__title" @click="logOut">
-            Log out
-          </div>
-        </li>
-      </ul> -->
       <q-list>
-        <q-item clickable>
+        <q-item
+          v-for="(item, index) in filteredNavItems"
+          :key="index"
+          @click="
+            $router.push(item.link);
+            closeOverlay;
+          "
+          clickable
+        >
           <q-item-section avatar>
-            <q-avatar rounded color="purple" text-color="white" icon="home" />
+            <q-avatar
+              rounded
+              color="purple"
+              text-color="white"
+              :icon="item.icon"
+            />
           </q-item-section>
-          <q-item-section>Test</q-item-section>
+          <q-item-section>{{ item.title }}</q-item-section>
+        </q-item>
+        <q-item @click="logOut" clickable>
+          <q-item-section avatar>
+            <q-avatar rounded color="purple" text-color="white" icon="input" />
+          </q-item-section>
+          <q-item-section>Wyloguj</q-item-section>
         </q-item>
       </q-list>
     </div>
@@ -77,7 +81,6 @@ export default class TheOverlay extends Vue {
 }
 </script>
 <style lang="scss">
-@import "~material-design-icons/iconfont/material-icons.css";
 @import "@/assets/styles/global.scss";
 .overlay {
   position: fixed;
@@ -92,10 +95,6 @@ export default class TheOverlay extends Vue {
     flex-direction: column;
     .account__preview {
       @include flex;
-      // display: grid;
-      // grid-template-columns: 10vh auto;
-      // grid-column-gap: 4vh;
-      // height: 10vh;
       .account__avatar--wrapper {
         @include flex;
         justify-content: flex-start;
@@ -118,30 +117,9 @@ export default class TheOverlay extends Vue {
         }
         h2 {
           margin-top: 2vh;
-          // color: $secondaryColor;
           color: gray;
           font-size: 1rem;
           font-weight: 400;
-        }
-      }
-    }
-    .overlay__items {
-      margin-top: 6vh;
-      display: grid;
-      grid-template-columns: minmax(350px, 100%);
-      margin: 0 auto;
-      .item {
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-gap: 20px;
-        align-items: center;
-        padding: 2vh 0;
-        .item__title {
-          font-size: 1.15rem;
-          text-transform: capitalize;
-          &:hover {
-            cursor: pointer;
-          }
         }
       }
     }

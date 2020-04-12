@@ -9,9 +9,10 @@
   </div>
 </template>
 <script>
-export default {
-  name: "TheLoading"
-};
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class LoadingComponent extends Vue {}
 </script>
 <style lang="scss" scoped>
 .loading {

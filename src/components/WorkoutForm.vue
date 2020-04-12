@@ -1,10 +1,7 @@
 <template>
   <div class="form__wrapper q-pa-md">
-    <div class="text-subtitle1" v-if="!isFinished">
-      Dodaj swój wynik
-    </div>
-    <div class="text-subtitle1" v-else>
-      Edytuj swój wynik
+    <div class="text-subtitle1">
+      {{ scoreMessage }}
     </div>
     <q-form @submit="onSubmit" class="q-gutter-md" v-if="!$props.isFinished">
       <q-input
@@ -72,10 +69,14 @@ export default class WorkoutForm extends Vue {
     weight: 15
   };
 
+  get scoreMessage() {
+    return !this.$props.isLoading ? "Dodaj swój wynik" : "Edytuj swój wynik";
+  }
+
   onSubmit() {
-    const currentWorkout: unknown = this.$route.params.workout;
+    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
     let workout = {
-      workoutId: (currentWorkout as Workout).sys.id,
+      workoutId: currentWorkout.sys.id,
       workoutResults: {
         ...this.workoutResults
       }
@@ -89,9 +90,9 @@ export default class WorkoutForm extends Vue {
     });
   }
   onUpdate() {
-    const currentWorkout: unknown = this.$route.params.workout;
+    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
     let workout = {
-      workoutId: (currentWorkout as Workout).sys.id,
+      workoutId: currentWorkout.sys.id,
       workoutResults: {
         ...this.workoutResults
       }

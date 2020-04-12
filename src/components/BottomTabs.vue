@@ -32,10 +32,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { User } from "@/store/models";
 
-@Component({})
+@Component
 export default class BottomTabs extends Vue {
-  tab = "mails";
+  tab = "Home";
   navItems = [
     {
       title: "Home",
@@ -57,7 +58,7 @@ export default class BottomTabs extends Vue {
     return this.$store.getters.isNavOpen;
   }
 
-  get user() {
+  get user(): User {
     return this.$store.getters.user;
   }
 }

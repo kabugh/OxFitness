@@ -12,9 +12,9 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <!-- <VideoComponent
+      <VideoComponent
         :videoUrl="currentWorkout.fields.videoId"
-      ></VideoComponent> -->
+      ></VideoComponent>
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
           <!-- <RichTextRenderer

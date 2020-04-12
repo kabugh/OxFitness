@@ -28,26 +28,25 @@
         @click="isNavOpen = !isNavOpen"
         v-if="$route.path !== '/features' && $route.path != '/faq'"
       >
-        <span v-if="$route.path !== '/features'"></span>
-        <span v-if="$route.path !== '/features'"></span>
-        <span v-if="$route.path !== '/features'"></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
   </nav>
 </template>
 <script>
-export default {
-  computed: {
-    isNavOpen: {
-      get() {
-        return this.$store.state.isNavOpen;
-      },
-      set(value) {
-        this.$store.commit("setNav", value);
-      }
-    }
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class TopNavbar extends Vue {
+  get isNavOpen() {
+    return this.$store.state.isNavOpen;
   }
-};
+  set isNavOpen(value) {
+    this.$store.commit("setNav", value);
+  }
+}
 </script>
 <style lang="scss">
 nav.topNavbar {
@@ -62,7 +61,6 @@ nav.topNavbar {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  // flex-wrap: wrap;
   ul {
     display: flex;
     justify-content: flex-start;

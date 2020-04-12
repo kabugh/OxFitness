@@ -2,7 +2,6 @@
   <section class="dashboard bottomView">
     <div class="dashboard__container container">
       <div class="workouts__sections--container" v-if="user.premiumAccount">
-        <!-- workoutCategories.length > 0 && !loading && -->
         <q-pull-to-refresh @refresh="pullData">
           <div
             class="workout__container"
@@ -58,6 +57,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import AccessDeniedComponent from "../components/AccessDeniedComponent.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
+import { User } from "@/store/models";
 
 @Component({
   components: {
@@ -73,15 +73,11 @@ export default class Dashboard extends Vue {
   }
 
   pullData(done: Function) {
-    this.pullMe();
+    this.$store.dispatch("fetchWorkoutTypes");
     done();
   }
 
-  pullMe() {
-    this.$store.dispatch("fetchWorkoutTypes");
-  }
-
-  get user() {
+  get user(): User {
     return this.$store.getters.user;
   }
 
@@ -89,30 +85,8 @@ export default class Dashboard extends Vue {
     return this.$store.getters.workoutCategories;
   }
 
-  get loading() {
+  get loading(): boolean {
     return this.$store.getters.loading;
-  }
-
-  generateUUID() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return (
-      s4() +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      s4() +
-      s4()
-    );
   }
 }
 </script>

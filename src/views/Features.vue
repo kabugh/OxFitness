@@ -62,7 +62,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LoadingComponent from "../components/LoadingComponent.vue";
-
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
 
 @Component({
@@ -77,7 +76,7 @@ export default class Features extends Vue {
     return this.$store.getters.features;
   }
 
-  get loading() {
+  get loading(): boolean {
     return this.$store.getters.loading;
   }
 }

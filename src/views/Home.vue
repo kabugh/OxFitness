@@ -16,7 +16,7 @@
             v-for="(item, index) in selectionItems"
             :key="index"
             :style="{
-              backgroundImage: 'url(' + require(`@/assets/${item.image}`) + ')'
+              backgroundImage: 'url(' + require(`@/assets//${item.image}`) + ')'
             }"
             class="selection__item"
           >

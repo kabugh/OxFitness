@@ -14,14 +14,14 @@
             type="password"
             v-model="password"
             :disabled="disableInputs"
-            placeholder="Password"
+            placeholder="Hasło"
             autocomplete="false"
           />
           <input
             type="password"
             v-model="confirmPassword"
             :disabled="disableInputs"
-            placeholder="Confirm password"
+            placeholder="Potwierdź hasło"
             autocomplete="false"
           />
           <button
@@ -29,7 +29,7 @@
             :disabled="disableInputs"
             :class="{ loading: disableInputs }"
           >
-            create account
+            utwórz konto
           </button>
         </form>
       </div>

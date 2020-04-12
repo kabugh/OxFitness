@@ -57,7 +57,7 @@ export default class LeaderboardComponent extends Vue {
       required: true,
       align: "center",
       field: "name",
-      format: val => `${val}`,
+      format: (val: string) => `${val}`,
       sortable: true
     },
     {
@@ -117,7 +117,7 @@ export default class LeaderboardComponent extends Vue {
       this.currentLeaderboard !== null
     )
       Object.values(this.currentLeaderboard).forEach(element => {
-        this.data.push(element.workoutResults);
+        this.data.push((element as any).workoutResults);
         // eslint-disable-next-line no-console
         console.log(element);
       });

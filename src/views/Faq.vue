@@ -58,9 +58,7 @@ export default class Faq extends Vue {
     width: 100%;
     height: 30vh;
     padding: 4vh;
-    background: #c31432;
-    background: -webkit-linear-gradient(to top, #240b36, #c31432);
-    background: linear-gradient(to top, #240b36, #c31432);
+    background-color: #6b108e;
     color: white;
     h1 {
       font-size: 1.75rem;

@@ -28,10 +28,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { User } from "@/store/models";
 
 @Component
 export default class Profile extends Vue {
-  get user() {
+  get user(): User {
     return this.$store.getters.user;
   }
 

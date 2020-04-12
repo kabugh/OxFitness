@@ -10,7 +10,7 @@
             placeholder="Email"
             autocomplete="false"
           />
-          <button type="submit">recover password</button>
+          <button type="submit">odzyskaj hasło</button>
         </form>
       </div>
     </div>

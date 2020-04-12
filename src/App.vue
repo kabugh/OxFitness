@@ -17,6 +17,7 @@ import { Component, Vue } from "vue-property-decorator";
 import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
 import TheOverlay from "./components/TheOverlay.vue";
+import { User } from "./store/models";
 
 @Component({
   components: {
@@ -26,10 +27,10 @@ import TheOverlay from "./components/TheOverlay.vue";
   }
 })
 export default class App extends Vue {
-  get isNavOpen() {
+  get isNavOpen(): boolean {
     return this.$store.getters.isNavOpen;
   }
-  get user() {
+  get user(): User {
     return this.$store.getters.user;
   }
 }

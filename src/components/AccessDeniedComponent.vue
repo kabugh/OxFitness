@@ -2,10 +2,10 @@
   <div class="noAccess__container">
     <img src="@/assets/illustrations/track.svg" class="illustration" />
     <h2>
-      Unfortunately, you are unable to display our fitness programs 😥
+      Niestety nie masz moliwości wyświetlenia naszych treningów OxFitness 😥
     </h2>
     <h2>
-      To continue, buy premium access on
+      Aby kontynuoować, wykup dostęp na
       <a href="https://oxfitness.wod.guru/user/login" target="_blank"
         >wod.guru</a
       >
