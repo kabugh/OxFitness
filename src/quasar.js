@@ -36,7 +36,9 @@ import {
   QTable,
   QTh,
   QTr,
-  QTd
+  QTd,
+  QForm,
+  QInput
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -70,7 +72,9 @@ Vue.use(Quasar, {
     QTable,
     QTh,
     QTr,
-    QTd
+    QTd,
+    QForm,
+    QInput
   },
   directives: { ClosePopup, TouchSwipe },
   plugins: {

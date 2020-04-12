@@ -7,6 +7,7 @@
       <div class="details__container">
         <h3><span>Email:</span> {{ user.email }}</h3>
         <h3><span>ID:</span> {{ user.id }}</h3>
+        <h3><span>Dostęp do treningów wygasa:</span> 25.04.2020</h3>
         <div class="button__wrapper">
           <h4>
             Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasło lub
@@ -15,6 +16,9 @@
           <div class="wrapper">
             <button class="dark" type="button" @click="changePassword">
               Zmień hasło
+            </button>
+            <button class="dark" type="button" @click="logOut">
+              Wyloguj
             </button>
           </div>
         </div>
@@ -33,6 +37,10 @@ export default class Profile extends Vue {
 
   changePassword() {
     this.$store.dispatch("changePassword", this.user.email);
+  }
+
+  logOut() {
+    this.$store.dispatch("signUserOut");
   }
 }
 </script>
@@ -73,12 +81,14 @@ export default class Profile extends Vue {
         font-size: 1rem;
       }
       .button__wrapper {
-        @include flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2vh 0;
-        button {
-          margin-top: 2vh;
+        .wrapper {
+          @include flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 2vh 0;
+          button {
+            margin-top: 2vh;
+          }
         }
       }
     }

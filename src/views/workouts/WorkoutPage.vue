@@ -12,9 +12,9 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <VideoComponent
+      <!-- <VideoComponent
         :videoUrl="currentWorkout.fields.videoId"
-      ></VideoComponent>
+      ></VideoComponent> -->
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
           <!-- <RichTextRenderer
@@ -51,17 +51,29 @@
       </q-list>
 
       <div class="results__container" v-if="$attrs.workoutType === 'daily'">
-        <h2>
-          Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczy!
-        </h2>
-
+        <div class="results__wrapper" v-if="!isFinished">
+          <h2>
+            Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczy!
+          </h2>
+          <q-btn
+            label="Dodaj swój wynik"
+            color="primary"
+            @click="card = true"
+          />
+        </div>
+        <div class="results__wrapper" v-else>
+          <h2>Ukończyłeś juz ten trening. Edytuj podany przez siebie wynik.</h2>
+          <q-btn label="Edytuj wynik" color="secondary" @click="card = true" />
+        </div>
         <q-dialog v-model="card">
           <q-card class="my-card">
             <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
             <q-card-section>
               <div class="row no-wrap items-center">
                 <div class="col text-h6 ellipsis">
-                  Cafe Basilico
+                  {{
+                    `${currentWorkout.fields.title} - ${currentWorkout.fields.date}`
+                  }}
                 </div>
                 <div
                   class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
@@ -70,9 +82,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              <div class="text-subtitle1">
-                Dodaj swój wynik
-              </div>
+              <WorkoutForm :isFinished="isFinished" />
               <div class="text-caption text-grey"></div>
             </q-card-section>
 
@@ -84,9 +94,10 @@
             </q-card-actions>
           </q-card>
         </q-dialog>
-        <q-btn label="Dodaj swój wynik" color="primary" @click="card = true" />
-
-        <RankingComponent />
+        <!-- <LeaderboardComponent
+          v-if="user.workouts !== undefined && user.workouts !== null"
+          :currentWorkout="currentWorkout"
+        /> -->
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
@@ -97,14 +108,15 @@
   </section>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import VideoComponent from "@/components/VideoComponent.vue";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
 import LeaderboardComponent from "@/components/LeaderboardComponent.vue";
+import WorkoutForm from "@/components/WorkoutForm.vue";
 
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import { WorkoutContent } from "@/store/models";
+import { User, WorkoutContent, Workout } from "@/store/models";
 
 const options = {
   renderNode: {
@@ -114,9 +126,10 @@ const options = {
 
 @Component({
   components: {
+    LeaderboardComponent,
+    WorkoutForm,
     VideoComponent,
-    RichTextRenderer,
-    LeaderboardComponent
+    RichTextRenderer
   }
 })
 export default class WorkoutPage extends Vue {
@@ -132,11 +145,13 @@ export default class WorkoutPage extends Vue {
       options
     );
   }
+  mounted() {
+    this.isFin();
+  }
   card = false;
-  stars = 3;
   accordionItems = {};
-
   receivedData = {};
+  isFinished = false;
 
   initialiseAccordionItems() {
     this.findItemInObject("programA", this.currentWorkout.fields);
@@ -155,12 +170,29 @@ export default class WorkoutPage extends Vue {
     }
   }
 
-  buildTitle(title: string) {
+  buildTitle(title: string): string {
     return `${title.slice(0, -1)} ${title.slice(-1)}`;
+  }
+
+  @Watch("user.workouts")
+  isFin() {
+    let workouts: Object[];
+    if (this.user.workouts !== undefined && this.user.workouts !== null) {
+      workouts = Object.values(this.user.workouts);
+      let matchedWorkout = workouts.find((workout: any) => {
+        if (workout !== undefined) return workout.workoutId === this.$attrs.id;
+      });
+
+      this.isFinished = matchedWorkout !== undefined;
+    }
   }
 
   get loading() {
     return this.$store.getters.loading;
+  }
+
+  get user(): User {
+    return this.$store.getters.user;
   }
 
   get currentWorkout() {

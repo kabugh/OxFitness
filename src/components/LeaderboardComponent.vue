@@ -23,6 +23,7 @@
           :key="i"
         >
           <q-table
+            v-if="data.length > 0"
             align="center"
             :data="data"
             :columns="columns"
@@ -34,10 +35,19 @@
   </section>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class LeaderboardComponent extends Vue {
+  created() {
+    // eslint-disable-next-line no-console
+    console.log("created?");
+    this.getLeaderboard();
+  }
+  mounted() {
+    // eslint-disable-next-line no-console
+    console.log("mounted?");
+  }
   tab = "";
   tabs = ["WOD 2020-02-24"];
   columns = [
@@ -86,37 +96,32 @@ export default class LeaderboardComponent extends Vue {
       sortable: true
     }
   ];
+  data: Object[] = [];
 
-  data = [
-    {
-      name: "Jarek",
-      time: "12:03",
-      reps: 53,
-      rounds: 4,
-      weight: 15
-    },
-    {
-      name: "Marek",
-      time: "13:13",
-      reps: 33,
-      rounds: 6,
-      weight: 20
-    },
-    {
-      name: "Darek",
-      time: "12:13",
-      reps: 34,
-      rounds: 4,
-      weight: 25
-    },
-    {
-      name: "Arek",
-      time: "10:13",
-      reps: 55,
-      rounds: 5,
-      weight: 30
-    }
-  ];
+  getLeaderboard() {
+    this.$store
+      .dispatch("fetchWorkoutLeaderboard", this.$route.params.id)
+      .then(() => {
+        this.transformLeaderboardData();
+        // eslint-disable-next-line no-console
+        console.log("test");
+      });
+  }
+  get currentLeaderboard() {
+    return this.$store.getters.currentLeaderboard;
+  }
+
+  transformLeaderboardData() {
+    if (
+      this.currentLeaderboard !== undefined &&
+      this.currentLeaderboard !== null
+    )
+      Object.values(this.currentLeaderboard).forEach(element => {
+        this.data.push(element.workoutResults);
+        // eslint-disable-next-line no-console
+        console.log(element);
+      });
+  }
 }
 </script>
 <style lang="scss" scoped></style>

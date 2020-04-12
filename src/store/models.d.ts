@@ -3,6 +3,7 @@ export interface User {
   email: string;
   premiumAccount: boolean;
   imageURL?: string;
+  workouts: [];
 }
 
 export interface Feature {

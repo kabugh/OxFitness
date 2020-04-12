@@ -2,7 +2,11 @@
   <div
     class="q-gutter-y-md"
     v-if="
-      ($route.path === '/dashboard' || $route.path === '/profile') && !isNavOpen
+      user &&
+        $route.path !== '/' &&
+        $route.path !== '/features' &&
+        $route.path !== '/faq' &&
+        !isNavOpen
     "
   >
     <q-tabs
@@ -30,7 +34,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class Features extends Vue {
+export default class BottomTabs extends Vue {
   tab = "mails";
   navItems = [
     {
@@ -51,6 +55,10 @@ export default class Features extends Vue {
   ];
   get isNavOpen() {
     return this.$store.getters.isNavOpen;
+  }
+
+  get user() {
+    return this.$store.getters.user;
   }
 }
 </script>

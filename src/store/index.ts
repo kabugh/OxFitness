@@ -29,7 +29,8 @@ export default new Vuex.Store({
 
     workoutCategories: [] as any[],
     workouts: [],
-    currentWorkout: {}
+    currentWorkout: {},
+    currentLeaderboard: {}
   },
   mutations: {
     setNav(state, payload) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     setCurrentWorkout(state, payload) {
       state.currentWorkout = payload;
+    },
+    setCurrentLeaderboard(state, payload) {
+      state.currentLeaderboard = payload;
     }
   },
   actions: {
@@ -76,7 +80,7 @@ export default new Vuex.Store({
               id: response.user.uid,
               email: payload.email,
               premiumAccount: true,
-              imageURL: ""
+              workouts: []
             };
             commit("setUser", newUser);
             firebase
@@ -86,7 +90,6 @@ export default new Vuex.Store({
             router.push("/dashboard").catch(e => {
               console.log(e);
             });
-            console.log("User created");
           }
         })
         .catch(e => {
@@ -95,7 +98,7 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
-    signUserIn({ commit, dispatch }, payload) {
+    signUserIn({ commit }, payload) {
       commit("setLoading", true);
       commit("clearError");
       firebase
@@ -107,7 +110,7 @@ export default new Vuex.Store({
               id: response.user.uid,
               email: payload.email,
               premiumAccount: true,
-              imageURL: ""
+              workouts: []
             };
             firebase
               .database()
@@ -119,13 +122,13 @@ export default new Vuex.Store({
                     newUser.premiumAccount = (value as User).premiumAccount;
                   }
                 });
+                newUser.workouts = snapshot.val().workouts;
               });
             commit("setUser", newUser);
             commit("setLoading", false);
             router.push("/dashboard").catch(e => {
               console.log(e);
             });
-            console.log("Logged in");
           }
         })
         .catch(e => {
@@ -139,8 +142,20 @@ export default new Vuex.Store({
         id: payload.uid,
         email: payload.email,
         premiumAccount: true,
-        imageURL: ""
+        workouts: payload.workouts
       };
+      firebase
+        .database()
+        .ref("/users/" + payload.uid)
+        .once("value")
+        .then(snapshot => {
+          Object.entries(snapshot.val()).forEach(([key, value]) => {
+            if (payload.uid === (value as User).id) {
+              cachedUser.premiumAccount = (value as User).premiumAccount;
+            }
+          });
+          cachedUser.workouts = snapshot.val().workouts;
+        });
       commit("setUser", cachedUser);
     },
     signUserOut({ commit, state }) {
@@ -165,7 +180,6 @@ export default new Vuex.Store({
         .sendPasswordResetEmail(payload)
         .then(() => {
           commit("setLoading", false);
-          console.log("Email has been sent.");
           if (state.user) {
             dispatch("signUserOut");
           } else {
@@ -284,7 +298,6 @@ export default new Vuex.Store({
         );
         commit("setWorkouts", foundCategory.workouts);
 
-        console.log(state.workouts);
         let foundWorkout = state.workouts.find(
           item => (item as Workout).sys.id === payload.id
         );
@@ -293,6 +306,92 @@ export default new Vuex.Store({
         state.workouts = [];
         // state.currentWorkout = {};
       }
+    },
+    uploadWorkoutResults({ commit, getters }, payload) {
+      commit("setLoading", true);
+      commit("clearError");
+      // upload to user
+      let user = getters.user;
+      if (!(user.workouts instanceof Array)) {
+        user.workouts = [];
+        user.workouts.push(payload);
+      } else {
+        user.workouts.push(payload);
+      }
+      commit("setUser", user);
+      firebase
+        .database()
+        .ref(`/users/${getters.user.id}/workouts/`)
+        .push(payload);
+      // upload to group of workouts
+      firebase
+        .database()
+        .ref("/workouts/" + payload.workoutId)
+        .push({ ...payload, userId: getters.user.id });
+      commit("setLoading", false);
+    },
+    updateWorkoutResults({ commit, getters }, payload) {
+      commit("setLoading", true);
+      commit("clearError");
+      // upload to user
+      let user = getters.user;
+      let key: any;
+      if (user.workouts instanceof Object) {
+        let workouts = Object.values(user.workouts);
+        let matchedWorkout: any = workouts.find(
+          workout => (workout as any).workoutId === payload.workoutId
+        );
+        key = Object.keys(user.workouts).find(
+          k => user.workouts[k] === matchedWorkout
+        );
+        user.workouts[key].workoutResults = payload.workoutResults;
+      }
+      commit("setUser", user);
+      firebase
+        .database()
+        .ref(`/users/${getters.user.id}/workouts/${key}`)
+        .update(payload);
+      // upload to group of workouts
+
+      // get current group of workouts
+      let workoutResults: Object;
+      firebase
+        .database()
+        .ref("/workouts/" + payload.workoutId)
+        .once("value")
+        .then(snapshot => {
+          workoutResults = snapshot.val();
+        })
+        .then(() => {
+          let convertedResults = Object.values(workoutResults);
+          console.log(convertedResults[0].userId, user.id);
+
+          let foundResult = convertedResults.find(
+            result => result.userId === user.id
+          );
+
+          let resultKey = Object.keys(workoutResults).find(
+            k => (workoutResults as any)[k] === foundResult
+          );
+          firebase
+            .database()
+            .ref(`/workouts/${payload.workoutId}/${resultKey}`)
+            .update({ ...payload, userId: user.id });
+        });
+      commit("setLoading", false);
+    },
+    fetchWorkoutLeaderboard({ commit }, payload) {
+      commit("setLoading", true);
+      commit("clearError");
+
+      firebase
+        .database()
+        .ref("/workouts/" + payload)
+        .once("value")
+        .then(snapshot => {
+          commit("setCurrentLeaderboard", snapshot.val());
+        });
+      commit("setLoading", false);
     }
   },
   modules: {},
@@ -323,6 +422,9 @@ export default new Vuex.Store({
     },
     currentWorkout(state) {
       return state.currentWorkout;
+    },
+    currentLeaderboard(state) {
+      return state.currentLeaderboard;
     }
   }
 });
