@@ -41,7 +41,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class TopNavbar extends Vue {
   get isNavOpen() {
-    return this.$store.state.isNavOpen;
+    return this.$store.getters.isNavOpen;
   }
   set isNavOpen(value) {
     this.$store.commit("setNav", value);

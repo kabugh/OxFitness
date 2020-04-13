@@ -14,6 +14,22 @@
             potrzebujesz je zmienieć.
           </h4>
           <div class="wrapper">
+            <button
+              v-if="!isVerified"
+              class="dark"
+              type="button"
+              @click="verifyAccount"
+            >
+              Zweryfikuj konto
+            </button>
+            <button
+              class="dark"
+              v-show="false"
+              type="button"
+              @click="changeEmail"
+            >
+              Zmień email
+            </button>
             <button class="dark" type="button" @click="changePassword">
               Zmień hasło
             </button>
@@ -22,18 +38,49 @@
             </button>
           </div>
         </div>
+        <ChangeEmailComponent />
       </div>
     </div>
   </section>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import ChangeEmailComponent from "@/components/authentication/ChangeEmailComponent.vue";
 import { User } from "@/store/models";
+import * as firebase from "firebase";
 
-@Component
+@Component({
+  components: {
+    ChangeEmailComponent
+  }
+})
 export default class Profile extends Vue {
+  isVerified = false;
+
+  created() {
+    let user = firebase.auth().currentUser;
+    if (user) {
+      this.isVerified = user.emailVerified;
+    }
+  }
   get user(): User {
     return this.$store.getters.user;
+  }
+
+  get emailDialog(): boolean {
+    return this.$store.getters.emailDialog;
+  }
+
+  set emailDialog(value: boolean) {
+    this.$store.commit("setEmailDialog", value);
+  }
+
+  verifyAccount() {
+    this.$store.dispatch("verifyAccount");
+  }
+
+  changeEmail() {
+    this.emailDialog = true;
   }
 
   changePassword() {

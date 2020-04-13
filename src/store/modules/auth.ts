@@ -6,6 +6,7 @@ import { Notify } from "quasar";
 
 const state = {
   isNavOpen: false,
+  emailDialog: false,
 
   user: null,
   loading: false,
@@ -14,10 +15,13 @@ const state = {
 };
 
 const mutations = {
-  setNav(state: { user: User; isNavOpen: boolean }, payload: any) {
+  setNav(state: { user: User; isNavOpen: boolean }, payload: boolean) {
     if (state.user) {
       state.isNavOpen = payload;
     }
+  },
+  setEmailDialog(state: { emailDialog: boolean }, payload: boolean) {
+    state.emailDialog = payload;
   },
   setUser(state: { user: User }, payload: User) {
     state.user = payload;
@@ -143,6 +147,54 @@ const actions = {
       })
       .catch(e => console.log(e));
   },
+  verifyAccount({ commit }: any) {
+    commit("setLoading", true);
+    let user = firebase.auth().currentUser;
+    console.log(user);
+    if (user && !user.emailVerified) {
+      user
+        .sendEmailVerification()
+        .then(() => {
+          Notify.create({
+            type: "positive",
+            message: `Zweryfikuj swoje konto poprzez wiadomość wysłaną na email.`
+          });
+        })
+        .catch(e => {
+          commit("setLoading", false);
+          commit("setError", e);
+        });
+    } else if ((user as firebase.User).emailVerified) {
+      Notify.create({
+        type: "positive",
+        message: `Twoje konto jest już zweryfikowane.`
+      });
+    }
+    commit("setLoading", false);
+  },
+  changeEmail({ commit, dispatch, state }: any, payload: string) {
+    commit("setLoading", true);
+    let user = firebase.auth().currentUser;
+    if (user)
+      user
+        .updateEmail(payload)
+        .then(() => {
+          commit("setLoading", false);
+          if (state.user) {
+            dispatch("signUserOut");
+          } else {
+            router.push("/");
+          }
+          Notify.create({
+            type: "positive",
+            message: `Email zmieniony. Zaloguj się i zweryfikuj swoje konto.`
+          });
+        })
+        .catch(e => {
+          commit("setLoading", false);
+          commit("setError", e);
+        });
+  },
   changePassword({ commit, dispatch, state }: any, payload: string) {
     commit("setLoading", true);
     firebase
@@ -170,6 +222,9 @@ const actions = {
 const getters = {
   isNavOpen(state: { isNavOpen: boolean }) {
     return state.isNavOpen;
+  },
+  emailDialog(state: { emailDialog: boolean }) {
+    return state.emailDialog;
   },
   user(state: { user: User }) {
     return state.user;

@@ -43,59 +43,6 @@ export default class VideoComponent extends Vue {
     this.isLoaded = true;
   }
 }
-// export default {
-//   created() {
-//     this.videoId = this.$attrs.videoUrl;
-//   },
-//   computed: {
-//     player() {
-//       return this.$refs.youtube.player;
-//     }
-//   },
-//   mounted() {
-//     this.isLoaded = false;
-//     window.setTimeout(() => {
-//       this.player.addEventListener("onReady", this.isReady());
-//     }, 1000);
-//   },
-//   methods: {
-//     isReady() {
-//       this.isLoaded = true;
-//     }
-//   },
-//   data: () => ({
-//     videoId: "",
-//     isLoaded: false,
-//     playerVars: {
-//       autoplay: 0,
-//       controls: 1,
-//       loop: 1,
-//       enablejsapi: 1,
-//       origin: "http://localhost:8080",
-//       mute: false,
-//       modestbranding: true
-//     }
-//   })
-// };
-// export default class VideoComponent extends Vue {
-//   videoId: String = "";
-//   isLoaded = false;
-//   playerVars = {
-//     autoplay: 0,
-//     controls: 1,
-//     loop: 1,
-//     enablejsapi: 1,
-//     origin: "http://localhost:8080",
-//     mute: false,
-//     modestbranding: true
-//   };
-//   created() {
-//     this.videoId = this.$attrs.videoUrl;
-//   }
-//   get player() {
-//     return this.$refs.youtube.player;
-//   }
-// }
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
