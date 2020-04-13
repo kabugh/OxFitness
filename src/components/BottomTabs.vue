@@ -46,7 +46,7 @@ export default class BottomTabs extends Vue {
     {
       title: "Workouts",
       icon: "fitness_center",
-      link: "/plans/daily"
+      link: "/dashboard"
     },
     {
       title: "Profile",

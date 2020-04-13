@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <h2>Loading..</h2>
+    <h2>Wczytywanie..</h2>
     <div class="spinner">
       <div class="mask">
         <div class="maskedCircle"></div>

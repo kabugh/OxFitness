@@ -192,9 +192,10 @@ const actions = {
       key = Object.keys(user.workouts).find(
         k => user.workouts[k] === matchedWorkout
       );
-      user.workouts[key].workoutResults = payload.workoutResults;
+      user.workouts[key as any].workoutResults = payload.workoutResults;
     }
     commit("setUser", user);
+
     firebase
       .database()
       .ref(`/users/${getters.user.id}/workouts/${key}`)
@@ -225,6 +226,57 @@ const actions = {
           .ref(`/workouts/${payload.workoutId}/${resultKey}`)
           .update({ ...payload, userId: user.id });
       });
+    commit("setLoading", false);
+  },
+  removeWorkoutResults({ commit, getters }: any, payload: any) {
+    commit("setLoading", true);
+    commit("clearError");
+
+    let user = getters.user;
+    let key: String;
+
+    if (user.workouts) {
+      let workouts = Object.values(user.workouts);
+      let matchedWorkout: any = workouts.find(
+        workout => (workout as any).workoutId === payload.workoutId
+      );
+      key = Object.keys(user.workouts).find(
+        k => user.workouts[k] === matchedWorkout
+      ) as String;
+
+      delete user.workouts[key as any];
+      commit("setUser", user);
+
+      firebase
+        .database()
+        .ref(`/users/${getters.user.id}/workouts/${key}`)
+        .remove();
+
+      // get current group of workouts
+      let workoutResults: Object;
+      firebase
+        .database()
+        .ref("/workouts/" + payload.workoutId)
+        .once("value")
+        .then(snapshot => {
+          workoutResults = snapshot.val();
+        })
+        .then(() => {
+          let convertedResults = Object.values(workoutResults);
+
+          let foundResult = convertedResults.find(
+            result => result.userId === user.id
+          );
+
+          let resultKey = Object.keys(workoutResults).find(
+            k => (workoutResults as any)[k] === foundResult
+          );
+          firebase
+            .database()
+            .ref(`/workouts/${payload.workoutId}/${resultKey}`)
+            .remove();
+        });
+    }
     commit("setLoading", false);
   },
   fetchWorkoutLeaderboard({ commit }: any, payload: string) {

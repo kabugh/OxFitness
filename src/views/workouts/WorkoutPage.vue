@@ -82,7 +82,10 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              <WorkoutForm :isFinished="isFinished" />
+              <WorkoutForm
+                :isFinished="isFinished"
+                @removed="onResultRemoval"
+              />
               <div class="text-caption text-grey"></div>
             </q-card-section>
 
@@ -172,6 +175,11 @@ export default class WorkoutPage extends Vue {
 
   buildTitle(title: string): string {
     return `${title.slice(0, -1)} ${title.slice(-1)}`;
+  }
+
+  onResultRemoval(value: boolean) {
+    this.isFin();
+    this.card = value;
   }
 
   @Watch("user.workouts")

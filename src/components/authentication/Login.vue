@@ -64,7 +64,8 @@ export default class Login extends Vue {
   onSignIn() {
     this.$store.dispatch("signUserIn", {
       email: this.email,
-      password: this.password
+      password: this.password,
+      path: this.$route.query.redirect
     });
     this.disableInputs = true;
   }

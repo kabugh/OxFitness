@@ -5,6 +5,7 @@
     </div>
     <q-form @submit="onSubmit" class="q-gutter-md" v-if="!$props.isFinished">
       <q-input
+        ref="name"
         filled
         v-model="workoutResults.name"
         label="Imię *"
@@ -13,6 +14,7 @@
       />
 
       <q-input
+        ref="time"
         filled
         type="number"
         v-model="workoutResults.time"
@@ -24,7 +26,7 @@
         ]"
       />
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn label="Dodaj wynik" type="submit" color="primary" />
       </div>
     </q-form>
     <q-form @submit="onUpdate" class="q-gutter-md" v-else>
@@ -47,8 +49,22 @@
           val => (val > 0 && val < 100) || 'Podaj poprawny czas'
         ]"
       />
-      <div>
-        <q-btn label="Submit" type="submit" color="secondary" />
+      <div class="buttons__container">
+        <q-btn
+          label="Edytuj wynik"
+          type="submit"
+          color="secondary"
+          class="q-ma-sm"
+          v-close-popup
+        />
+
+        <q-btn
+          label="Usuń swój wynik"
+          color="negative"
+          @click="onRemove"
+          class="q-ma-sm"
+          v-close-popup
+        />
       </div>
     </q-form>
   </div>
@@ -73,6 +89,18 @@ export default class WorkoutForm extends Vue {
     return !this.$props.isLoading ? "Dodaj swój wynik" : "Edytuj swój wynik";
   }
 
+  clearForm() {
+    this.workoutResults = {
+      name: "",
+      reps: 0,
+      rounds: 0,
+      time: 0,
+      weight: 0
+    };
+    // this.$refs.name.resetValidation();
+    // this.$refs.age.resetValidation();
+  }
+
   onSubmit() {
     const currentWorkout = (this.$route.params.workout as unknown) as Workout;
     let workout = {
@@ -81,12 +109,14 @@ export default class WorkoutForm extends Vue {
         ...this.workoutResults
       }
     };
-    this.$store.dispatch("uploadWorkoutResults", workout);
-    this.$q.notify({
-      color: "green-8",
-      textColor: "white",
-      icon: "cloud_done",
-      message: "Wynik pomyślnie wysłany!"
+    this.$store.dispatch("uploadWorkoutResults", workout).then(() => {
+      this.clearForm();
+      this.$q.notify({
+        color: "green-8",
+        textColor: "white",
+        icon: "cloud_done",
+        message: "Wynik pomyślnie wysłany!"
+      });
     });
   }
   onUpdate() {
@@ -97,12 +127,32 @@ export default class WorkoutForm extends Vue {
         ...this.workoutResults
       }
     };
-    this.$store.dispatch("updateWorkoutResults", workout);
-    this.$q.notify({
-      color: "green-8",
-      textColor: "white",
-      icon: "cloud_done",
-      message: "Wynik zaktualizowany!"
+    this.$store.dispatch("updateWorkoutResults", workout).then(() => {
+      this.clearForm();
+      this.$q.notify({
+        color: "green-8",
+        textColor: "white",
+        icon: "cloud_done",
+        message: "Wynik zaktualizowany!"
+      });
+    });
+  }
+  onRemove() {
+    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
+    let workout = {
+      workoutId: currentWorkout.sys.id,
+      workoutResults: {
+        ...this.workoutResults
+      }
+    };
+    this.$store.dispatch("removeWorkoutResults", workout).then(() => {
+      this.$emit("removed", false);
+      this.$q.notify({
+        color: "green-8",
+        textColor: "white",
+        icon: "cloud_done",
+        message: "Wynik usunięty!"
+      });
     });
   }
 }

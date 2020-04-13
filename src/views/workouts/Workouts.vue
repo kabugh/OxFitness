@@ -382,6 +382,7 @@ export default class Workouts extends Vue {
             }
             .thumbnail {
               width: 100%;
+              max-width: 600px;
               &:hover {
                 cursor: pointer;
               }
