@@ -66,8 +66,7 @@
           <q-btn label="Edytuj wynik" color="secondary" @click="card = true" />
         </div>
         <q-dialog v-model="card">
-          <q-card class="my-card">
-            <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+          <q-card class="my-card q-p-xl">
             <q-card-section>
               <div class="row no-wrap items-center">
                 <div class="col text-h6 ellipsis">
@@ -274,6 +273,11 @@ export default class WorkoutPage extends Vue {
         margin-bottom: 2vh;
       }
     }
+  }
+}
+.q-card {
+  .text-h6 {
+    text-transform: capitalize;
   }
 }
 </style>

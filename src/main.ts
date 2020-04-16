@@ -5,8 +5,23 @@ import router from "./router";
 import store from "./store";
 import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
+import VueScrollTo from "vue-scrollto";
 
 Vue.use(VueYoutube);
+
+Vue.use(VueScrollTo, {
+  container: "body",
+  duration: 1500,
+  easing: [0.86, 0, 0.07, 1],
+  offset: 0,
+  force: true,
+  cancelable: false,
+  onStart: false,
+  onDone: false,
+  onCancel: false,
+  x: false,
+  y: true
+});
 
 import { Quasar } from "quasar";
 import "./quasar";

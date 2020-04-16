@@ -3,7 +3,11 @@
     <div class="text-subtitle1">
       {{ scoreMessage }}
     </div>
-    <q-form @submit="onSubmit" class="q-gutter-md" v-if="!$props.isFinished">
+    <q-form
+      @submit="onSubmit"
+      class="q-pa-md q-gutter-md"
+      v-if="!$props.isFinished"
+    >
       <q-input
         ref="name"
         filled
@@ -60,7 +64,7 @@
 
         <q-btn
           label="Usuń swój wynik"
-          color="negative"
+          color="primary"
           @click="onRemove"
           class="q-ma-sm"
           v-close-popup
@@ -110,6 +114,7 @@ export default class WorkoutForm extends Vue {
       }
     };
     this.$store.dispatch("uploadWorkoutResults", workout).then(() => {
+      this.$emit("removed", false);
       this.clearForm();
       this.$q.notify({
         color: "green-8",

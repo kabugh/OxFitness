@@ -38,7 +38,8 @@ import {
   QTr,
   QTd,
   QForm,
-  QInput
+  QInput,
+  GoBack
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -76,7 +77,7 @@ Vue.use(Quasar, {
     QForm,
     QInput
   },
-  directives: { ClosePopup, TouchSwipe },
+  directives: { ClosePopup, TouchSwipe, GoBack },
   plugins: {
     Notify
   }

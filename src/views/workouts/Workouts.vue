@@ -382,11 +382,12 @@ export default class Workouts extends Vue {
             }
             .thumbnail {
               width: 100%;
-              max-width: 600px;
+              max-width: 400px;
               &:hover {
                 cursor: pointer;
               }
             }
+
             &.skeleton {
               display: grid;
               grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);

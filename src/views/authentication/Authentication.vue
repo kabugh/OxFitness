@@ -17,7 +17,7 @@
         />
       </transition>
       <div class="status" v-if="passwordRecoveryTab">
-        <h4>Remember your password?</h4>
+        <h4>Pamiętasz hasło?</h4>
         <h4
           class="highlighted"
           @click="
@@ -30,7 +30,7 @@
         </h4>
       </div>
       <div class="status" v-else>
-        <h4>Forgot your password?</h4>
+        <h4>Zapomniałeś hasło?</h4>
         <h4
           class="highlighted"
           @click="

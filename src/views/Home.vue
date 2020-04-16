@@ -2,10 +2,14 @@
   <section class="homePage">
     <div class="hero">
       <div class="hero__wrapper">
-        <h1 class="text-bold">Ox Fitness</h1>
-        <h2 class="text-bold">Train wherever you are</h2>
-        <button type="button" class="homeButton">
-          Start a journey
+        <img src="@/assets/ox_white.png" class="unselectable" alt="OxFitness" />
+        <h2 class="text-bold">Ćwicz w dowolnym miejscu, o dowolnej porze!</h2>
+        <button
+          type="button"
+          class="homeButton"
+          v-scroll-to="{ element: '.selection' }"
+        >
+          Czas na trening
         </button>
       </div>
     </div>
@@ -94,6 +98,12 @@ export default class Home extends Vue {
       @include flex;
       align-items: center;
       flex-direction: column;
+      text-align: center;
+      img {
+        max-width: 60vw;
+        max-height: 50%;
+        margin: 4vh 0;
+      }
       h1 {
         font-size: 3.5rem !important;
         letter-spacing: 4px;
@@ -102,6 +112,7 @@ export default class Home extends Vue {
         font-size: 1.5rem !important;
         font-weight: 300 !important;
         letter-spacing: 2px;
+        max-width: 60%;
       }
       button {
         margin-top: 4vh;

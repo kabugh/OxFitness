@@ -13,8 +13,8 @@
       class="back__wrapper"
       v-if="$route.path !== '/' && $route.path !== '/dashboard'"
     >
-      <div class="arrow" @click="$router.go(-1)"></div>
-      <div class="back" @click="$router.go(-1)">Back</div>
+      <div class="arrow" v-go-back.single></div>
+      <div class="back" v-go-back.single>Powrót</div>
     </div>
     <ul v-else></ul>
     <div class="logowhite">
