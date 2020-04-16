@@ -16,18 +16,38 @@
         hint="Imię/Ksywka"
         :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"
       />
-
       <q-input
+        v-if="resultKey == 'czas'"
         ref="time"
         filled
-        type="number"
+        type="text"
         v-model="workoutResults.time"
-        label="Twój czas *"
-        lazy-rules
+        mask="##:##"
+        fill-mask
+        label="Czas *"
+        hint="Przykład - 12:35"
+        :rules="[val => (val && val.length > 0) || 'Podaj swój czas']"
+      />
+      <q-input
+        v-else-if="resultKey == 'powtórzenia'"
+        ref="reps"
+        filled
+        type="number"
+        v-model="workoutResults.reps"
+        label="Powtórzenia *"
         :rules="[
-          val => (val !== null && val !== '') || 'Podaj swój czas',
-          val => (val > 0 && val < 100) || 'Podaj poprawny czas'
+          val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
+          val => (val > 0 && val < 100) || 'Podaj poprawną ilość powtórzeń'
         ]"
+      />
+      <q-input
+        ref="note"
+        filled
+        v-model="workoutResults.note"
+        label="Notatka"
+        hint="Twoje uwagi"
+        :rules="[val => val.length < 100 || 'Maksymalnie 100 znaków']"
+        autogrow
       />
       <div>
         <q-btn label="Dodaj wynik" type="submit" color="primary" />
@@ -41,17 +61,42 @@
         hint="Imię/Ksywka"
         :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"
       />
-
+      <!-- These inputs could be shrinked to only one element and filled with appropriate data -->
       <q-input
+        v-if="resultKey == 'czas'"
+        ref="time"
+        filled
+        type="text"
+        v-model="workoutResults.time"
+        mask="##:##"
+        fill-mask
+        label="Czas *"
+        hint="Przykład - 12:35"
+        :rules="[
+          val =>
+            (val && val.length > 0 && !val.includes('_')) || 'Podaj swój czas'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'powtórzenia'"
+        ref="reps"
         filled
         type="number"
-        v-model="workoutResults.time"
-        label="Twój czas *"
-        lazy-rules
+        v-model="workoutResults.reps"
+        label="Powtórzenia *"
         :rules="[
-          val => (val !== null && val !== '') || 'Podaj swój czas',
-          val => (val > 0 && val < 100) || 'Podaj poprawny czas'
+          val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
+          val => (val > 0 && val < 100) || 'Podaj poprawną ilość powtórzeń'
         ]"
+      />
+      <q-input
+        ref="note"
+        filled
+        v-model="workoutResults.note"
+        label="Notatka"
+        hint="Twoje uwagi"
+        :rules="[val => val.length < 100 || 'Maksymalnie 100 znaków']"
+        autogrow
       />
       <div class="buttons__container">
         <q-btn
@@ -78,15 +123,19 @@ import { Component, Vue } from "vue-property-decorator";
 import { Workout, User } from "../store/models";
 
 @Component({
-  props: ["isFinished"]
+  props: ["isFinished", "user", "resultKey"]
 })
 export default class WorkoutForm extends Vue {
+  mounted() {
+    this.updateInputs();
+  }
   workoutResults = {
     name: "",
     reps: 10,
     rounds: 4,
     time: 0,
-    weight: 15
+    weight: 15,
+    note: ""
   };
 
   get scoreMessage() {
@@ -99,10 +148,26 @@ export default class WorkoutForm extends Vue {
       reps: 0,
       rounds: 0,
       time: 0,
-      weight: 0
+      weight: 0,
+      note: ""
     };
     // this.$refs.name.resetValidation();
     // this.$refs.age.resetValidation();
+  }
+
+  updateInputs() {
+    if (
+      this.$props.user.workouts !== null &&
+      this.$props.user.workouts !== undefined
+    ) {
+      if (Object.values(this.$props.user.workouts).length > 0) {
+        const foundWorkout = Object.values(this.$props.user.workouts).find(
+          workout => (workout as any).workoutId === this.$route.params.id
+        );
+        if (foundWorkout !== null && foundWorkout !== undefined)
+          this.workoutResults = (foundWorkout as any).workoutResults;
+      }
+    }
   }
 
   onSubmit() {
@@ -162,3 +227,14 @@ export default class WorkoutForm extends Vue {
   }
 }
 </script>
+<style lang="scss">
+.form__wrapper {
+  .q-field input,
+  .q-field textarea {
+    font-weight: 500;
+  }
+  .q-field textarea {
+    max-height: 10vh;
+  }
+}
+</style>

@@ -6,6 +6,9 @@ import store from "./store";
 import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
 import VueScrollTo from "vue-scrollto";
+import vueVimeoPlayer from "vue-vimeo-player";
+
+Vue.use(vueVimeoPlayer);
 
 Vue.use(VueYoutube);
 

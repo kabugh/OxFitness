@@ -6,17 +6,25 @@
         :video-id="videoId"
         :player-vars="playerVars"
       ></youtube>
+      <!-- <vimeo-player
+        ref="player"
+        video-id="407694202"
+        @ready="isLoaded = true"
+        :controls="controls"
+      ></vimeo-player> -->
     </div>
     <q-skeleton v-if="!isLoaded" type="rect" />
   </section>
 </template>
 <script>
 import { Component, Vue } from "vue-property-decorator";
+import { vueVimeoPlayer } from "vue-vimeo-player";
 
-@Component
+@Component({
+  compontents: { vueVimeoPlayer }
+})
 export default class VideoComponent extends Vue {
   videoId = "";
-  isLoaded = false;
   playerVars = {
     autoplay: 0,
     controls: 1,
@@ -26,11 +34,12 @@ export default class VideoComponent extends Vue {
     mute: false,
     modestbranding: true
   };
+  isLoaded = false;
   created() {
     this.videoId = this.$attrs.videoUrl;
   }
   mounted() {
-    this.isLoaded = false;
+    this.isLoaded = true;
     window.setTimeout(() => {
       this.player.addEventListener("onReady", this.isReady());
     }, 1000);
@@ -58,6 +67,7 @@ export default class VideoComponent extends Vue {
     margin: 0 auto;
     iframe {
       width: 100%;
+      position: static;
     }
   }
 }

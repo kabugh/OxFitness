@@ -53,7 +53,7 @@
       <div class="results__container" v-if="$attrs.workoutType === 'daily'">
         <div class="results__wrapper" v-if="!isFinished">
           <h2>
-            Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczy!
+            Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!
           </h2>
           <q-btn
             label="Dodaj swój wynik"
@@ -83,17 +83,19 @@
             <q-card-section class="q-pt-none">
               <WorkoutForm
                 :isFinished="isFinished"
+                :user="user"
+                :resultKey="currentWorkout.fields.resultKey"
                 @removed="onResultRemoval"
               />
               <div class="text-caption text-grey"></div>
             </q-card-section>
 
-            <q-separator />
+            <!-- <q-separator />
 
             <q-card-actions align="right">
               <q-btn v-close-popup flat color="primary" label="Reserve" />
               <q-btn v-close-popup flat color="primary" round icon="event" />
-            </q-card-actions>
+            </q-card-actions> -->
           </q-card>
         </q-dialog>
         <!-- <LeaderboardComponent

@@ -56,7 +56,7 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Home extends Vue {
   selectionItems = [
     {
-      title: "Czym jest OxFit?",
+      title: "Czym jest OxFitness?",
       button: "Dowiedz się więcej",
       image: "1.jpg",
       link: "/features"
@@ -68,7 +68,7 @@ export default class Home extends Vue {
       externalLink: "https://wod.guru/athlete-registration-form/wolow"
     },
     {
-      title: "Należę do OxFit",
+      title: "Należę do OxFitness",
       button: "Zaloguj się",
       image: "3.jpg",
       link: "/dashboard"

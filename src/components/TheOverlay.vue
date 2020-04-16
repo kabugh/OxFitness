@@ -2,13 +2,6 @@
   <section ref="overlay" class="overlay topView">
     <div class="overlay__wrapper">
       <div class="account__preview">
-        <div class="account__avatar--wrapper">
-          <img
-            src="@/assets/1.jpg"
-            class="account__avatar unselectable"
-            alt="avatar"
-          />
-        </div>
         <div class="account__details">
           <h1>{{ $attrs.user.email }}</h1>
         </div>
@@ -111,6 +104,8 @@ export default class TheOverlay extends Vue {
         @include flex;
         flex: 2;
         flex-direction: column;
+        padding: 4vh 0;
+        text-align: center;
         h1 {
           font-size: 1.25rem;
           letter-spacing: 2px;

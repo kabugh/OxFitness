@@ -368,6 +368,9 @@ export default class Workouts extends Vue {
           align-items: center;
           padding: 4vh 0;
           .video__wrapper {
+            @include flex;
+            align-items: center;
+            flex-direction: column;
             .title__container {
               text-transform: capitalize;
               text-align: center;
@@ -383,6 +386,7 @@ export default class Workouts extends Vue {
             .thumbnail {
               width: 100%;
               max-width: 400px;
+              margin: 0 auto;
               &:hover {
                 cursor: pointer;
               }

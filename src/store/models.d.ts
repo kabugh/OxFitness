@@ -24,6 +24,7 @@ export interface WorkoutContent {
   date: string;
   dayOfTheWeek: string;
   videoId: string;
+  resultKey: string;
   programA?: Object;
   programB?: Object;
   description?: Object;
