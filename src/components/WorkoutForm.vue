@@ -17,7 +17,7 @@
         :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"
       />
       <q-input
-        v-if="resultKey == 'czas'"
+        v-if="resultKey == 'time'"
         ref="time"
         filled
         type="text"
@@ -26,10 +26,13 @@
         fill-mask
         label="Czas *"
         hint="Przykład - 12:35"
-        :rules="[val => (val && val.length > 0) || 'Podaj swój czas']"
+        :rules="[
+          val =>
+            (val && val.length > 0 && !val.includes('_')) || 'Podaj swój czas'
+        ]"
       />
       <q-input
-        v-else-if="resultKey == 'powtórzenia'"
+        v-else-if="resultKey == 'reps'"
         ref="reps"
         filled
         type="number"
@@ -63,7 +66,7 @@
       />
       <!-- These inputs could be shrinked to only one element and filled with appropriate data -->
       <q-input
-        v-if="resultKey == 'czas'"
+        v-if="resultKey == 'time'"
         ref="time"
         filled
         type="text"
@@ -78,7 +81,7 @@
         ]"
       />
       <q-input
-        v-else-if="resultKey == 'powtórzenia'"
+        v-else-if="resultKey == 'reps'"
         ref="reps"
         filled
         type="number"
@@ -131,10 +134,10 @@ export default class WorkoutForm extends Vue {
   }
   workoutResults = {
     name: "",
-    reps: 10,
-    rounds: 4,
-    time: 0,
-    weight: 15,
+    reps: 0,
+    rounds: 0,
+    time: "00:00",
+    weight: 0,
     note: ""
   };
 
@@ -147,7 +150,7 @@ export default class WorkoutForm extends Vue {
       name: "",
       reps: 0,
       rounds: 0,
-      time: 0,
+      time: "00:00",
       weight: 0,
       note: ""
     };

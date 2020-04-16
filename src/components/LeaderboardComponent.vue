@@ -1,13 +1,8 @@
 <template>
   <section class="ranking">
     <div class="ranking__container">
-      <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
-        <q-tab
-          v-for="(element, index) in tabs"
-          :name="index"
-          :label="element"
-          :key="index"
-        />
+      <q-tabs v-model="tab" align="center" narrow-indicator class="q-mb-lg">
+        <q-tab :name="tab" :label="tab" />
       </q-tabs>
       <q-tab-panels
         v-model="tab"
@@ -16,18 +11,17 @@
         transition-next="scale"
         class="text-center"
       >
-        <q-tab-panel
-          :name="i"
-          class="videos__section__wrapper"
-          v-for="(item, i) in tabs"
-          :key="i"
-        >
+        <q-tab-panel :name="tab" class="videos__section__wrapper">
+          <!-- v-for="(item, i) in tabs" -->
+          <!-- :key="i" -->
           <q-table
             v-if="data.length > 0"
             align="center"
-            :data="data"
-            :columns="columns"
+            :data="leaderboardData"
+            :columns="dynamicColumns"
             row-key="name"
+            :loading="loading"
+            no-data-label="Brak wyników, masz okazję dodać swój jako pierwszy!"
           />
         </q-tab-panel>
       </q-tab-panels>
@@ -35,28 +29,47 @@
   </section>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { Workout } from "../store/models";
 
-@Component
+interface Column {
+  name: string;
+  label: string;
+  align: string;
+  field: string;
+  sortable: boolean;
+  required?: boolean;
+  format?: Function;
+}
+@Component({
+  props: ["user"]
+})
 export default class LeaderboardComponent extends Vue {
   created() {
-    // eslint-disable-next-line no-console
-    console.log("created?");
-    this.getLeaderboard();
-  }
-  mounted() {
-    // eslint-disable-next-line no-console
-    console.log("mounted?");
+    this.tab = (this.$attrs.currentWorkout as any).fields.date;
+    this.findColumns();
+    this.updateLeaderboard();
   }
   tab = "";
-  tabs = ["WOD 2020-02-24"];
-  columns = [
+  tabs: any[] = [];
+  dynamicColumns: Column[] = [
     {
       name: "name",
       label: "Osoba",
       required: true,
       align: "center",
       field: "name",
+      format: (val: string) => `${val}`,
+      sortable: true
+    }
+  ];
+  columns: Column[] = [
+    {
+      name: "name",
+      label: "Osoba",
+      required: true,
+      align: "center",
+      field: "imie",
       format: (val: string) => `${val}`,
       sortable: true
     },
@@ -98,17 +111,35 @@ export default class LeaderboardComponent extends Vue {
   ];
   data: Object[] = [];
 
-  getLeaderboard() {
+  @Watch("currentWorkout")
+  @Watch("user.workouts")
+  updateLeaderboard() {
     this.$store
       .dispatch("fetchWorkoutLeaderboard", this.$route.params.id)
       .then(() => {
         this.transformLeaderboardData();
-        // eslint-disable-next-line no-console
-        console.log("test");
       });
   }
   get currentLeaderboard() {
     return this.$store.getters.currentLeaderboard;
+  }
+
+  get loading() {
+    return this.$store.getters.loading;
+  }
+
+  get leaderboardData() {
+    if (
+      this.currentLeaderboard !== null &&
+      this.currentLeaderboard !== undefined
+    )
+      if (
+        Object.values(this.currentLeaderboard).length > 0 &&
+        this.data.length === 0
+      )
+        this.updateLeaderboard();
+
+    return this.data;
   }
 
   transformLeaderboardData() {
@@ -118,9 +149,17 @@ export default class LeaderboardComponent extends Vue {
     )
       Object.values(this.currentLeaderboard).forEach(element => {
         this.data.push((element as any).workoutResults);
-        // eslint-disable-next-line no-console
-        console.log(element);
       });
+  }
+
+  findColumns() {
+    this.columns.forEach(column => {
+      if (
+        column.field ===
+        ((this.$attrs.currentWorkout as unknown) as Workout).fields.resultKey
+      )
+        this.dynamicColumns.push(column);
+    });
   }
 }
 </script>

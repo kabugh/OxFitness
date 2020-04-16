@@ -12,9 +12,9 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <VideoComponent
+      <!-- <VideoComponent
         :videoUrl="currentWorkout.fields.videoId"
-      ></VideoComponent>
+      ></VideoComponent> -->
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
           <!-- <RichTextRenderer
@@ -98,10 +98,11 @@
             </q-card-actions> -->
           </q-card>
         </q-dialog>
-        <!-- <LeaderboardComponent
+        <LeaderboardComponent
           v-if="user.workouts !== undefined && user.workouts !== null"
           :currentWorkout="currentWorkout"
-        /> -->
+          :user="user"
+        />
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
