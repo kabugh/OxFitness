@@ -26,6 +26,9 @@ const mutations = {
   setUser(state: { user: User }, payload: User) {
     state.user = payload;
   },
+  setUsername(state: { user: User }, payload: string) {
+    state.user.name = payload;
+  },
   setLoading(state: { loading: boolean }, payload: boolean) {
     state.loading = payload;
   },
@@ -50,6 +53,7 @@ const actions = {
           const newUser: User = {
             id: response.user.uid,
             email: payload.email,
+            name: "",
             premiumAccount: true,
             workouts: []
           };
@@ -80,6 +84,7 @@ const actions = {
           const newUser: User = {
             id: response.user.uid,
             email: payload.email,
+            name: "",
             premiumAccount: true,
             workouts: []
           };
@@ -91,6 +96,7 @@ const actions = {
               Object.entries(snapshot.val()).forEach(([key, value]) => {
                 if (newUser.id === (value as User).id) {
                   newUser.premiumAccount = (value as User).premiumAccount;
+                  newUser.name = (value as User).name;
                 }
               });
               newUser.workouts = snapshot.val().workouts;
@@ -110,11 +116,12 @@ const actions = {
   },
   autoSignIn(
     { commit }: any,
-    payload: { uid: string; email: string; workouts: any }
+    payload: { uid: string; email: string; name: string; workouts: any }
   ) {
     const cachedUser: User = {
       id: payload.uid,
       email: payload.email,
+      name: "",
       premiumAccount: true,
       workouts: payload.workouts
     };
@@ -126,6 +133,7 @@ const actions = {
         Object.entries(snapshot.val()).forEach(([key, value]) => {
           if (payload.uid === (value as User).id) {
             cachedUser.premiumAccount = (value as User).premiumAccount;
+            cachedUser.name = (value as User).name;
           }
         });
         cachedUser.workouts = snapshot.val().workouts;
@@ -146,6 +154,31 @@ const actions = {
         router.push("/");
       })
       .catch(e => console.log(e));
+  },
+  updateUser({ commit, getters }: any, payload: string) {
+    commit("setLoading", true);
+    let key: string;
+    firebase
+      .database()
+      .ref("/users/" + getters.user.id)
+      .once("value")
+      .then(snapshot => {
+        key = Object.keys(snapshot.val())[0];
+        firebase
+          .database()
+          .ref(`/users/${getters.user.id}/${key}/`)
+          .update({ name: payload })
+          .catch(e => {
+            commit("setLoading", false);
+            commit("setError", e);
+          });
+      })
+      .catch(e => {
+        commit("setLoading", false);
+        commit("setError", e);
+      });
+    commit("setUsername", payload);
+    commit("setLoading", false);
   },
   verifyAccount({ commit }: any) {
     commit("setLoading", true);

@@ -26,7 +26,7 @@
             passwordRecoveryTab = false;
           "
         >
-          login
+          zaloguj się
         </h4>
       </div>
       <div class="status" v-else>
@@ -39,7 +39,7 @@
             passwordRecoveryTab = true;
           "
         >
-          Remind
+          przypomnij
         </h4>
       </div>
       <!-- <div class="status" v-if="loginTab">
@@ -130,6 +130,8 @@ export default class Authentication extends Vue {
     width: 80%;
     margin: 0 auto;
     padding: 2vh 2vh;
+    // @include flex;
+    // align-items: center;
     @media (min-width: 360px) {
       padding: 8vh 2vh 4vh 2vh;
     }
@@ -160,6 +162,9 @@ export default class Authentication extends Vue {
           color: $brandColor;
           font-size: 0.9rem;
           text-decoration: underline;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
       .passwordStatus__container {

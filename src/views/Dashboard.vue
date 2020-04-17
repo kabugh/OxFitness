@@ -50,6 +50,11 @@
         v-else-if="!user.premiumAccount"
       ></AccessDeniedComponent>
       <LoadingComponent v-else></LoadingComponent>
+      <WelcomeComponent
+        v-if="displayWelcome"
+        :user="user"
+        :welcomeDialog="displayWelcome"
+      />
     </div>
   </section>
 </template>
@@ -57,12 +62,15 @@
 import { Component, Vue } from "vue-property-decorator";
 import AccessDeniedComponent from "../components/AccessDeniedComponent.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
+import WelcomeComponent from "../components/WelcomeComponent.vue";
+
 import { User } from "@/store/models";
 
 @Component({
   components: {
     AccessDeniedComponent,
-    LoadingComponent
+    LoadingComponent,
+    WelcomeComponent
   }
 })
 export default class Dashboard extends Vue {
@@ -87,6 +95,15 @@ export default class Dashboard extends Vue {
 
   get loading(): boolean {
     return this.$store.getters.loading;
+  }
+
+  get displayWelcome(): boolean {
+    return (
+      !("name" in this.user) ||
+      this.user.name === null ||
+      this.user.name === undefined ||
+      this.user.name === ""
+    );
   }
 }
 </script>

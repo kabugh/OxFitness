@@ -9,14 +9,6 @@
       v-if="!$props.isFinished"
     >
       <q-input
-        ref="name"
-        filled
-        v-model="workoutResults.name"
-        label="Imię *"
-        hint="Imię/Ksywka"
-        :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"
-      />
-      <q-input
         v-if="resultKey == 'time'"
         ref="time"
         filled
@@ -57,13 +49,6 @@
       </div>
     </q-form>
     <q-form @submit="onUpdate" class="q-gutter-md" v-else>
-      <q-input
-        filled
-        v-model="workoutResults.name"
-        label="Imię *"
-        hint="Imię/Ksywka"
-        :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"
-      />
       <!-- These inputs could be shrinked to only one element and filled with appropriate data -->
       <q-input
         v-if="resultKey == 'time'"
@@ -131,6 +116,7 @@ import { Workout, User } from "../store/models";
 export default class WorkoutForm extends Vue {
   mounted() {
     this.updateInputs();
+    this.workoutResults.name = this.$props.user.email;
   }
   workoutResults = {
     name: "",
