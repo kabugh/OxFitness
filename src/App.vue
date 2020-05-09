@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
@@ -36,6 +36,12 @@ export default class App extends Vue {
   }
   get user(): User {
     return this.$store.getters.user;
+  }
+  @Watch("isNavOpen")
+  blockOverflow() {
+    this.isNavOpen
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
   }
 }
 </script>

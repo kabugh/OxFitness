@@ -80,6 +80,10 @@ export default class Dashboard extends Vue {
     this.$store.dispatch("fetchWorkoutTypes");
   }
 
+  mounted() {
+    this.$store.dispatch("bindUser");
+  }
+
   pullData(done: Function) {
     this.$store.dispatch("fetchWorkoutTypes");
     done();

@@ -3,6 +3,7 @@ import router from "@/router/index";
 import * as firebase from "firebase";
 import { User } from "../models";
 import { Notify } from "quasar";
+import { firebaseAction } from "vuexfire";
 
 const state = {
   isNavOpen: false,
@@ -41,6 +42,23 @@ const mutations = {
 };
 
 const actions = {
+  bindUser: firebaseAction(({ bindFirebaseRef, getters }) => {
+    // return the promise returned by `bindFirebaseRef`
+    let key;
+    let returnedPromise;
+    firebase
+      .database()
+      .ref("/users/" + getters.user.id)
+      .once("value")
+      .then(snapshot => {
+        key = Object.keys(snapshot.val())[0];
+        returnedPromise = bindFirebaseRef(
+          "user",
+          firebase.database().ref(`/users/${getters.user.id}/${key}`)
+        );
+      });
+    return returnedPromise;
+  }),
   signUserUp({ commit }: any, payload: { email: string; password: string }) {
     commit("setLoading", true);
     commit("clearError");

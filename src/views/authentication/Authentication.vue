@@ -135,6 +135,12 @@ export default class Authentication extends Vue {
     @media (min-width: 360px) {
       padding: 8vh 2vh 4vh 2vh;
     }
+    @media (min-width: 600px) {
+      max-width: 60vw;
+    }
+    @media (min-width: 1000px) {
+      max-width: 600px;
+    }
     .fade-enter-active {
       transition: all 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
