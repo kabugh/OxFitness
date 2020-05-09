@@ -12,8 +12,6 @@
         class="text-center"
       >
         <q-tab-panel :name="tab" class="videos__section__wrapper">
-          <!-- v-for="(item, i) in tabs" -->
-          <!-- :key="i" -->
           <q-table
             v-if="data.length > 0"
             align="center"
@@ -163,4 +161,3 @@ export default class LeaderboardComponent extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped></style>

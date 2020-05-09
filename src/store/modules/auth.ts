@@ -44,20 +44,10 @@ const mutations = {
 const actions = {
   bindUser: firebaseAction(({ bindFirebaseRef, getters }) => {
     // return the promise returned by `bindFirebaseRef`
-    let key;
-    let returnedPromise;
-    firebase
-      .database()
-      .ref("/users/" + getters.user.id)
-      .once("value")
-      .then(snapshot => {
-        key = Object.keys(snapshot.val())[0];
-        returnedPromise = bindFirebaseRef(
-          "user",
-          firebase.database().ref(`/users/${getters.user.id}/${key}`)
-        );
-      });
-    return returnedPromise;
+    return bindFirebaseRef(
+      "user",
+      firebase.database().ref(`/users/${getters.user.id}`)
+    );
   }),
   signUserUp({ commit }: any, payload: { email: string; password: string }) {
     commit("setLoading", true);
@@ -79,7 +69,7 @@ const actions = {
           firebase
             .database()
             .ref("/users/" + newUser.id)
-            .push(newUser);
+            .update(newUser);
           router.push("/dashboard").catch(e => {
             console.log(e);
           });
@@ -111,13 +101,13 @@ const actions = {
             .ref("/users/" + newUser.id)
             .once("value")
             .then(snapshot => {
-              Object.entries(snapshot.val()).forEach(([key, value]) => {
-                if (newUser.id === (value as User).id) {
-                  newUser.premiumAccount = (value as User).premiumAccount;
-                  newUser.name = (value as User).name;
-                }
-              });
-              newUser.workouts = snapshot.val().workouts;
+              let value = snapshot.val();
+              // useless check?
+              if (newUser.id === (value as User).id) {
+                newUser.premiumAccount = (value as User).premiumAccount;
+                newUser.name = (value as User).name;
+              }
+              newUser.workouts = value.workouts;
             });
           commit("setUser", newUser);
           commit("setLoading", false);
@@ -148,13 +138,12 @@ const actions = {
       .ref("/users/" + payload.uid)
       .once("value")
       .then(snapshot => {
-        Object.entries(snapshot.val()).forEach(([key, value]) => {
-          if (payload.uid === (value as User).id) {
-            cachedUser.premiumAccount = (value as User).premiumAccount;
-            cachedUser.name = (value as User).name;
-          }
-        });
-        cachedUser.workouts = snapshot.val().workouts;
+        let value = snapshot.val();
+        if (payload.uid === (value as User).id) {
+          cachedUser.premiumAccount = (value as User).premiumAccount;
+          cachedUser.name = (value as User).name;
+        }
+        cachedUser.workouts = value.workouts;
       });
     commit("setUser", cachedUser);
   },
@@ -175,22 +164,10 @@ const actions = {
   },
   updateUser({ commit, getters }: any, payload: string) {
     commit("setLoading", true);
-    let key: string;
     firebase
       .database()
-      .ref("/users/" + getters.user.id)
-      .once("value")
-      .then(snapshot => {
-        key = Object.keys(snapshot.val())[0];
-        firebase
-          .database()
-          .ref(`/users/${getters.user.id}/${key}/`)
-          .update({ name: payload })
-          .catch(e => {
-            commit("setLoading", false);
-            commit("setError", e);
-          });
-      })
+      .ref(`/users/${getters.user.id}/`)
+      .update({ name: payload })
       .catch(e => {
         commit("setLoading", false);
         commit("setError", e);
@@ -201,7 +178,6 @@ const actions = {
   verifyAccount({ commit }: any) {
     commit("setLoading", true);
     let user = firebase.auth().currentUser;
-    console.log(user);
     if (user && !user.emailVerified) {
       user
         .sendEmailVerification()

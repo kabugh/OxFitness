@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Workout } from "../models";
 
 import * as firebase from "firebase";
@@ -159,23 +160,26 @@ const actions = {
     commit("setLoading", true);
     commit("clearError");
     // upload to user
-    let user = getters.user;
-    if (!(user.workouts instanceof Array)) {
-      user.workouts = [];
-      user.workouts.push(payload);
-    } else {
-      user.workouts.push(payload);
-    }
-    commit("setUser", user);
     firebase
       .database()
-      .ref(`/users/${getters.user.id}/workouts/`)
+      .ref(`/users/${getters.user.id}/workouts`)
       .push(payload);
     // upload to group of workouts
     firebase
       .database()
       .ref("/workouts/" + payload.workoutId)
       .push({ ...payload, userId: getters.user.id });
+    // update user
+    let user = getters.user;
+    firebase
+      .database()
+      .ref(`/users/${getters.user.id}/workouts/`)
+      .once("value")
+      .then(snapshot => {
+        console.log(snapshot.val());
+        user.workouts = snapshot.val();
+      });
+    commit("setUser", user);
     commit("setLoading", false);
   },
   updateWorkoutResults({ commit, getters }: any, payload: any) {
@@ -195,7 +199,7 @@ const actions = {
       user.workouts[key as any].workoutResults = payload.workoutResults;
     }
     commit("setUser", user);
-
+    console.log("workoutKey: " + key);
     firebase
       .database()
       .ref(`/users/${getters.user.id}/workouts/${key}`)

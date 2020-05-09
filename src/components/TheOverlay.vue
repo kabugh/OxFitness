@@ -47,7 +47,7 @@ export default class TheOverlay extends Vue {
       link: "/dashboard"
     },
     {
-      title: "My profile",
+      title: "Profil",
       icon: "account_circle",
       link: "/profile"
     }
