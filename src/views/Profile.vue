@@ -5,9 +5,19 @@
         <div class="avatar__preview"></div>
       </div>
       <div class="details__container">
+        <h3>
+          Hej <span>{{ user.name }}</span
+          >,
+        </h3>
+        <h3>
+          ponizej znajduja sie wszystkie potrzebne informacje odnosnie konta.
+        </h3>
         <h3><span>Email:</span> {{ user.email }}</h3>
         <h3><span>ID:</span> {{ user.id }}</h3>
-        <h3><span>Dostęp do treningów wygasa:</span> 25.04.2020</h3>
+        <h3>
+          <span>Dostęp do treningów wygasa:</span>
+          {{ user.premiumAccount.validUntil | date }}
+        </h3>
         <div class="button__wrapper">
           <h4>
             Kliknij w przycisk poniej, jeśli zapomniałeś swoje hasło lub
@@ -52,6 +62,11 @@ import * as firebase from "firebase";
 @Component({
   components: {
     ChangeEmailComponent
+  },
+  filters: {
+    date(value: any) {
+      return new Date(value).toLocaleString();
+    }
   }
 })
 export default class Profile extends Vue {
@@ -110,7 +125,7 @@ export default class Profile extends Vue {
     .details__container {
       display: grid;
       grid-template-columns: 1fr;
-      grid-row-gap: 2vh;
+      grid-row-gap: 0.5vh;
       justify-content: center;
       align-items: center;
       margin: 4vh 0;

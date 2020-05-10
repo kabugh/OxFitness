@@ -176,7 +176,6 @@ const actions = {
       .ref(`/users/${getters.user.id}/workouts/`)
       .once("value")
       .then(snapshot => {
-        console.log(snapshot.val());
         user.workouts = snapshot.val();
       });
     commit("setUser", user);

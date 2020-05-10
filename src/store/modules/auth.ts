@@ -62,7 +62,11 @@ const actions = {
             id: response.user.uid,
             email: payload.email,
             name: "",
-            premiumAccount: true,
+            premiumAccount: {
+              isActive: false,
+              activationDate: "",
+              validUntil: ""
+            },
             workouts: []
           };
           commit("setUser", newUser);
@@ -93,7 +97,11 @@ const actions = {
             id: response.user.uid,
             email: payload.email,
             name: "",
-            premiumAccount: true,
+            premiumAccount: {
+              isActive: false,
+              activationDate: "",
+              validUntil: ""
+            },
             workouts: []
           };
           firebase
@@ -130,7 +138,11 @@ const actions = {
       id: payload.uid,
       email: payload.email,
       name: "",
-      premiumAccount: true,
+      premiumAccount: {
+        isActive: false,
+        activationDate: "",
+        validUntil: ""
+      },
       workouts: payload.workouts
     };
     firebase

@@ -2,7 +2,11 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  premiumAccount: boolean;
+  premiumAccount: {
+    isActive: boolean;
+    activationDate: string;
+    validUntil: string;
+  };
   imageURL?: string;
   workouts: [];
 }

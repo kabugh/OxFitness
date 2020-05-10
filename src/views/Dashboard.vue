@@ -1,7 +1,10 @@
 <template>
   <section class="dashboard bottomView">
     <div class="dashboard__container container">
-      <div class="workouts__sections--container" v-if="user.premiumAccount">
+      <div
+        class="workouts__sections--container"
+        v-if="user.premiumAccount.isActive"
+      >
         <q-pull-to-refresh @refresh="pullData">
           <div
             class="workout__container"
@@ -47,7 +50,7 @@
         </q-pull-to-refresh>
       </div>
       <AccessDeniedComponent
-        v-else-if="!user.premiumAccount"
+        v-else-if="!user.premiumAccount.isActive"
       ></AccessDeniedComponent>
       <LoadingComponent v-else></LoadingComponent>
       <WelcomeComponent
