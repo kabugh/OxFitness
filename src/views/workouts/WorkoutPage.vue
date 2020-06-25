@@ -183,7 +183,7 @@ export default class WorkoutPage extends Vue {
     this.isFin();
     this.card = value;
   }
-
+  // if there's only one workout left and gets removed, the watcher doesnt work
   @Watch("user.workouts")
   isFin() {
     let workouts: Object[];
