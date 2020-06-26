@@ -82,6 +82,10 @@ button {
       background-color: black;
     }
   }
+  &.small-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }
 
 input:not([type="range"]) {
