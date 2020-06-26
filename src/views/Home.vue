@@ -3,6 +3,7 @@
     <div class="hero">
       <div class="hero__wrapper">
         <img src="@/assets/ox_white.png" class="unselectable" alt="OxFitness" />
+        <h1>Tworzymy świadomy fitness</h1>
         <h2 class="text-bold">Ćwicz w dowolnym miejscu, o dowolnej porze!</h2>
         <button
           type="button"
@@ -100,13 +101,14 @@ export default class Home extends Vue {
       flex-direction: column;
       text-align: center;
       img {
-        max-width: 60vw;
+        max-width: 30vw;
         max-height: 50%;
         margin: 4vh 0;
       }
       h1 {
         font-size: 3.5rem !important;
         letter-spacing: 4px;
+        font-weight: bold;
       }
       h2 {
         font-size: 1.5rem !important;

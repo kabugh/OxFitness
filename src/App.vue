@@ -9,7 +9,13 @@
     </keep-alive>
     <!-- </transition> -->
     <!-- an error occurs because conentful-vue-render components are rendered as TheFooter template -->
-    <TheFooter />
+    <!-- <TheFooter
+      v-if="
+        $route.path == '/' ||
+          $route.path == '/features' ||
+          $route.path == '/faq'
+      "
+    /> -->
     <q-ajax-bar ref="bar" position="top" color="accent" size="5px" />
   </div>
 </template>
@@ -19,15 +25,15 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
 import TheOverlay from "./components/TheOverlay.vue";
-import TheFooter from "./components/TheFooter.vue";
+// import TheFooter from "./components/TheFooter.vue";
 import { User } from "./store/models";
 
 @Component({
   components: {
     TopNavbar,
     BottomTabs,
-    TheOverlay,
-    TheFooter
+    TheOverlay
+    // TheFooter
   }
 })
 export default class App extends Vue {

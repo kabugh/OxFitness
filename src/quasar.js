@@ -39,7 +39,9 @@ import {
   QTd,
   QForm,
   QInput,
-  GoBack
+  GoBack,
+  QCircularProgress,
+  QTooltip
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -75,7 +77,9 @@ Vue.use(Quasar, {
     QTr,
     QTd,
     QForm,
-    QInput
+    QInput,
+    QCircularProgress,
+    QTooltip
   },
   directives: { ClosePopup, TouchSwipe, GoBack },
   plugins: {
