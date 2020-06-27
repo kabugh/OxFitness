@@ -4,7 +4,7 @@
       <section class="hero shadow-box shadow-14">
         <div class="hero__container">
           <div class="avatar__container">
-            <q-avatar color="white" text-color="black" size="4rem">{{
+            <q-avatar color="primary" text-color="white" size="4rem">{{
               user.name.charAt(0)
             }}</q-avatar>
           </div>
@@ -66,9 +66,9 @@
                   <div class="membership__details">
                     <span>Umowa OxFit na czas nieokreślony</span>
                   </div>
-                  <button class="dark small-btn" type="button">
+                  <!-- <button class="dark small-btn" type="button">
                     Przedłuz karnet
-                  </button>
+                  </button> -->
                 </q-expansion-item>
               </div>
               <div class="expansionItem__wrapper">
@@ -142,7 +142,7 @@ import * as firebase from "firebase";
     date(value: any) {
       return new Date(value).toLocaleString();
     },
-    daysFilter: (value: any) => (value > 1 ? `${value} dni` : `${value} dzień`)
+    daysFilter: (value: any) => (value != 1 ? `${value} dni` : `${value} dzień`)
   }
 })
 export default class Profile extends Vue {

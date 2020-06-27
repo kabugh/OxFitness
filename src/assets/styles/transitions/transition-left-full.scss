@@ -1,0 +1,37 @@
+.transition-left-full-enter ~ .transition-right {
+  transform: translateX(0);
+}
+
+.transition-left-full-enter-active ~ .transition-right,
+.transition-left-full-leave-active ~ .transition-right {
+  transform: translateX(0);
+}
+
+.transition-left-full-enter-active ~ .transition-right {
+  transition-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+.transition-left-full-enter-active ~ .transition-right,
+.transition-left-full-enter-to ~ .transition-right {
+  display: none;
+}
+
+.transition-left-full-enter-to ~ .transition-left {
+  transform: translateX(100vw); // maybe use 100% - in case of wide scrollbar?
+}
+
+.transition-left-full-leave-active ~ .transition-left {
+  transition-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+.transition-left-full-enter ~ .transition-left,
+.transition-left-full-enter-active ~ .transition-left,
+.transition-left-full-enter-to ~ .transition-left {
+  transition-duration: unset !important;
+  transform: translateX(0);
+}
+
+.transition-left-full-enter-active,
+.transition-left-full-leave-active {
+  transition-duration: var(--transition-duration);
+}

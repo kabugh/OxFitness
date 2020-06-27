@@ -3,8 +3,8 @@
     <div class="logo__container">
       <!-- <img src="@/assets/icons/iconLogo.png" alt="logo" class="unselectable" /> -->
       <div class="text__wrapper">
-        <h1>OxFit</h1>
-        <h3>Your daily workouts</h3>
+        <h1>OxFitness</h1>
+        <h3>Codzienne treningi</h3>
       </div>
     </div>
     <div class="authentication__container">
@@ -114,7 +114,7 @@ export default class Authentication extends Vue {
       margin: 0 auto;
     }
     h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: 600;
       letter-spacing: -1px;
       text-align: center;

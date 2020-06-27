@@ -9,18 +9,21 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
+    meta: { transition: "transition-left-full" }
   },
   {
     path: "/features",
     name: "features",
     component: () =>
-      import(/* webpackChunkName: "features" */ "../views/Features.vue")
+      import(/* webpackChunkName: "features" */ "../views/Features.vue"),
+    meta: { transition: "transition-left-full" }
   },
   {
     path: "/faq",
     name: "faq",
-    component: () => import(/* webpackChunkName: "faq" */ "../views/Faq.vue")
+    component: () => import(/* webpackChunkName: "faq" */ "../views/Faq.vue"),
+    meta: { transition: "transition-left-full" }
   },
   {
     path: "/authentication",
@@ -28,14 +31,16 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "authentication" */ "../views/authentication/Authentication.vue"
-      )
+      ),
+    meta: { transition: "transition-left-full" }
   },
   {
     path: "/dashboard",
     name: "dashboard",
     component: () =>
       import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
-    beforeEnter: AuthGuard
+    beforeEnter: AuthGuard,
+    meta: { transition: "transition-left-full" }
   },
   {
     path: "/plans/:workoutType",
@@ -74,11 +79,27 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+  // scrollBehavior(to, from, savedPosition) {
+  //   if (savedPosition) {
+  //     return savedPosition;
+  //   } else {
+  //     return { x: 0, y: 0 };
+  //   }
+  // }
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
+    if (to.meta.transition) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (savedPosition) resolve(savedPosition);
+          else resolve({ x: 0, y: 0 });
+        }, 500);
+      });
     } else {
-      return { x: 0, y: 0 };
+      if (savedPosition) {
+        return savedPosition;
+      } else {
+        return { x: 0, y: 0 };
+      }
     }
   }
 });
