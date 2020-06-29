@@ -61,6 +61,9 @@ nav.topNavbar {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  @media (min-width: 700px) and (min-height: 1024px) {
+    min-height: 6vh;
+  }
   ul {
     display: flex;
     justify-content: flex-start;

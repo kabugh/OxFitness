@@ -21,7 +21,7 @@
         </article>
       </div>
       <img
-        src="@/assets/illustrations/fitness3.svg"
+        src="@/assets/illustrations/fitness2.svg"
         class="illustration unselectable"
         v-if="features.length > 0"
       />

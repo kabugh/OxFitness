@@ -35,7 +35,7 @@
       <q-list bordered v-if="Object.keys(this.accordionItems).length > 0">
         <q-expansion-item
           group="accordion"
-          icon="explore"
+          icon="emoji_events"
           :label="buildTitle(index)"
           header-class="text-primary"
           v-for="(item, index) in accordionItems"
@@ -43,7 +43,7 @@
         >
           <q-card>
             <q-card-section>
-              <RichTextRenderer :document="item" />
+              <RichTextRenderer :document="item" :nodeRenderers="nodes" />
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -125,7 +125,7 @@ import { User, WorkoutContent, Workout } from "@/store/models";
 
 const options = {
   renderNode: {
-    [BLOCKS.HR]: (node: any, next: any) => `<br>`
+    [BLOCKS.HR]: (node: any, next: any) => `\n`
   }
 };
 
@@ -150,6 +150,7 @@ export default class WorkoutPage extends Vue {
       options
     );
   }
+  nodes = options.renderNode;
   mounted() {
     this.isFin();
   }
