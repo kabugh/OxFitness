@@ -18,7 +18,7 @@
     </div>
     <ul v-else></ul>
     <div class="logowhite">
-      <h3>OxFit</h3>
+      <h3>OxFitness</h3>
     </div>
     <div class="burger__wrapper">
       <div

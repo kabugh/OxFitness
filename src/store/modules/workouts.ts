@@ -128,7 +128,7 @@ const actions = {
       commit("clearError");
       client
         .getEntries({
-          order: "sys.createdAt",
+          order: "sys.updatedAt",
           content_type: "workoutCategory",
           "fields.category[match]": payload.workoutType
         })

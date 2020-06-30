@@ -5,7 +5,7 @@
       Niestety nie masz moliwości wyświetlenia naszych treningów OxFitness 😥
     </h2>
     <h2>
-      Aby kontynuoować, wykup dostęp na
+      Aby kontynuować, wykup dostęp na
       <a href="https://oxfitness.wod.guru/user/login" target="_blank"
         >wod.guru</a
       >

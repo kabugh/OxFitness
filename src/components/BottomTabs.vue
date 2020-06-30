@@ -11,8 +11,8 @@
   >
     <q-tabs
       v-model="tab"
-      class="bg-black text-grey-6 shadow-2"
-      active-color="bg-gray-1"
+      class="bg-grey-10 text-grey-6 shadow-2"
+      active-color="grey-2"
       indicator-color="primary"
       switch-indicator
       align="justify"

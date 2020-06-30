@@ -89,20 +89,10 @@
               />
               <div class="text-caption text-grey"></div>
             </q-card-section>
-
-            <!-- <q-separator />
-
-            <q-card-actions align="right">
-              <q-btn v-close-popup flat color="primary" label="Reserve" />
-              <q-btn v-close-popup flat color="primary" round icon="event" />
-            </q-card-actions> -->
           </q-card>
         </q-dialog>
-        <LeaderboardComponent
-          v-if="user.workouts !== undefined && user.workouts !== null"
-          :currentWorkout="currentWorkout"
-          :user="user"
-        />
+        <LeaderboardComponent :currentWorkout="currentWorkout" :user="user" />
+        <!-- v-if="user.workouts !== undefined && user.workouts !== null" -->
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
@@ -282,6 +272,7 @@ export default class WorkoutPage extends Vue {
 .q-card {
   .text-h6 {
     text-transform: capitalize;
+    text-align: center !important;
   }
 }
 </style>

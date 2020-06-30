@@ -284,9 +284,6 @@ export default class Workouts extends Vue {
   }
 
   groupWorkouts(arr: any, prop: any) {
-    // display the latest accessories at the top
-    if (this.$attrs.workoutType === "accessories") arr.reverse();
-
     // temporarily casted as any :/
     const groups = arr.reduce(
       (groups: any, item: any) => ({
@@ -296,28 +293,6 @@ export default class Workouts extends Vue {
       {}
     );
     return groups;
-  }
-
-  generateUUID() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return (
-      s4() +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      "-" +
-      s4() +
-      s4() +
-      s4()
-    );
   }
 }
 </script>

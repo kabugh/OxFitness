@@ -55,6 +55,14 @@
           >
             Sprawdź treningi
           </button>
+          <button
+            type="button"
+            class="homeButton login"
+            data-aos="fade-left"
+            @click="$router.push('/authentication')"
+          >
+            Zaloguj się
+          </button>
         </div>
         <div class="heroImage__wrapper" data-aos="fade-down">
           <img
@@ -245,9 +253,14 @@ $secondaryColor: #666;
           font-size: 16px !important;
           text-transform: uppercase;
           border: none;
+          transition: all 0.5s ease-in-out;
           &.homeButton {
             background: #6b108e;
             color: #fff;
+            &.login {
+              display: block;
+              margin: 2vh 0;
+            }
             &:hover {
               background: #80389c;
             }
@@ -365,6 +378,9 @@ $secondaryColor: #666;
             &.homeButton {
               background: #6b108e;
               color: #fff;
+              &.login {
+                display: none;
+              }
               &:hover {
                 background: #80389c;
               }

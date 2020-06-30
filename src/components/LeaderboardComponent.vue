@@ -11,9 +11,12 @@
         transition-next="scale"
         class="text-center"
       >
-        <q-tab-panel :name="tab" class="videos__section__wrapper">
+        <q-tab-panel
+          :name="tab"
+          class="videos__section__wrapper"
+          v-if="data.length > 0"
+        >
           <q-table
-            v-if="data.length > 0"
             align="center"
             :data="leaderboardData"
             :columns="dynamicColumns"
@@ -109,7 +112,6 @@ export default class LeaderboardComponent extends Vue {
   ];
   data: Object[] = [];
 
-  @Watch("currentWorkout")
   @Watch("user.workouts")
   updateLeaderboard() {
     this.$store
@@ -141,13 +143,19 @@ export default class LeaderboardComponent extends Vue {
   }
 
   transformLeaderboardData() {
+    this.data = [];
     if (
       this.currentLeaderboard !== undefined &&
       this.currentLeaderboard !== null
-    )
+    ) {
       Object.values(this.currentLeaderboard).forEach(element => {
-        this.data.push((element as any).workoutResults);
+        if (
+          (element as any).workoutId ===
+          ((this.$attrs.currentWorkout as any) as Workout).sys.id
+        )
+          this.data.push((element as any).workoutResults);
       });
+    }
   }
 
   findColumns() {
