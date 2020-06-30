@@ -10,6 +10,7 @@
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^13.4.0",
     "@quasar/extras": "^1.8.2",
+    "aos": "^3.0.0-beta.6",
     "contentful": "^7.14.5",
     "contentful-rich-text-vue-renderer": "^1.1.5",
     "core-js": "^3.6.5",

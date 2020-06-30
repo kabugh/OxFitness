@@ -6,7 +6,6 @@ import store from "./store";
 import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
 import VueScrollTo from "vue-scrollto";
-
 Vue.use(VueYoutube);
 
 Vue.use(VueScrollTo, {

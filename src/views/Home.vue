@@ -3,11 +3,11 @@
     <div class="hero">
       <nav class="static__nav">
         <div class="nav__container">
-          <div class="logo">
+          <div class="logo" data-aos="fade-down" data-aos-delay="100">
             <h3>OxFitness</h3>
           </div>
           <ul class="nav__items">
-            <div class="items__grid">
+            <div class="items__grid" data-aos="fade-down" data-aos-delay="200">
               <li
                 v-for="(item, i) in navItems"
                 @click="$router.push(item.slug)"
@@ -16,9 +16,20 @@
                 {{ item.name }}
               </li>
             </div>
-            <div class="separated__items">
+            <div
+              class="separated__items"
+              data-aos="fade-down"
+              data-aos-delay="300"
+            >
               <li @click="$router.push('/authentication')">Logowanie</li>
-              <li class="highlighted" @click="$router.push('/')">
+              <li
+                class="highlighted"
+                @click="
+                  navigateOutside(
+                    'https://wod.guru/athlete-registration-form/wolow'
+                  )
+                "
+              >
                 Rejestracja
               </li>
             </div>
@@ -26,8 +37,10 @@
         </div>
       </nav>
       <div class="hero__container">
-        <div class="hero__wrapper">
-          <h1>Jedna platforma.</h1>
+        <div class="hero__wrapper" data-aos="fade-right">
+          <h1>
+            Jedna platforma.
+          </h1>
           <h1>Codzienne treningi.</h1>
           <p>
             OxFitness jest aplikacją treningową skierowaną do wszystkich, którzy
@@ -38,11 +51,12 @@
             type="button"
             class="homeButton"
             v-scroll-to="{ element: '.selection' }"
+            data-aos="fade-left"
           >
             Sprawdź treningi
           </button>
         </div>
-        <div class="heroImage__wrapper">
+        <div class="heroImage__wrapper" data-aos="fade-down">
           <img
             src="@/assets/illustrations/fitness3.svg"
             class="unselectable"
@@ -86,9 +100,9 @@
     </div>
     <section class="pricing">
       <div class="pricing__container">
-        <h1>Zacznij za darmo.</h1>
-        <h1>Ćwicz z naszą pomocą.</h1>
-        <p>
+        <h1 data-aos="fade-up" data-aos-delay="200">Zacznij za darmo.</h1>
+        <h1 data-aos="fade-up" data-aos-delay="300">Ćwicz z naszą pomocą.</h1>
+        <p data-aos="fade-up" data-aos-delay="400">
           Wypróbuj plan OxFitness przez cały miesiąc za darmo i pozostań na
           dłużej.
         </p>
@@ -101,12 +115,18 @@
     <section class="statistics">
       <div class="statistics__container">
         <div class="statistics__header">
-          <h1>Najlepsi w swojej dziedzinie.</h1>
-          <p>Always fast. Always online. Always effective.</p>
+          <h1 data-aos="fade-down" data-aos-delay="100">
+            Najlepsi w swojej dziedzinie.
+          </h1>
+          <p data-aos="fade-down" data-aos-delay="200">
+            Always fast. Always online. Always effective.
+          </p>
         </div>
         <div class="data__container">
           <div class="data__item" v-for="(item, j) in statistics" :key="j">
-            <h2>{{ item.value }}+</h2>
+            <h2 data-aos="fade-down" :data-aos-delay="300 + (j + 1) * 100">
+              {{ item.value }}+
+            </h2>
             <span>{{ item.description }}</span>
           </div>
         </div>
@@ -130,6 +150,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({
+  easing: "ease-in-out-quart"
+});
 
 @Component
 export default class Home extends Vue {
@@ -244,7 +269,7 @@ $secondaryColor: #666;
       position: absolute;
       top: 0;
       padding: 4vh $horizontalPadding;
-      z-index: 100;
+      z-index: 99;
       display: flex;
       justify-content: flex-start;
       align-items: center;
