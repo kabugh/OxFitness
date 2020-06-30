@@ -8,16 +8,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "vue-page-transition",
-  props: ["name"],
-  data() {
-    return {
-      transition: "transition-left-full",
-      mode: "out-in"
-    };
-  },
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component({
+  props: ["name"]
+})
+export default class TransitionComponent extends Vue {
+  transition = "transition-left-full";
+  mode = "out-in";
   created() {
     this.$router.beforeEach((to, from, next) => {
       this.transition = to.meta.transition
@@ -26,7 +25,7 @@ export default {
       next();
     });
   }
-};
+}
 </script>
 <style lang="scss">
 :root {

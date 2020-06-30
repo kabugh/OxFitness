@@ -58,7 +58,7 @@
             v-for="(item, index) in selectionItems"
             :key="index"
             :style="{
-              backgroundImage: 'url(' + require(`@/assets//${item.image}`) + ')'
+              backgroundImage: 'url(' + require(`@/assets/${item.image}`) + ')'
             }"
             class="selection__item"
           >
@@ -84,6 +84,47 @@
         </ul>
       </div>
     </div>
+    <section class="pricing">
+      <div class="pricing__container">
+        <h1>Zacznij za darmo.</h1>
+        <h1>Ćwicz z naszą pomocą.</h1>
+        <p>
+          Wypróbuj plan OxFitness przez cały miesiąc za darmo i pozostań na
+          dłużej.
+        </p>
+        <img
+          src="@/assets/illustrations/develop.svg"
+          class="illustration unselectable"
+        />
+      </div>
+    </section>
+    <section class="statistics">
+      <div class="statistics__container">
+        <div class="statistics__header">
+          <h1>Najlepsi w swojej dziedzinie.</h1>
+          <p>Always fast. Always online. Always effective.</p>
+        </div>
+        <div class="data__container">
+          <div class="data__item" v-for="(item, j) in statistics" :key="j">
+            <h2>{{ item.value }}+</h2>
+            <span>{{ item.description }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- <section class="brands">
+      <h1>Partnerzy.</h1>
+      <div class="brands__container">
+        <div
+          class="brand"
+          v-for="(brand, i) in brands"
+          :key="i"
+          :style="{
+            backgroundImage: 'url(' + require(`@/assets/brands/${brand}`) + ')'
+          }"
+        ></div>
+      </div>
+    </section> -->
   </section>
 </template>
 
@@ -98,6 +139,7 @@ export default class Home extends Vue {
     { name: "FAQ", slug: "/faq" },
     { name: "Kontakt", slug: "/contact" }
   ];
+
   selectionItems = [
     {
       title: "Czym jest OxFitness?",
@@ -119,6 +161,12 @@ export default class Home extends Vue {
     }
   ];
 
+  statistics = [
+    { value: 120, description: "nowych użytkowników" },
+    { value: 50, description: "unikalnych workoutów" },
+    { value: 8, description: "treningów na żywo" }
+  ];
+
   navigateOutside(link: string) {
     window.open(link, "_blank");
   }
@@ -127,7 +175,10 @@ export default class Home extends Vue {
 
 <style lang="scss">
 @import "@/assets/styles/global.scss";
-$heroPadding: 10vw;
+$horizontalPadding: 10vw;
+$verticalPadding: 8vw;
+$backgroundColor: #958efa;
+$secondaryColor: #666;
 .homePage {
   width: 100%;
   color: white;
@@ -135,7 +186,7 @@ $heroPadding: 10vw;
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: #7f6f8a;
+    background-color: $backgroundColor;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -147,7 +198,7 @@ $heroPadding: 10vw;
       display: grid;
       grid-template-columns: 1fr;
       column-gap: 6vw;
-      padding: 6vh $heroPadding;
+      padding: $verticalPadding $horizontalPadding;
       .hero__wrapper {
         @include flex;
         align-items: center;
@@ -188,12 +239,11 @@ $heroPadding: 10vw;
         }
       }
     }
-
     .static__nav {
       width: 100%;
       position: absolute;
       top: 0;
-      padding: 2vh $heroPadding;
+      padding: 4vh $horizontalPadding;
       z-index: 100;
       display: flex;
       justify-content: flex-start;
@@ -234,9 +284,13 @@ $heroPadding: 10vw;
               cursor: pointer;
             }
             &.highlighted {
-              padding: 8px 16px;
+              padding: 2px 12px;
               background-color: #6b108e;
               border-radius: 5px;
+              transition: all 0.5s ease-in-out;
+              &:hover {
+                background: #80389c;
+              }
             }
           }
         }
@@ -297,103 +351,6 @@ $heroPadding: 10vw;
         }
       }
     }
-    #nav-icon,
-    #nav-icon-static {
-      display: block;
-      width: 25px;
-      height: 20px;
-      -webkit-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-      -webkit-transition: 0.5s ease-in-out;
-      -moz-transition: 0.5s ease-in-out;
-      -o-transition: 0.5s ease-in-out;
-      transition: 0.5s ease-in-out;
-      cursor: pointer;
-      z-index: 100;
-    }
-    #nav-icon-static {
-      position: static !important;
-      margin-top: 0 !important;
-      margin-right: 0 !important;
-    }
-    #nav-icon span,
-    #nav-icon-static span {
-      display: block;
-      position: absolute;
-      height: 2px;
-      width: 100%;
-      background: white;
-      opacity: 1;
-      top: 0;
-      -webkit-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-      -webkit-transition: 0.25s ease-in-out;
-      -moz-transition: 0.25s ease-in-out;
-      -o-transition: 0.25s ease-in-out;
-      transition: 0.25s ease-in-out;
-    }
-    /* #nav-icon:not(.open):hover span:first-child,  */
-    #nav-icon-static:not(.open):hover span:first-child {
-      width: 16px;
-    }
-    /* #nav-icon:not(.open):hover span:nth-child(2),  */
-    #nav-icon-static:not(.open):hover span:nth-child(2) {
-      width: 20px;
-    }
-    /* #nav-icon:not(.open):hover span:nth-child(3),  */
-    #nav-icon-static:not(.open):hover span:nth-child(3) {
-      width: 24px;
-    }
-    #nav-icon span:nth-child(1),
-    #nav-icon-static span:nth-child(1),
-    #nav-icon:not(.open):hover {
-      top: 0;
-      -webkit-transform-origin: left center;
-      -moz-transform-origin: left center;
-      -o-transform-origin: left center;
-      transform-origin: left center;
-    }
-    #nav-icon span:nth-child(2),
-    #nav-icon-static span:nth-child(2) {
-      top: 7px;
-      -webkit-transform-origin: left center;
-      -moz-transform-origin: left center;
-      -o-transform-origin: left center;
-      transform-origin: left center;
-    }
-    #nav-icon span:nth-child(3),
-    #nav-icon-static span:nth-child(3) {
-      top: 14px;
-      -webkit-transform-origin: left center;
-      -moz-transform-origin: left center;
-      -o-transform-origin: left center;
-      transform-origin: left center;
-    }
-    #nav-icon-static.open span:nth-child(1),
-    #nav-icon.open span:nth-child(1) {
-      -webkit-transform: rotate(45deg);
-      -moz-transform: rotate(45deg);
-      -o-transform: rotate(45deg);
-      transform: rotate(45deg);
-      top: -3px;
-    }
-    #nav-icon-static.open span:nth-child(2),
-    #nav-icon.open span:nth-child(2) {
-      width: 0;
-      opacity: 0;
-    }
-    #nav-icon-static.open span:nth-child(3),
-    #nav-icon.open span:nth-child(3) {
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
-      transform: rotate(-45deg);
-      top: 15px;
-    }
   }
   .selection {
     width: 100%;
@@ -438,6 +395,199 @@ $heroPadding: 10vw;
         }
       }
     }
+  }
+  .pricing {
+    width: 100%;
+    background-color: $backgroundColor;
+    color: white;
+    padding: $verticalPadding 0;
+    .pricing__container {
+      text-align: center;
+      h1 {
+        font-size: 3.5rem !important;
+        font-weight: bold;
+        line-height: 1.25;
+      }
+      p {
+        font-size: 1.5em;
+        font-weight: 500;
+        margin: 3vh 0;
+      }
+      .illustration {
+        max-width: 60vw;
+        margin: 0 auto;
+      }
+    }
+  }
+  .statistics {
+    width: 100%;
+    background-color: white;
+    color: black;
+    .statistics__container {
+      padding: $verticalPadding $horizontalPadding;
+      text-align: center;
+      .statistics__header {
+        h1 {
+          font-size: 3.5rem !important;
+          font-weight: bold;
+          line-height: 1.25;
+        }
+        p {
+          font-size: 1.75em;
+          font-weight: 500;
+          margin: 2vh 0;
+          color: $secondaryColor;
+        }
+      }
+      .data__container {
+        margin-top: 8vh;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 20vw));
+        .data__item {
+          padding: 0 4vw;
+          border-right: 1px solid lightgray;
+          h2 {
+            font-size: 5.5rem;
+            font-weight: 600;
+            line-height: 1;
+          }
+          span {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: $secondaryColor;
+          }
+          &:last-of-type {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+  .brands {
+    width: 100%;
+    color: black;
+    padding: $verticalPadding $horizontalPadding;
+    @include flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      font-size: 3.5rem !important;
+      font-weight: bold;
+      line-height: 1.25;
+    }
+    .brands__container {
+      width: 100%;
+      margin: 4vh 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      column-gap: 4vw;
+      .brand {
+        @include backgroundDefault;
+        background-size: contain;
+        width: auto;
+        min-height: 10vh;
+      }
+    }
+  }
+  #nav-icon,
+  #nav-icon-static {
+    display: block;
+    width: 25px;
+    height: 20px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    z-index: 100;
+  }
+  #nav-icon-static {
+    position: static !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+  }
+  #nav-icon span,
+  #nav-icon-static span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: white;
+    opacity: 1;
+    top: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+  }
+  /* #nav-icon:not(.open):hover span:first-child,  */
+  #nav-icon-static:not(.open):hover span:first-child {
+    width: 16px;
+  }
+  /* #nav-icon:not(.open):hover span:nth-child(2),  */
+  #nav-icon-static:not(.open):hover span:nth-child(2) {
+    width: 20px;
+  }
+  /* #nav-icon:not(.open):hover span:nth-child(3),  */
+  #nav-icon-static:not(.open):hover span:nth-child(3) {
+    width: 24px;
+  }
+  #nav-icon span:nth-child(1),
+  #nav-icon-static span:nth-child(1),
+  #nav-icon:not(.open):hover {
+    top: 0;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+  #nav-icon span:nth-child(2),
+  #nav-icon-static span:nth-child(2) {
+    top: 7px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+  #nav-icon span:nth-child(3),
+  #nav-icon-static span:nth-child(3) {
+    top: 14px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+  #nav-icon-static.open span:nth-child(1),
+  #nav-icon.open span:nth-child(1) {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: -3px;
+  }
+  #nav-icon-static.open span:nth-child(2),
+  #nav-icon.open span:nth-child(2) {
+    width: 0;
+    opacity: 0;
+  }
+  #nav-icon-static.open span:nth-child(3),
+  #nav-icon.open span:nth-child(3) {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: 15px;
   }
 }
 </style>
