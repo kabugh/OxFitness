@@ -5,12 +5,12 @@
         <div class="account__details">
           <div class="avatar__container">
             <q-avatar color="primary" text-color="white" size="4rem">{{
-              $attrs.user.name.charAt(0)
+              user.name.charAt(0)
             }}</q-avatar>
           </div>
           <div class="user__details">
-            <h3>{{ $attrs.user.name }}</h3>
-            <h4>{{ $attrs.user.email }}</h4>
+            <h3 ref="title">{{ user.name }}</h3>
+            <h4>{{ user.email }}</h4>
           </div>
         </div>
       </div>
@@ -40,8 +40,10 @@
   </section>
 </template>
 <script>
-import { Component, Vue } from "vue-property-decorator";
-@Component
+import { Component, Vue, Watch } from "vue-property-decorator";
+@Component({
+  props: ["user"]
+})
 export default class TheOverlay extends Vue {
   navItems = [
     {
@@ -78,6 +80,26 @@ export default class TheOverlay extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
+// enter/leave overlay animation
+.theOverlay-enter-active,
+.theOverlay-leave-active {
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.theOverlay-leave-active {
+  transition-duration: 0.3s;
+}
+
+.theOverlay-enter,
+.theOverlay-leave-to {
+  transform: translateY(100%);
+}
+
+.theOverlay-enter-to,
+.theOverlay-leave {
+  transform: translateX(0);
+}
+
 .overlay {
   position: fixed;
   bottom: 0;

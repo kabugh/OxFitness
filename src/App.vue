@@ -2,7 +2,9 @@
   <div id="app">
     <BottomTabs></BottomTabs>
     <TopNavbar></TopNavbar>
-    <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
+    <transition name="theOverlay">
+      <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
+    </transition>
     <TransitionComponent>
       <keep-alive include="Dashboard">
         <router-view />

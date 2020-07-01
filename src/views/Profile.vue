@@ -38,11 +38,16 @@
       >
         <q-tab-panel name="validity"
           ><div class="details__container validity">
-            <h3>
+            <h3 v-if="daysLeft >= 0 && user.premiumAccount.isActive">
               <span>Dostęp do treningów wygasa:</span>
               {{ user.premiumAccount.validUntil | date }}
             </h3>
+            <h3 v-else>
+              <span>Dostęp do treningów wygasł:</span>
+              {{ user.premiumAccount.validUntil | date }}
+            </h3>
             <q-circular-progress
+              v-if="daysLeft >= 0 && user.premiumAccount.isActive"
               show-value
               font-size="14px"
               :value="daysLeft"
@@ -223,14 +228,28 @@ export default class Profile extends Vue {
     this.$store.commit("setEmailDialog", value);
   }
 
+  findDaysBetween(startDate: Date, endDate: Date) {
+    // The number of milliseconds in all UTC days (no DST)
+    const oneDay = 1000 * 60 * 60 * 24;
+    // A day in UTC always lasts 24 hours
+    const start = Date.UTC(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+    const end = Date.UTC(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    // it's safe to divide by 24 hours
+    return (start - end) / oneDay;
+  }
+
   calculateDaysLeft() {
-    const currentDate = new Date().getUTCDay();
-    const validUntilDate = new Date(
-      this.user.premiumAccount.validUntil
-    ).getUTCDay();
-    // eslint-disable-next-line no-console
-    console.log(currentDate, validUntilDate);
-    this.daysLeft = Math.abs(Math.floor(validUntilDate - currentDate));
+    const currentDate = new Date();
+    const validUntilDate = new Date(this.user.premiumAccount.validUntil);
+    this.daysLeft = this.findDaysBetween(currentDate, validUntilDate);
   }
 
   @Watch("user.settings.displayResults")
