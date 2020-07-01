@@ -37,7 +37,7 @@
         class="tab-panels text-center"
       >
         <q-tab-panel name="validity"
-          ><div class="details__container">
+          ><div class="details__container validity">
             <h3>
               <span>Dostęp do treningów wygasa:</span>
               {{ user.premiumAccount.validUntil | date }}
@@ -88,37 +88,87 @@
           <div class="details__container">
             <div class="button__wrapper">
               <div class="wrapper">
-                <div class="expansionItem__wrapper">
-                  <q-expansion-item
-                    dense
-                    icon="perm_identity"
-                    label="Wyświetl ID konta"
-                  >
-                    {{ user.id }}
-                  </q-expansion-item>
-                </div>
-                <button
-                  v-if="!isVerified"
-                  class="dark"
-                  type="button"
-                  @click="verifyAccount"
-                >
-                  Zweryfikuj konto
-                </button>
-                <button
-                  class="dark"
-                  v-show="false"
-                  type="button"
-                  @click="changeEmail"
-                >
-                  Zmień email
-                </button>
-                <button class="dark" type="button" @click="changePassword">
-                  Zmień hasło
-                </button>
-                <button class="dark" type="button" @click="logOut">
-                  Wyloguj
-                </button>
+                <q-list padding>
+                  <q-item-label header>Ustawienia ogólne</q-item-label>
+                  <q-item tag="label">
+                    <q-item-section side top>
+                      <q-checkbox v-model="user.settings.notifications" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>Powiadomienia</q-item-label>
+                      <q-item-label caption>
+                        Wyświetlaj powiadomienia o nowych treningach, postach
+                        trenerów.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item tag="label">
+                    <q-item-section side top>
+                      <q-checkbox v-model="user.settings.displayResults" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>Wyświetlanie rezultatów</q-item-label>
+                      <q-item-label caption>
+                        Zezwalaj na wyświetlanie Twoich rezultatów z treningów w
+                        tabeli wszystkich wyników.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced />
+
+                  <q-item-label header>Szczegóły konta</q-item-label>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>ID konta</q-item-label>
+                      <q-item-label caption>
+                        {{ user.id }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable @click="changePassword">
+                    <q-item-section>
+                      <q-item-label>Zmień hasło</q-item-label>
+                      <q-item-label caption>
+                        Kliknij, aby zmienić hasło. Link zostanie wysłany na
+                        powiązany adres email.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable @click="verifyAccount" v-if="!isVerified">
+                    <q-item-section>
+                      <q-item-label>Zweryfikuj konto</q-item-label>
+                      <q-item-label caption>
+                        Otrzymasz wiadomość na powiązany adres email z linkiem
+                        aktywacyjnym.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <!-- <q-item clickable @click="changeEmail">
+                    <q-item-section>
+                      <q-item-label>Zmień adres email</q-item-label>
+                      <q-item-label caption>
+                        Otrzymasz wiadomość na powiązany adres email - musisz
+                        potwierdzić swój wybór.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item> -->
+
+                  <q-item clickable @click="logOut">
+                    <q-item-section>
+                      <q-item-label>Wyloguj się</q-item-label>
+                      <q-item-label caption>
+                        Kliknij, aby wylogować się.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
                 <ChangeEmailComponent />
               </div>
             </div>
@@ -129,7 +179,7 @@
   </section>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import ChangeEmailComponent from "@/components/authentication/ChangeEmailComponent.vue";
 import { User } from "@/store/models";
 import * as firebase from "firebase";
@@ -178,7 +228,15 @@ export default class Profile extends Vue {
     const validUntilDate = new Date(
       this.user.premiumAccount.validUntil
     ).getUTCDay();
+    // eslint-disable-next-line no-console
+    console.log(currentDate, validUntilDate);
     this.daysLeft = Math.abs(Math.floor(validUntilDate - currentDate));
+  }
+
+  @Watch("user.settings.displayResults")
+  @Watch("user.settings.notifications")
+  updateSettings() {
+    this.$store.dispatch("updateUserSettings", this.user.settings);
   }
 
   verifyAccount() {
@@ -207,6 +265,9 @@ export default class Profile extends Vue {
     .hero {
       width: 100%;
       height: 30vh;
+      @media (min-height: 1100px) {
+        height: 15vh;
+      }
       @include flex;
       flex-direction: column;
       align-items: center;
@@ -252,7 +313,9 @@ export default class Profile extends Vue {
       grid-row-gap: 0.5vh;
       justify-content: center;
       align-items: center;
-      padding: 4vh 6vw;
+      &.validity {
+        padding: 4vh 0;
+      }
       h3,
       h4 {
         font-weight: 400;
@@ -285,7 +348,9 @@ export default class Profile extends Vue {
           @include flex;
           flex-direction: column;
           align-items: center;
-          padding: 2vh 0;
+          .q-list {
+            text-align: left;
+          }
           button {
             margin-top: 2vh;
           }

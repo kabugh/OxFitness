@@ -50,7 +50,7 @@ export default class WelcomeComponent extends Vue {
   }
 
   onSubmit() {
-    this.$store.dispatch("updateUser", this.passedUserName);
+    this.$store.dispatch("updateUsername", this.passedUserName);
   }
 }
 </script>
@@ -58,6 +58,7 @@ export default class WelcomeComponent extends Vue {
 .q-card {
   h2 {
     font-size: 1.25rem;
+    font-weight: 400;
     text-align: center;
     color: black;
   }

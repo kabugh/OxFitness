@@ -30,6 +30,12 @@ const mutations = {
   setUsername(state: { user: User }, payload: string) {
     state.user.name = payload;
   },
+  setSettings(
+    state: { user: User },
+    payload: { notifications: boolean; displayResults: boolean }
+  ) {
+    state.user.settings = payload;
+  },
   setLoading(state: { loading: boolean }, payload: boolean) {
     state.loading = payload;
   },
@@ -67,6 +73,10 @@ const actions = {
               activationDate: "",
               validUntil: ""
             },
+            settings: {
+              notifications: true,
+              displayResults: true
+            },
             workouts: []
           };
           commit("setUser", newUser);
@@ -102,6 +112,10 @@ const actions = {
               activationDate: "",
               validUntil: ""
             },
+            settings: {
+              notifications: true,
+              displayResults: true
+            },
             workouts: []
           };
           firebase
@@ -114,6 +128,7 @@ const actions = {
               if (newUser.id === (value as User).id) {
                 newUser.premiumAccount = (value as User).premiumAccount;
                 newUser.name = (value as User).name;
+                newUser.settings = (value as User).settings;
               }
               newUser.workouts = value.workouts;
             });
@@ -143,6 +158,10 @@ const actions = {
         activationDate: "",
         validUntil: ""
       },
+      settings: {
+        notifications: true,
+        displayResults: true
+      },
       workouts: payload.workouts
     };
     firebase
@@ -154,6 +173,7 @@ const actions = {
         if (payload.uid === (value as User).id) {
           cachedUser.premiumAccount = (value as User).premiumAccount;
           cachedUser.name = (value as User).name;
+          cachedUser.settings = (value as User).settings;
         }
         cachedUser.workouts = value.workouts;
       });
@@ -174,7 +194,7 @@ const actions = {
       })
       .catch(e => console.log(e));
   },
-  updateUser({ commit, getters }: any, payload: string) {
+  updateUsername({ commit, getters }: any, payload: string) {
     commit("setLoading", true);
     firebase
       .database()
@@ -185,6 +205,19 @@ const actions = {
         commit("setError", e);
       });
     commit("setUsername", payload);
+    commit("setLoading", false);
+  },
+  updateUserSettings({ commit, getters }: any, payload: Object) {
+    commit("setLoading", true);
+    firebase
+      .database()
+      .ref(`/users/${getters.user.id}/`)
+      .update({ settings: payload })
+      .catch(e => {
+        commit("setLoading", false);
+        commit("setError", e);
+      });
+    commit("setSettings", payload);
     commit("setLoading", false);
   },
   verifyAccount({ commit }: any) {

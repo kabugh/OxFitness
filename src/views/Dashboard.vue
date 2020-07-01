@@ -106,10 +106,11 @@ export default class Dashboard extends Vue {
 
   get displayWelcome(): boolean {
     return (
-      !("name" in this.user) ||
-      this.user.name === null ||
-      this.user.name === undefined ||
-      this.user.name === ""
+      this.user !== null &&
+      (!("name" in this.user) ||
+        this.user.name === null ||
+        this.user.name === undefined ||
+        this.user.name === "")
     );
   }
 }

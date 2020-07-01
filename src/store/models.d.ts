@@ -7,6 +7,10 @@ export interface User {
     activationDate: string;
     validUntil: string;
   };
+  settings: {
+    notifications: boolean;
+    displayResults: boolean;
+  };
   imageURL?: string;
   workouts: [];
 }

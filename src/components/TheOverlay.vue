@@ -3,7 +3,15 @@
     <div class="overlay__wrapper">
       <div class="account__preview">
         <div class="account__details">
-          <h1>{{ $attrs.user.email }}</h1>
+          <div class="avatar__container">
+            <q-avatar color="primary" text-color="white" size="4rem">{{
+              $attrs.user.name.charAt(0)
+            }}</q-avatar>
+          </div>
+          <div class="user__details">
+            <h3>{{ $attrs.user.name }}</h3>
+            <h4>{{ $attrs.user.email }}</h4>
+          </div>
         </div>
       </div>
       <q-list>
@@ -17,18 +25,13 @@
           clickable
         >
           <q-item-section avatar>
-            <q-avatar
-              rounded
-              color="purple"
-              text-color="white"
-              :icon="item.icon"
-            />
+            <q-avatar rounded text-color="white" :icon="item.icon" />
           </q-item-section>
           <q-item-section>{{ item.title }}</q-item-section>
         </q-item>
         <q-item @click="logOut" clickable>
           <q-item-section avatar>
-            <q-avatar rounded color="purple" text-color="white" icon="input" />
+            <q-avatar text-color="white" icon="input" />
           </q-item-section>
           <q-item-section>Wyloguj</q-item-section>
         </q-item>
@@ -80,7 +83,8 @@ export default class TheOverlay extends Vue {
   bottom: 0;
   height: 100%;
   width: 100%;
-  background-color: white;
+  color: white;
+  background-color: #3e3e3e;
   z-index: 99;
   .overlay__wrapper {
     padding: 2vh 4vh 4vh 4vh;
@@ -101,20 +105,20 @@ export default class TheOverlay extends Vue {
         }
       }
       .account__details {
-        @include flex;
-        flex: 2;
-        flex-direction: column;
-        padding: 4vh 0;
-        text-align: center;
-        h1 {
-          font-size: 1.25rem;
-          letter-spacing: 2px;
-        }
-        h2 {
-          margin-top: 2vh;
-          color: gray;
-          font-size: 1rem;
-          font-weight: 400;
+        display: grid;
+        column-gap: 5vw;
+        grid-template-columns: repeat(2, auto);
+        align-items: center;
+        padding: 2rem;
+        .user__details {
+          h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+          }
+          h4 {
+            font-size: 1rem;
+            font-weight: 500;
+          }
         }
       }
     }
