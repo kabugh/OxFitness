@@ -12,9 +12,12 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <!-- <VideoComponent
-        :videoUrl="currentWorkout.fields.videoId"
-      ></VideoComponent> -->
+      <vue-plyr class="video__wrapper">
+        <div
+          data-plyr-provider="vimeo"
+          :data-plyr-embed-id="currentWorkout.fields.videoId"
+        ></div>
+      </vue-plyr>
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
           <!-- <RichTextRenderer
@@ -109,10 +112,10 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import VideoComponent from "@/components/VideoComponent.vue";
 import RichTextRenderer from "contentful-rich-text-vue-renderer";
 import LeaderboardComponent from "@/components/LeaderboardComponent.vue";
 import WorkoutForm from "@/components/WorkoutForm.vue";
+import VuePlyr from "vue-plyr";
 
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
@@ -128,8 +131,8 @@ const options = {
   components: {
     LeaderboardComponent,
     WorkoutForm,
-    VideoComponent,
-    RichTextRenderer
+    RichTextRenderer,
+    VuePlyr
   }
 })
 export default class WorkoutPage extends Vue {
@@ -234,6 +237,9 @@ export default class WorkoutPage extends Vue {
       h2 {
         font-size: 1.25rem;
       }
+    }
+
+    .video__wrapper {
     }
 
     .q-skeleton--type-text {
