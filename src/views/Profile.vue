@@ -71,26 +71,29 @@
               <div class="expansionItem__wrapper">
                 <q-expansion-item
                   group="accordion"
-                  dense
+                  popup
                   icon="receipt"
                   label="Szczegóły umowy"
                 >
-                  <div class="membership__details">
-                    <span>Umowa OxFit na czas nieokreślony</span>
-                  </div>
-                  <!-- <button class="dark small-btn" type="button">
-                    Przedłuz karnet
-                  </button> -->
+                  <q-separator />
+                  <q-card>
+                    <q-card-section>
+                      Umowa OxFitness na czas nieokreslony
+                    </q-card-section>
+                  </q-card>
                 </q-expansion-item>
-              </div>
-              <div class="expansionItem__wrapper">
                 <q-expansion-item
-                  dense
                   group="accordion"
+                  popup
                   icon="account_balance_wallet"
                   label="Stan płatności"
                 >
-                  {{ user.id }}
+                  <q-separator />
+                  <q-card>
+                    <q-card-section>
+                      Płatność uregulowana
+                    </q-card-section>
+                  </q-card>
                 </q-expansion-item>
               </div>
             </q-list>
@@ -374,12 +377,6 @@ export default class Profile extends Vue {
       .expansionItem__wrapper {
         max-width: 80%;
         margin: 0 auto;
-        padding: 1vh 0;
-        .q-expansion-item__content {
-          padding: 2vh 0;
-          display: grid;
-          row-gap: 2vh;
-        }
       }
       .button__wrapper {
         .wrapper {

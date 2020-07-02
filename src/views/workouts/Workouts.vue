@@ -1,9 +1,9 @@
 <template>
   <section class="workouts topView">
     <div class="workouts__container container">
-      <div class="workout__description" v-if="$attrs.categoryDetails">
-        <h2>{{ $attrs.categoryDetails.title }}</h2>
-        <p>{{ $attrs.categoryDetails.description }}</p>
+      <div class="workout__description" v-if="categoryDetails">
+        <h2>{{ categoryDetails.title }}</h2>
+        <p>{{ categoryDetails.description }}</p>
       </div>
       <div
         class="videos__section__container"
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="archive__videos__container">
+        <div class="archive__videos__container" v-show="false">
           <h2>
             Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
             klikając poniżej.
@@ -84,9 +84,7 @@
       <div class="videos__section__container" v-else>
         <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
           <q-tab
-            v-for="(element, index) in Object.keys(
-              this.groupedWorkouts
-            ).reverse()"
+            v-for="(element, index) in Object.keys(this.groupedWorkouts)"
             :name="element"
             :label="element"
             :key="index"
@@ -253,10 +251,23 @@ import { Workout } from "@/store/models";
 export default class Workouts extends Vue {
   mockItems = 6;
   tab = "";
+  categoryDetails = {};
 
   groupedWorkouts = this.groupWorkouts(this.workouts, "category");
 
   created() {
+    if (this.$attrs.categoryDetails) {
+      this.categoryDetails = this.$attrs.categoryDetails;
+    } else {
+      const foundWorkoutCategory = this.$store.getters.workoutCategories.find(
+        (workoutCategory: any) =>
+          workoutCategory.category === this.$attrs.workoutType
+      );
+      this.categoryDetails = {
+        title: foundWorkoutCategory.title,
+        description: foundWorkoutCategory.description
+      };
+    }
     if (this.$attrs.workouts) {
       this.workouts = this.$attrs.workouts;
     } else {
@@ -266,9 +277,7 @@ export default class Workouts extends Vue {
   }
 
   mounted() {
-    this.tab = Object.keys(this.groupedWorkouts)[
-      Object.keys(this.groupedWorkouts).length - 1
-    ];
+    this.tab = Object.keys(this.groupedWorkouts)[0];
   }
 
   get workouts() {

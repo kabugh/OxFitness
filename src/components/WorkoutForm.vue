@@ -111,7 +111,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { Workout, User } from "../store/models";
 
 @Component({
-  props: ["isFinished", "user", "resultKey"]
+  props: ["isFinished", "user", "resultKey", "currentWorkout"]
 })
 export default class WorkoutForm extends Vue {
   mounted() {
@@ -128,7 +128,7 @@ export default class WorkoutForm extends Vue {
   };
 
   get scoreMessage() {
-    return !this.$props.isLoading ? "Dodaj swój wynik" : "Edytuj swój wynik";
+    return !this.$props.isFinished ? "Dodaj swój wynik" : "Edytuj swój wynik";
   }
 
   clearForm() {
@@ -160,7 +160,7 @@ export default class WorkoutForm extends Vue {
   }
 
   onSubmit() {
-    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
+    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {
@@ -179,7 +179,7 @@ export default class WorkoutForm extends Vue {
     });
   }
   onUpdate() {
-    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
+    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {
@@ -197,7 +197,7 @@ export default class WorkoutForm extends Vue {
     });
   }
   onRemove() {
-    const currentWorkout = (this.$route.params.workout as unknown) as Workout;
+    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {

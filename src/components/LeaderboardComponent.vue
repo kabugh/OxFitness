@@ -43,7 +43,7 @@ interface Column {
   format?: Function;
 }
 @Component({
-  props: ["user"]
+  props: ["user", "isFinished"]
 })
 export default class LeaderboardComponent extends Vue {
   created() {
@@ -113,6 +113,7 @@ export default class LeaderboardComponent extends Vue {
   data: Object[] = [];
 
   @Watch("user.workouts")
+  @Watch("isFinished")
   updateLeaderboard() {
     this.$store
       .dispatch("fetchWorkoutLeaderboard", this.$route.params.id)

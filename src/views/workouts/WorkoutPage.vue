@@ -85,14 +85,19 @@
                 :isFinished="isFinished"
                 :user="user"
                 :resultKey="currentWorkout.fields.resultKey"
+                :currentWorkout="currentWorkout"
                 @removed="onResultRemoval"
               />
               <div class="text-caption text-grey"></div>
             </q-card-section>
           </q-card>
         </q-dialog>
-        <LeaderboardComponent :currentWorkout="currentWorkout" :user="user" />
-        <!-- v-if="user.workouts !== undefined && user.workouts !== null" -->
+        <LeaderboardComponent
+          :currentWorkout="currentWorkout"
+          :user="user"
+          :isFinished="isFinished"
+          v-if="user.workouts !== undefined && user.workouts !== null"
+        />
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
@@ -174,18 +179,19 @@ export default class WorkoutPage extends Vue {
     this.isFin();
     this.card = value;
   }
-  // if there's only one workout left and gets removed, the watcher doesnt work
   @Watch("user.workouts")
   isFin() {
+    // if there's only one workout left and gets removed, the watcher doesnt work
     let workouts: Object[];
     if (this.user.workouts !== undefined && this.user.workouts !== null) {
       workouts = Object.values(this.user.workouts);
       let matchedWorkout = workouts.find((workout: any) => {
         if (workout !== undefined) return workout.workoutId === this.$attrs.id;
       });
-
       this.isFinished = matchedWorkout !== undefined;
     }
+    // this is a solution to the problem found above
+    if (this.user.workouts === undefined) this.isFinished = false;
   }
 
   get loading() {
@@ -256,7 +262,8 @@ export default class WorkoutPage extends Vue {
     .q-item__label {
       text-transform: capitalize;
     }
-    .results__container {
+    .results__container,
+    .rating__container {
       @include flex;
       flex-direction: column;
       align-items: center;

@@ -77,7 +77,8 @@ const actions = {
     }
   },
   fetchWorkoutTypes({ commit, state }: any) {
-    if (state.workoutCategories.length <= 0) {
+    // if (state.workoutCategories.length <= 0) {
+    if (state.workoutCategories.length < 3) {
       commit("setLoading", true);
       commit("clearError");
       client
@@ -86,6 +87,7 @@ const actions = {
           content_type: "workoutCategory"
         })
         .then((entries: { items: any[] }) => {
+          state.workoutCategories = [];
           entries.items.forEach((element: { fields: any }) => {
             state.workoutCategories.push(element.fields);
           });
@@ -100,13 +102,13 @@ const actions = {
       client
         .getEntries({
           order: "sys.createdAt",
-          // order: "-sys.createdAt",
           content_type: "workoutCategory",
           "fields.category[match]": payload
         })
         .then((entries: { items: any[] }) => {
           entries.items.forEach((element: { fields: any }) => {
             state.workoutCategories.push(element.fields);
+            state.workouts.push(...element.fields.workouts);
           });
           commit("setLoading", false);
         });
