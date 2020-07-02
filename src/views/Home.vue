@@ -117,6 +117,7 @@
         <img
           src="@/assets/illustrations/develop.svg"
           class="illustration unselectable"
+          loading="lazy"
         />
       </div>
     </section>

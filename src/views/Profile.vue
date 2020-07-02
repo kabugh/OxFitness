@@ -1,7 +1,14 @@
 <template>
   <section class="profile bottomView">
     <div class="profile__container">
-      <section class="hero shadow-box shadow-14">
+      <img
+        src="@/assets/bg.jpg"
+        v-show="false"
+        @load="onImageLoad"
+        alt="loadingImage"
+      />
+      <q-skeleton class="hero__skeleton" v-if="!isLoaded" />
+      <section v-else class="hero shadow-box shadow-14">
         <div class="hero__container">
           <div class="avatar__container">
             <q-avatar color="primary" text-color="white" size="4rem">{{
@@ -207,6 +214,7 @@ export default class Profile extends Vue {
   ];
   currentTab = this.tabs[0].name;
 
+  isLoaded = false;
   isVerified = false;
   daysLeft = 0;
   created() {
@@ -252,6 +260,10 @@ export default class Profile extends Vue {
     this.daysLeft = this.findDaysBetween(currentDate, validUntilDate);
   }
 
+  onImageLoad() {
+    this.isLoaded = true;
+  }
+
   @Watch("user.settings.displayResults")
   @Watch("user.settings.notifications")
   updateSettings() {
@@ -281,6 +293,13 @@ export default class Profile extends Vue {
   .profile__container {
     @include flex;
     flex-direction: column;
+    .hero__skeleton {
+      width: 100%;
+      height: 30vh;
+      @media (min-height: 1100px) {
+        height: 15vh;
+      }
+    }
     .hero {
       width: 100%;
       height: 30vh;

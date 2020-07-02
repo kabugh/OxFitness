@@ -5,6 +5,7 @@
         src="@/assets/illustrations/fitness1.svg"
         class="illustration unselectable"
         v-if="features.length > 0"
+        loading="lazy"
       />
       <div class="articles__container" v-if="features.length > 0">
         <article class="article__container">
@@ -24,6 +25,7 @@
         src="@/assets/illustrations/fitness2.svg"
         class="illustration unselectable"
         v-if="features.length > 0"
+        loading="lazy"
       />
       <div class="accessories__container" v-if="features.length > 0">
         <article
@@ -47,6 +49,7 @@
         src="@/assets/illustrations/fitness4.svg"
         class="illustration unselectable"
         v-if="features.length > 0"
+        loading="lazy"
       />
       <div class="additionalInfo__container" v-if="features.length > 0">
         <h2>
