@@ -171,9 +171,7 @@ export default class WorkoutForm extends Vue {
       this.$emit("removed", false);
       this.clearForm();
       this.$q.notify({
-        color: "green-8",
-        textColor: "white",
-        icon: "cloud_done",
+        type: "positive",
         message: "Wynik pomyślnie wysłany!"
       });
     });
@@ -189,9 +187,7 @@ export default class WorkoutForm extends Vue {
     this.$store.dispatch("updateWorkoutResults", workout).then(() => {
       this.clearForm();
       this.$q.notify({
-        color: "green-8",
-        textColor: "white",
-        icon: "cloud_done",
+        type: "positive",
         message: "Wynik zaktualizowany!"
       });
     });
@@ -207,9 +203,7 @@ export default class WorkoutForm extends Vue {
     this.$store.dispatch("removeWorkoutResults", workout).then(() => {
       this.$emit("removed", false);
       this.$q.notify({
-        color: "green-8",
-        textColor: "white",
-        icon: "cloud_done",
+        type: "positive",
         message: "Wynik usunięty!"
       });
     });

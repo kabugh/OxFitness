@@ -106,12 +106,12 @@
         </ul>
       </div>
     </div>
-    <section class="pricing">
-      <div class="pricing__container">
+    <section class="start">
+      <div class="start__container">
         <h1 data-aos="fade-up" data-aos-delay="200">Zacznij za darmo.</h1>
         <h1 data-aos="fade-up" data-aos-delay="300">Ćwicz z naszą pomocą.</h1>
         <p data-aos="fade-up" data-aos-delay="400">
-          Wypróbuj plan OxFitness przez cały miesiąc za darmo i pozostań na
+          Wypróbuj plan OxFitness przez cały miesiąc bez opłat i pozostań na
           dłużej.
         </p>
         <img
@@ -239,19 +239,19 @@ $secondaryColor: #666;
         flex-direction: column;
         text-align: center;
         h1 {
-          font-size: 2rem !important;
+          font-size: 1.5rem !important;
           font-weight: bold;
           line-height: 1.25;
         }
         p {
-          font-size: 1.25em;
+          font-size: 1em;
           font-weight: 500;
           margin: 6vh 0;
         }
         button {
-          padding: 15px 40px;
+          padding: 16px 20px;
           font-weight: 600 !important;
-          font-size: 16px !important;
+          font-size: 14px !important;
           text-transform: uppercase;
           border: none;
           transition: all 0.5s ease-in-out;
@@ -342,6 +342,16 @@ $secondaryColor: #666;
         }
       }
     }
+    @media (min-width: 370px) {
+      .hero__container .hero__wrapper {
+        h1 {
+          font-size: 2rem !important;
+        }
+        p {
+          font-size: 1.25em;
+        }
+      }
+    }
     @media (min-width: 700px) {
       .static__nav .nav__container {
         grid-template-columns: 1fr 4fr;
@@ -362,8 +372,6 @@ $secondaryColor: #666;
           text-align: left;
           h1 {
             font-size: 3.25rem !important;
-            font-weight: bold;
-            line-height: 1.25;
           }
           p {
             font-size: 1.25em;
@@ -372,19 +380,9 @@ $secondaryColor: #666;
           }
           button {
             padding: 15px 40px;
-            font-weight: 600 !important;
             font-size: 16px !important;
-            text-transform: uppercase;
-            border: none;
-            &.homeButton {
-              background: #6b108e;
-              color: #fff;
-              &.login {
-                display: none;
-              }
-              &:hover {
-                background: #80389c;
-              }
+            &.homeButton.login {
+              display: none;
             }
           }
         }
@@ -393,7 +391,40 @@ $secondaryColor: #666;
         }
       }
     }
+    @media (min-width: 768px) and (min-height: 1024px) and (max-width: 1000px) and (orientation: portrait) {
+      .hero__container {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 4vh;
+        .heroImage__wrapper {
+          grid-row: 1;
+          img {
+            max-width: 45vw;
+          }
+        }
+      }
+    }
+    @media (min-width: 1024px) and (min-height: 1360px) and (orientation: portrait) {
+      height: 75vh;
+      .hero__container {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 4vh;
+        .hero__wrapper {
+          button {
+            font-size: 20px !important;
+          }
+        }
+        .heroImage__wrapper {
+          grid-row: 1;
+          img {
+            max-width: 45vw;
+          }
+        }
+      }
+    }
   }
+
   .selection {
     width: 100%;
     .selection__container {
@@ -438,26 +469,43 @@ $secondaryColor: #666;
       }
     }
   }
-  .pricing {
+  .start {
     width: 100%;
     background-color: $backgroundColor;
     color: white;
-    padding: $verticalPadding 0;
-    .pricing__container {
+    padding: $verticalPadding $horizontalPadding;
+    .start__container {
       text-align: center;
       h1 {
-        font-size: 3.5rem !important;
+        font-size: 1.25rem !important;
         font-weight: bold;
         line-height: 1.25;
       }
       p {
-        font-size: 1.5em;
+        font-size: 1em;
         font-weight: 500;
         margin: 3vh 0;
       }
       .illustration {
         max-width: 60vw;
         margin: 0 auto;
+      }
+      @media (min-width: 370px) {
+        h1 {
+          font-size: 1.75rem !important;
+        }
+        p {
+          font-size: 1.25em;
+        }
+      }
+      @media (min-width: 700px) {
+        h1 {
+          font-size: 3.5rem !important;
+        }
+        p {
+          font-size: 1.5em;
+          margin: 3vh 0;
+        }
       }
     }
   }
@@ -470,28 +518,28 @@ $secondaryColor: #666;
       text-align: center;
       .statistics__header {
         h1 {
-          font-size: 3.5rem !important;
+          font-size: 1.25rem !important;
           font-weight: bold;
           line-height: 1.25;
         }
         p {
-          font-size: 1.75em;
+          font-size: 1em;
           font-weight: 500;
           margin: 2vh 0;
           color: $secondaryColor;
         }
       }
       .data__container {
-        margin-top: 8vh;
+        margin-top: 4vh;
         display: grid;
         align-items: center;
         justify-content: center;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 20vw));
+        grid-template-columns: 1fr;
         .data__item {
-          padding: 0 4vw;
-          border-right: 1px solid lightgray;
+          padding: 4vh 0;
+          border-bottom: 1px solid lightgray;
           h2 {
-            font-size: 5.5rem;
+            font-size: 2.5rem;
             font-weight: 600;
             line-height: 1;
           }
@@ -502,7 +550,66 @@ $secondaryColor: #666;
             color: $secondaryColor;
           }
           &:last-of-type {
-            border-right: none;
+            border-bottom: none;
+          }
+        }
+      }
+      @media (min-width: 370px) and (orientation: portrait) {
+        .statistics__header {
+          h1 {
+            font-size: 2rem !important;
+          }
+          p {
+            font-size: 1.25em;
+          }
+        }
+        .data__container {
+          .data__item {
+            h2 {
+              font-size: 3.5rem;
+            }
+            span {
+              font-size: 0.75rem;
+            }
+          }
+        }
+      }
+      @media (min-width: 700px) {
+        .statistics__header {
+          h1 {
+            font-size: 3.5rem !important;
+          }
+          p {
+            font-size: 1.5em;
+            margin: 2vh 0;
+          }
+        }
+        .data__container {
+          margin-top: 8vh;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 20vw));
+          .data__item {
+            padding: 0 4vw;
+            border-right: 1px solid lightgray;
+            border-bottom: 0;
+            h2 {
+              font-size: 3.5rem;
+            }
+            span {
+              font-size: 0.5rem;
+            }
+            &:last-of-type {
+              border-right: none;
+            }
+          }
+        }
+      }
+      @media (min-width: 768px) and (min-height: 1024px) {
+        .data__container {
+          .data__item {
+            padding: 0 1vw;
+            span {
+              font-size: 0.75rem;
+            }
           }
         }
       }
