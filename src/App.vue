@@ -54,5 +54,12 @@ export default class App extends Vue {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "auto");
   }
+
+  @Watch("user.premiumAccount.isActive")
+  checkAccountStatus() {
+    if (!this.user.premiumAccount.isActive) {
+      this.$router.replace("/dashboard");
+    }
+  }
 }
 </script>

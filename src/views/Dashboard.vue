@@ -78,8 +78,10 @@ import { User } from "@/store/models";
 })
 export default class Dashboard extends Vue {
   mockItems = 3;
+  isComponentReady = false;
 
   created() {
+    this.isComponentReady = true;
     this.$store.dispatch("fetchWorkoutTypes");
   }
 
@@ -106,7 +108,9 @@ export default class Dashboard extends Vue {
 
   get displayWelcome(): boolean {
     return (
-      this.user !== null &&
+      this.user &&
+      this.isComponentReady &&
+      this.$route.path != "/authentication" &&
       (!("name" in this.user) ||
         this.user.name === null ||
         this.user.name === undefined ||

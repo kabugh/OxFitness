@@ -58,7 +58,7 @@ export default class Faq extends Vue {
     width: 100%;
     height: 30vh;
     padding: 4vh;
-    background-color: #6b108e;
+    background-color: #958efa;
     color: white;
     h1 {
       font-size: 1.75rem;

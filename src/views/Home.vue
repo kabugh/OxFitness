@@ -136,7 +136,9 @@
             <h2 data-aos="fade-down" :data-aos-delay="300 + (j + 1) * 100">
               {{ item.value }}+
             </h2>
-            <span>{{ item.description }}</span>
+            <span data-aos="fade-down" :data-aos-delay="400 + (j + 1) * 100">{{
+              item.description
+            }}</span>
           </div>
         </div>
       </div>
@@ -595,7 +597,7 @@ $secondaryColor: #666;
               font-size: 3.5rem;
             }
             span {
-              font-size: 0.5rem;
+              font-size: 0.75rem;
             }
             &:last-of-type {
               border-right: none;

@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="topNavbar"
+    class="topNavbar bg-grey-10"
     v-if="
       ($route.path !== '/' &&
         $route.path !== '/authentication' &&
@@ -53,7 +53,6 @@ nav.topNavbar {
   width: 100%;
   min-height: 12vh;
   position: fixed;
-  background-color: black;
   padding: 15px 6vw;
   z-index: 100;
   transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
