@@ -58,7 +58,12 @@ export default class App extends Vue {
   @Watch("user.premiumAccount.isActive")
   checkAccountStatus() {
     if (!this.user.premiumAccount.isActive) {
-      this.$router.replace("/dashboard");
+      if (
+        this.$route.path !== "/" &&
+        this.$route.path !== "/features" &&
+        this.$route.path !== "/faq"
+      )
+        this.$router.replace("/dashboard");
     }
   }
 }
