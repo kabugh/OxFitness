@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <BottomTabs></BottomTabs>
+    <BottomTabs
+      v-if="
+        user &&
+          $route.path !== '/' &&
+          $route.path !== '/features' &&
+          $route.path !== '/faq' &&
+          $route.path !== '/authentication' &&
+          !isNavOpen
+      "
+    ></BottomTabs>
     <TopNavbar></TopNavbar>
     <transition name="theOverlay">
       <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
@@ -61,7 +70,8 @@ export default class App extends Vue {
       if (
         this.$route.path !== "/" &&
         this.$route.path !== "/features" &&
-        this.$route.path !== "/faq"
+        this.$route.path !== "/faq" &&
+        this.$route.path !== "/dashboard"
       )
         this.$router.replace("/dashboard");
     }

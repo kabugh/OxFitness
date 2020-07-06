@@ -7,7 +7,6 @@ import * as firebase from "firebase";
 import VueYoutube from "vue-youtube";
 import VueScrollTo from "vue-scrollto";
 import VuePlyr from "vue-plyr";
-
 // The second argument is optional and sets the default config values for every player.
 Vue.use(VuePlyr, {
   plyr: {

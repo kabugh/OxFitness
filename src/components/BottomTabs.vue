@@ -1,14 +1,5 @@
 <template>
-  <div
-    class="q-gutter-y-md"
-    v-if="
-      user &&
-        $route.path !== '/' &&
-        $route.path !== '/features' &&
-        $route.path !== '/faq' &&
-        !isNavOpen
-    "
-  >
+  <div class="q-gutter-y-md">
     <q-tabs
       v-model="tab"
       class="bg-grey-10 text-grey-6 shadow-2"
@@ -43,11 +34,11 @@ export default class BottomTabs extends Vue {
       icon: "home",
       link: "/dashboard"
     },
-    {
-      title: "Workouts",
-      icon: "fitness_center",
-      link: "/dashboard"
-    },
+    // {
+    //   title: "Workouts",
+    //   icon: "fitness_center",
+    //   link: "/dashboard"
+    // },
     {
       title: "Profile",
       icon: "account_circle",

@@ -311,6 +311,7 @@ $secondaryColor: #666;
           }
           .separated__items {
             justify-content: flex-end;
+            grid-column: 3;
           }
           li {
             height: 100%;
@@ -362,6 +363,9 @@ $secondaryColor: #666;
         }
         .nav__items {
           display: grid;
+          .items__grid {
+            display: none;
+          }
         }
       }
       .hero__container {
@@ -391,6 +395,11 @@ $secondaryColor: #666;
         .heroImage__wrapper {
           display: flex;
         }
+      }
+    }
+    @media (min-width: 1000px) and (orientation: landscape) {
+      .static__nav .nav__container .nav__items .items__grid {
+        display: flex;
       }
     }
     @media (min-width: 768px) and (min-height: 1024px) and (max-width: 1000px) and (orientation: portrait) {
