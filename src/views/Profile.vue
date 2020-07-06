@@ -355,7 +355,13 @@ export default class Profile extends Vue {
       justify-content: center;
       align-items: center;
       &.validity {
+        grid-row-gap: 1vh;
         padding: 4vh 0;
+        @media (min-width: 700px) {
+          .q-list {
+            padding: 0 4vw;
+          }
+        }
       }
       h3,
       h4 {

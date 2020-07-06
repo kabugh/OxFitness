@@ -44,7 +44,7 @@ export const payment = functions.https.onRequest((request, response) => {
         line_items: [
           {
             price_data: {
-              currency: "pln",
+              currency: "PLN",
               product_data: {
                 name: "OxFitness karnet"
               },
@@ -54,13 +54,11 @@ export const payment = functions.https.onRequest((request, response) => {
           }
         ],
         mode: "payment",
-        success_url:
-          "https://example.com/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: "https://example.com/cancel"
+        success_url: "https://oxfitness.netlify.app/dashboard",
+        cancel_url: "https://oxfitness.netlify.app/cancel"
       },
       function(err: Error, session: any) {
-        // eslint-disable-next-line no-console
-        console.log(session);
+        response.set("Access-Control-Allow-Headers", "Content-Type");
         response.send(session);
       }
     );

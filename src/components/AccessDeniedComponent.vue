@@ -3,15 +3,9 @@
     <div class="noAccess__container">
       <img src="@/assets/illustrations/track.svg" class="illustration" />
       <h2>
-        Niestety nie masz moliwości wyświetlenia naszych treningów OxFitness 😥
+        Niestety nie masz możliwości wyświetlenia naszych treningów OxFitness 😥
       </h2>
-      <h2 v-if="test">
-        Aby kontynuować, kup dostęp na
-        <a href="https://oxfitness.wod.guru/user/login" target="_blank"
-          >wod.guru</a
-        >
-      </h2>
-      <div class="payment__container" v-else>
+      <div class="payment__container">
         <h2>
           Aby kontynuować, musisz kupić dostęp.
         </h2>
@@ -23,28 +17,28 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 const axios = require("axios").default;
-const Stripe = require("stripe");
-const stripe = Stripe(process.env.VUE_APP_stripePublicKey);
+import { loadStripe } from "@stripe/stripe-js";
 
 @Component
 export default class AccessDeniedComponent extends Vue {
-  test = false;
   sessionId = "";
   created() {
-    axios
-      .post(process.env.VUE_APP_cloudFunctionUrl)
-      .then((response: any) => {
-        // eslint-disable-next-line no-console
-        console.log(response);
-        this.sessionId = response.data;
-      })
-      // eslint-disable-next-line no-console
-      .catch((error: Error) => console.log(error));
+    // axios
+    //   .post(process.env.VUE_APP_cloudFunctionUrl)
+    //   .then((response: any) => (this.sessionId = response.data.id))
+    //   // eslint-disable-next-line no-console
+    //   .catch((error: Error) => console.log(error));
   }
-  checkout() {
-    stripe.redirectToCheckout({
-      sessionId: this.sessionId
-    });
+  async checkout() {
+    const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);
+    stripe
+      .redirectToCheckout({
+        sessionId: this.sessionId
+      })
+      .then((result: any) => {
+        // eslint-disable-next-line no-console
+        console.log(result);
+      });
   }
 }
 </script>
