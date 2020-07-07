@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 const cors = require("cors")({ origin: true });
-const stripe = require("stripe")(process.env.VUE_APP_stripeSecretKey);
+const stripe = require("stripe")(functions.config().stripe.secret);
 
 // When user's account is created, the function updates user's premiumAccount Object
 export const premiumAccess = functions.database
@@ -54,7 +54,10 @@ export const payment = functions.https.onRequest((request, response) => {
           }
         ],
         mode: "payment",
-        success_url: "https://oxfitness.netlify.app/dashboard",
+        // success_url:
+        //   "https://example.com/success?session_id={CHECKOUT_SESSION_ID}",
+        // cancel_url: "https://example.com/cancel"
+        success_url: "https://oxfitness.netlify.app/success",
         cancel_url: "https://oxfitness.netlify.app/cancel"
       },
       function(err: Error, session: any) {

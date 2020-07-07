@@ -58,6 +58,8 @@
         :user="user"
         :welcomeDialog="displayWelcome"
       />
+      <button @click="$router.push('/success')">Success</button>
+      <button @click="$router.push('/cancel')">Cancel</button>
     </div>
   </section>
 </template>
@@ -74,6 +76,13 @@ import { User } from "@/store/models";
     AccessDeniedComponent,
     LoadingComponent,
     WelcomeComponent
+  },
+  beforeRouteEnter(to, from, next) {
+    if (to.fullPath === "/success" || to.fullPath === "/cancel")
+      next(vm => {
+        vm.$router.replace(to.fullPath);
+      });
+    else next();
   }
 })
 export default class Dashboard extends Vue {

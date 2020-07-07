@@ -23,11 +23,11 @@ import { loadStripe } from "@stripe/stripe-js";
 export default class AccessDeniedComponent extends Vue {
   sessionId = "";
   created() {
-    // axios
-    //   .post(process.env.VUE_APP_cloudFunctionUrl)
-    //   .then((response: any) => (this.sessionId = response.data.id))
-    //   // eslint-disable-next-line no-console
-    //   .catch((error: Error) => console.log(error));
+    axios
+      .post(process.env.VUE_APP_cloudFunctionUrl)
+      .then((response: any) => (this.sessionId = response.data.id))
+      // eslint-disable-next-line no-console
+      .catch((error: Error) => console.log(error));
   }
   async checkout() {
     const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);

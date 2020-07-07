@@ -72,6 +72,24 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
     beforeEnter: AuthGuard
+  },
+  {
+    path: "/success",
+    name: "SuccessPage",
+    component: () =>
+      import(
+        /* webpackChunkName: "successPage" */ "../views/paymentRedirections/SuccessPage.vue"
+      ),
+    beforeEnter: AuthGuard
+  },
+  {
+    path: "/cancel",
+    name: "CancelPage",
+    component: () =>
+      import(
+        /* webpackChunkName: "cancelPage" */ "../views/paymentRedirections/CancelPage.vue"
+      ),
+    beforeEnter: AuthGuard
   }
 ];
 

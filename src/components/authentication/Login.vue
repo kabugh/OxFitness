@@ -39,7 +39,6 @@ import { required, email } from "vuelidate/lib/validators";
       required
     }
   },
-
   watch: {
     user(value) {
       if (value !== null && value !== undefined) {

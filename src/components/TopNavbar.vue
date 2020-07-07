@@ -5,7 +5,9 @@
       ($route.path !== '/' &&
         $route.path !== '/authentication' &&
         $route.path !== '/dashboard' &&
-        $route.path !== '/profile') ||
+        $route.path !== '/profile' &&
+        $route.path !== '/success' &&
+        $route.path !== '/cancel') ||
         isNavOpen
     "
   >
