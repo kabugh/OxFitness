@@ -38,6 +38,9 @@ export const premiumAccess = functions.database
 
 export const payment = functions.https.onRequest((request, response) => {
   cors(request, response, async () => {
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    response.set("Access-Control-Allow-Credentials", "true");
+    response.set("Access-Control-Allow-Origin", "*"); // to be changed on https://oxfitness.pl on production
     await stripe.checkout.sessions.create(
       {
         payment_method_types: ["card"],
@@ -61,7 +64,6 @@ export const payment = functions.https.onRequest((request, response) => {
         cancel_url: "https://oxfitness.netlify.app/cancel"
       },
       function(err: Error, session: any) {
-        response.set("Access-Control-Allow-Headers", "Content-Type");
         response.send(session);
       }
     );

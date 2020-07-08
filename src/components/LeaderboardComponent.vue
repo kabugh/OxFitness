@@ -77,7 +77,7 @@ export default class LeaderboardComponent extends Vue {
     {
       name: "time",
       align: "center",
-      label: "Czas",
+      label: "Czas [min]",
       field: "time",
       sortable: true
     },
@@ -98,23 +98,23 @@ export default class LeaderboardComponent extends Vue {
     {
       name: "weight",
       align: "center",
-      label: "Ciężar",
+      label: "Ciężar [kg]",
       field: "weight",
       sortable: true
     },
     {
       name: "distance",
       align: "center",
-      label: "Dystans",
+      label: "Dystans [m]",
       field: "distance",
       sortable: true
     }
   ];
   data: Object[] = [];
 
-  @Watch("user.workouts")
-  @Watch("isFinished")
   updateLeaderboard() {
+    // eslint-disable-next-line no-console
+    console.log("updateLeaderboard");
     this.$store
       .dispatch("fetchWorkoutLeaderboard", this.$route.params.id)
       .then(() => {
@@ -143,7 +143,10 @@ export default class LeaderboardComponent extends Vue {
     return this.data;
   }
 
+  @Watch("currentLeaderboard")
   transformLeaderboardData() {
+    // eslint-disable-next-line no-console
+    console.log("transformLeaderboard");
     this.data = [];
     if (
       this.currentLeaderboard !== undefined &&

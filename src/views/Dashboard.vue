@@ -58,8 +58,6 @@
         :user="user"
         :welcomeDialog="displayWelcome"
       />
-      <button @click="$router.push('/success')">Success</button>
-      <button @click="$router.push('/cancel')">Cancel</button>
     </div>
   </section>
 </template>

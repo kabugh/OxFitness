@@ -156,7 +156,7 @@ const actions = {
     }
   },
   uploadWorkoutResults(
-    { commit, getters }: any,
+    { commit, getters, dispatch }: any,
     payload: { workoutId: string }
   ) {
     commit("setLoading", true);
@@ -179,11 +179,13 @@ const actions = {
       .once("value")
       .then(snapshot => {
         user.workouts = snapshot.val();
+        commit("setUser", user);
+        dispatch("fetchWorkoutLeaderboard", payload.workoutId).then(() => {
+          commit("setLoading", false);
+        });
       });
-    commit("setUser", user);
-    commit("setLoading", false);
   },
-  updateWorkoutResults({ commit, getters }: any, payload: any) {
+  updateWorkoutResults({ commit, getters, dispatch }: any, payload: any) {
     commit("setLoading", true);
     commit("clearError");
     // upload to user
@@ -200,7 +202,6 @@ const actions = {
       user.workouts[key as any].workoutResults = payload.workoutResults;
     }
     commit("setUser", user);
-    console.log("workoutKey: " + key);
     firebase
       .database()
       .ref(`/users/${getters.user.id}/workouts/${key}`)
@@ -230,10 +231,13 @@ const actions = {
           .database()
           .ref(`/workouts/${payload.workoutId}/${resultKey}`)
           .update({ ...payload, userId: user.id });
+
+        dispatch("fetchWorkoutLeaderboard", payload.workoutId).then(() => {
+          commit("setLoading", false);
+        });
       });
-    commit("setLoading", false);
   },
-  removeWorkoutResults({ commit, getters }: any, payload: any) {
+  removeWorkoutResults({ commit, getters, dispatch }: any, payload: any) {
     commit("setLoading", true);
     commit("clearError");
 
@@ -279,7 +283,14 @@ const actions = {
           firebase
             .database()
             .ref(`/workouts/${payload.workoutId}/${resultKey}`)
-            .remove();
+            .remove()
+            .then(() => {
+              dispatch("fetchWorkoutLeaderboard", payload.workoutId).then(
+                () => {
+                  commit("setLoading", false);
+                }
+              );
+            });
         });
     }
     commit("setLoading", false);
@@ -294,8 +305,8 @@ const actions = {
       .once("value")
       .then(snapshot => {
         commit("setCurrentLeaderboard", snapshot.val());
+        commit("setLoading", false);
       });
-    commit("setLoading", false);
   }
 };
 

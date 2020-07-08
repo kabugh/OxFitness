@@ -17,7 +17,7 @@
         mask="##:##"
         fill-mask
         label="Czas *"
-        hint="Przykład - 12:35"
+        hint="Przykład - 12:35 [min]"
         :rules="[
           val =>
             (val && val.length > 0 && !val.includes('_')) || 'Podaj swój czas'
@@ -32,7 +32,46 @@
         label="Powtórzenia *"
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
-          val => (val > 0 && val < 100) || 'Podaj poprawną ilość powtórzeń'
+          val =>
+            (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość powtórzeń'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'rounds'"
+        ref="rounds"
+        filled
+        type="number"
+        v-model="workoutResults.rounds"
+        label="Ukończone rundy *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj ilość rund',
+          val => (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość rund'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'weight'"
+        ref="weight"
+        filled
+        type="number"
+        v-model="workoutResults.weight"
+        label="Ciężar [kg] *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj ciężar',
+          val =>
+            (val > 0 && val < 100) || 'Podaj poprawną, możliwą wartość ciężaru'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'distance'"
+        ref="distance"
+        filled
+        type="number"
+        v-model="workoutResults.distance"
+        label="Dystans [m] *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj wartość dystansu',
+          val =>
+            (val > 0 && val < 100) || 'Podaj poprawną, możliwą wartość dystansu'
         ]"
       />
       <q-input
@@ -58,8 +97,8 @@
         v-model="workoutResults.time"
         mask="##:##"
         fill-mask
-        label="Czas *"
-        hint="Przykład - 12:35"
+        label="Czas [min] *"
+        hint="Przykład - 12:35 [min]"
         :rules="[
           val =>
             (val && val.length > 0 && !val.includes('_')) || 'Podaj swój czas'
@@ -74,7 +113,47 @@
         label="Powtórzenia *"
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
-          val => (val > 0 && val < 100) || 'Podaj poprawną ilość powtórzeń'
+          val =>
+            (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość powtórzeń'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'rounds'"
+        ref="rounds"
+        filled
+        type="number"
+        v-model="workoutResults.rounds"
+        label="Ukończone rundy *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj ilość rund',
+          val => (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość rund'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'weight'"
+        ref="weight"
+        filled
+        type="number"
+        v-model="workoutResults.weight"
+        label="Ciężar [kg] *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj ciężar',
+          val =>
+            (val > 0 && val < 250) || 'Podaj poprawną, możliwą wartość ciężaru'
+        ]"
+      />
+      <q-input
+        v-else-if="resultKey == 'distance'"
+        ref="distance"
+        filled
+        type="number"
+        v-model="workoutResults.distance"
+        label="Dystans [m] *"
+        :rules="[
+          val => (val !== null && val !== '') || 'Podaj wartość dystansu',
+          val =>
+            (val > 0 && val < 10000) ||
+            'Podaj poprawną, możliwą wartość dystansu'
         ]"
       />
       <q-input

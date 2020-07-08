@@ -222,9 +222,11 @@ export default class Profile extends Vue {
   daysLeft = 0;
   created() {
     let user = firebase.auth().currentUser;
-    if (user) {
+    if (user && this.user.premiumAccount.validUntil.length !== 0) {
       this.isVerified = user.emailVerified;
       this.calculateDaysLeft();
+    } else {
+      this.logOut();
     }
   }
   get user(): User {
