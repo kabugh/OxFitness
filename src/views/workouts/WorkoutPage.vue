@@ -12,7 +12,7 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <vue-plyr class="video__wrapper" v-show="false">
+      <vue-plyr class="video__wrapper">
         <div
           data-plyr-provider="vimeo"
           :data-plyr-embed-id="currentWorkout.fields.videoId"
@@ -35,11 +35,7 @@
         /> -->
         <div class="editor__container" v-html="receivedData" v-else></div>
       </div>
-      <q-list
-        v-show="false"
-        bordered
-        v-if="Object.keys(this.accordionItems).length > 0"
-      >
+      <q-list bordered v-if="Object.keys(this.accordionItems).length > 0">
         <q-expansion-item
           group="accordion"
           icon="emoji_events"

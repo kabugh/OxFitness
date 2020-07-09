@@ -1,7 +1,6 @@
 <template>
   <section class="authentication">
     <div class="logo__container">
-      <!-- <img src="@/assets/icons/iconLogo.png" alt="logo" class="unselectable" /> -->
       <div class="text__wrapper">
         <h1>OxFitness</h1>
         <h3>Codzienne treningi</h3>
@@ -43,7 +42,7 @@
         </h4>
       </div>
       <!-- <div class="status" v-if="loginTab">
-        <h4>Don't have an account?</h4>
+        <h4>Nie masz konta?</h4>
         <h4
           class="highlighted"
           @click="
@@ -51,15 +50,24 @@
             signUpTab = true;
           "
         >
-          Sign up
+          Zarejestruj się
         </h4>
         <div class="passwordStatus__container">
-          <h4>Forgot your password?</h4>
-          <h4 class="highlighted">Remind</h4>
+          <h4>Zapomniałeś hasło?</h4>
+          <h4
+            class="highlighted"
+            @click="
+              loginTab = false;
+              signUpTab = false;
+              passwordRecoveryTab = true;
+            "
+          >
+            przypomnij
+          </h4>
         </div>
-      </div> -->
-      <!-- <div class="status" v-if="signUpTab">
-        <h4>Already a member?</h4>
+      </div>
+      <div class="status" v-if="signUpTab">
+        <h4>Masz konto?</h4>
         <h4
           class="highlighted"
           @click="
@@ -67,12 +75,8 @@
             signUpTab = false;
           "
         >
-          login
+          Zaloguj się
         </h4>
-        <div class="passwordStatus__container">
-          <h4>Forgot your password?</h4>
-          <h4 class="highlighted">Remind</h4>
-        </div>
       </div> -->
     </div>
   </section>
@@ -109,10 +113,6 @@ export default class Authentication extends Vue {
     color: $brandColor;
     text-transform: uppercase;
     padding-top: 4vh;
-    img {
-      width: 40%;
-      margin: 0 auto;
-    }
     h1 {
       font-size: 3rem;
       font-weight: 600;

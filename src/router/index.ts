@@ -63,6 +63,25 @@ const routes = [
     props: true
   },
   {
+    path: "/archived",
+    name: "archivedWorkouts",
+    component: () =>
+      import(
+        /* webpackChunkName: "archivedWorkouts" */ "../views/workouts/ArchivedWorkouts.vue"
+      ),
+    beforeEnter: AuthGuard
+  },
+  {
+    path: "/archived/:id",
+    name: "archivedWorkoutPage",
+    component: () =>
+      import(
+        /* webpackChunkName: "archivedWorkoutPage" */ "../views/workouts/ArchivedWorkoutPage.vue"
+      ),
+    beforeEnter: AuthGuard,
+    props: true
+  },
+  {
     path: "/plans",
     redirect: { name: "dashboard" }
   },

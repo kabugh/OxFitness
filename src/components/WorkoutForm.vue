@@ -58,7 +58,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ciężar',
           val =>
-            (val > 0 && val < 100) || 'Podaj poprawną, możliwą wartość ciężaru'
+            (val > 0 && val < 250) || 'Podaj poprawną, możliwą wartość ciężaru'
         ]"
       />
       <q-input
@@ -71,7 +71,8 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj wartość dystansu',
           val =>
-            (val > 0 && val < 100) || 'Podaj poprawną, możliwą wartość dystansu'
+            (val > 0 && val < 1000) ||
+            'Podaj poprawną, możliwą wartość dystansu'
         ]"
       />
       <q-input
@@ -195,7 +196,7 @@ import { Workout, User } from "../store/models";
 export default class WorkoutForm extends Vue {
   mounted() {
     this.updateInputs();
-    this.workoutResults.name = this.$props.user.email;
+    this.workoutResults.name = this.$props.user.name;
   }
   workoutResults = {
     name: "",

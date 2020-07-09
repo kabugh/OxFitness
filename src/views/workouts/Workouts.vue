@@ -71,13 +71,19 @@
             </div>
           </div>
         </div>
-        <div class="archive__videos__container" v-show="false">
+        <div class="archive__videos__container">
           <h2>
             Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
             klikając poniżej.
           </h2>
           <div class="button__wrapper">
-            <button type="button" class="dark">Wróć</button>
+            <button
+              type="button"
+              class="dark"
+              @click="$router.push('/archived')"
+            >
+              Wróć
+            </button>
           </div>
         </div>
       </div>
