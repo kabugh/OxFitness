@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as functions from "firebase-functions";
 const cors = require("cors")({ origin: true });
 const stripe = require("stripe")(functions.config().stripe.secret);
@@ -57,9 +58,6 @@ export const payment = functions.https.onRequest((request, response) => {
           }
         ],
         mode: "payment",
-        // success_url:
-        //   "https://example.com/success?session_id={CHECKOUT_SESSION_ID}",
-        // cancel_url: "https://example.com/cancel"
         success_url: "https://oxfitness.netlify.app/success",
         cancel_url: "https://oxfitness.netlify.app/cancel"
       },
@@ -69,3 +67,29 @@ export const payment = functions.https.onRequest((request, response) => {
     );
   });
 });
+
+const endpointSecret = functions.config().stripe.whsecret;
+export const successfulPayment = functions.https.onRequest(
+  (request: any, response: any) => {
+    const sig = request.headers["stripe-signature"];
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        request.rawBody,
+        sig,
+        endpointSecret
+      );
+    } catch (err) {
+      return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    // Handle the checkout.session.completed event
+    // Update user's premiumAccount
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      console.log(`Event passed: ${session}`);
+    }
+    // Return a response to acknowledge receipt of the event
+    response.json({ received: true });
+  }
+);
