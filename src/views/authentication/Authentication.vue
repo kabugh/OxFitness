@@ -28,20 +28,7 @@
           zaloguj się
         </h4>
       </div>
-      <div class="status" v-else>
-        <h4>Zapomniałeś hasło?</h4>
-        <h4
-          class="highlighted"
-          @click="
-            loginTab = false;
-            signUpTab = false;
-            passwordRecoveryTab = true;
-          "
-        >
-          przypomnij
-        </h4>
-      </div>
-      <!-- <div class="status" v-if="loginTab">
+      <div class="status" v-if="loginTab">
         <h4>Nie masz konta?</h4>
         <h4
           class="highlighted"
@@ -77,7 +64,7 @@
         >
           Zaloguj się
         </h4>
-      </div> -->
+      </div>
     </div>
   </section>
 </template>
@@ -86,6 +73,7 @@ import SignUp from "@/components/authentication/SignUp.vue";
 import Login from "@/components/authentication/Login.vue";
 import PasswordRecovery from "@/components/authentication/PasswordRecovery.vue";
 import { Component, Vue } from "vue-property-decorator";
+import { Route } from "vue-router";
 @Component({
   components: {
     SignUp,
@@ -97,6 +85,12 @@ export default class Authentication extends Vue {
   loginTab = true;
   signUpTab = false;
   passwordRecoveryTab = false;
+  created() {
+    if (this.$route.params.authMode === "signUp") {
+      this.loginTab = false;
+      this.signUpTab = true;
+    }
+  }
 }
 </script>
 <style lang="scss">
@@ -150,7 +144,7 @@ export default class Authentication extends Vue {
     }
     .status {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 40px;
       position: absolute;
       bottom: 10vh;
       left: 50%;
@@ -161,12 +155,12 @@ export default class Authentication extends Vue {
         letter-spacing: 2px;
         font-size: 0.8rem;
         white-space: nowrap;
-        margin-top: 10px;
+        margin-top: 8px;
         font-weight: bolder;
 
         &.highlighted {
           color: $brandColor;
-          font-size: 0.9rem;
+          font-size: 0.8rem;
           text-decoration: underline;
           &:hover {
             cursor: pointer;
@@ -174,7 +168,19 @@ export default class Authentication extends Vue {
         }
       }
       .passwordStatus__container {
-        margin-top: 20px;
+        margin-top: 10px;
+      }
+      @media (min-width: 360px) {
+        margin-top: 30px;
+        h4 {
+          margin-top: 10px;
+          &.highlighted {
+            font-size: 0.9rem;
+          }
+        }
+        .passwordStatus__container {
+          margin-top: 20px;
+        }
       }
     }
   }

@@ -2,15 +2,36 @@
   <section class="passwordRecovery">
     <div class="passwordRecovery__container">
       <div class="form__wrapper">
-        <form action @submit.prevent="onPasswordRecovery" autocomplete="false">
+        <form
+          action
+          @submit.prevent="onPasswordRecovery"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="off"
+          spellcheck="false"
+        >
           <input
             type="text"
-            v-model="email"
+            v-model.trim="email"
             :disabled="disableInputs"
             placeholder="Email"
-            autocomplete="false"
+            autocomplete="off"
+            @blur="$v.email.$touch()"
+            :class="{ 'form--error': $v.email.$error }"
           />
-          <button type="submit">odzyskaj hasło</button>
+          <span class="error" v-if="!$v.email.required && $v.email.$error">
+            Proszę podać adres email.
+          </span>
+          <span class="error" v-if="!$v.email.email && $v.email.$error">
+            Proszę podać poprawny adres email.
+          </span>
+          <button
+            type="submit"
+            :disabled="disableInputs || $v.$invalid"
+            :class="{ loading: disableInputs }"
+          >
+            odzyskaj hasło
+          </button>
         </form>
       </div>
     </div>
@@ -21,6 +42,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 @Component({
+  mixins: [validationMixin],
   validations: {
     email: {
       required,

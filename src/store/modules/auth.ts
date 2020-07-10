@@ -92,7 +92,18 @@ const actions = {
       .catch(e => {
         commit("setLoading", false);
         commit("setError", e);
-        console.log(e);
+        if (e.code === "auth/email-already-in-use") {
+          Notify.create({
+            type: "negative",
+            message: "Podany email jest już zajęty."
+          });
+        } else {
+          Notify.create({
+            type: "negative",
+            message:
+              "Wystąpił błąd. Spróbuj ponownie później lub skontaktuj się z Administratorem."
+          });
+        }
       });
   },
   signUserIn({ commit }: any, payload: { email: string; password: string }) {
@@ -142,7 +153,18 @@ const actions = {
       .catch(e => {
         commit("setLoading", false);
         commit("setError", e);
-        console.log(e);
+        if (e.code === "auth/wrong-password") {
+          Notify.create({
+            type: "negative",
+            message: "Podane hasło jest niepoprawne."
+          });
+        } else {
+          Notify.create({
+            type: "negative",
+            message:
+              "Wystąpił błąd. Spróbuj ponownie później lub skontaktuj się z Administratorem."
+          });
+        }
       });
   },
   autoSignIn(
