@@ -19,7 +19,6 @@
         <router-view />
       </keep-alive>
     </TransitionComponent>
-
     <!-- an error occurs because conentful-vue-render components are rendered as TheFooter template -->
     <!-- <TheFooter
       v-if="

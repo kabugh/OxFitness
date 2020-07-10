@@ -3,7 +3,10 @@
     <transition :name="transition" :mode="mode">
       <slot></slot>
     </transition>
-    <div class="pageTransition left transition-right"></div>
+    <div
+      ref="pageTransition"
+      class="pageTransition left transition-right"
+    ></div>
     <div class="pageTransition right transition-left"></div>
   </div>
 </template>
@@ -38,17 +41,15 @@ export default class TransitionComponent extends Vue {
   top: 0;
   height: 100vh;
   width: 100%;
-  transform: translateX(100vw); // maybe use 100% - in case of wide scrollbar?
   background: var(--overlay-bg);
   transition-duration: var(--transition-duration);
   z-index: 200;
   &.left {
-    right: 0;
+    transform: translateX(100vw); // maybe use 100% - in case of wide scrollbar?
   }
   &.right {
-    left: 0;
+    transform: translateX(-100vw);
   }
 }
-@import "@/assets/styles/transitions/transition-right-full";
 @import "@/assets/styles/transitions/transition-left-full";
 </style>

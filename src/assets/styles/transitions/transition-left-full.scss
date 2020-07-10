@@ -1,5 +1,5 @@
 .transition-left-full-enter ~ .transition-right {
-  transform: translateX(0);
+  transform: translateX(100vw);
 }
 
 .transition-left-full-enter-active ~ .transition-right,

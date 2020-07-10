@@ -17,7 +17,7 @@
               :key="index"
             >
               <img
-                src="@/assets/sample.png"
+                src="@/assets/sample.jpg"
                 alt="video
           thumbnail"
                 class="thumbnail"
@@ -62,11 +62,9 @@
           <div class="videos__container" v-else>
             <div
               class="video__wrapper skeleton"
-              v-for="(mockItem, index) in mockItems"
-              :key="index"
+              v-for="mockItem in mockItems"
+              :key="mockItem"
             >
-              <q-skeleton type="rect" />
-              <q-skeleton type="text" />
               <q-skeleton type="rect" />
             </div>
           </div>
@@ -118,7 +116,7 @@
                 :key="index"
               >
                 <img
-                  src="@/assets/sample.png"
+                  src="@/assets/sample.jpg"
                   alt="video thumbnail"
                   class="thumbnail"
                   @click="
@@ -161,85 +159,14 @@
             <div class="videos__container" v-else>
               <div
                 class="video__wrapper skeleton"
-                v-for="(mockItem, index) in mockItems"
-                :key="index"
+                v-for="mockItem in mockItems"
+                :key="mockItem"
               >
-                <q-skeleton type="rect" />
-                <q-skeleton type="text" />
-                <q-skeleton type="rect" />
+                <q-skeleton class="thumbnail" type="rect" />
               </div>
             </div>
           </q-tab-panel>
         </q-tab-panels>
-        <!-- <div
-          class="videos__section__wrapper"
-          v-for="(workouts, i) in groupedWorkouts"
-          :key="i"
-        >
-          <h2>{{ i }}</h2>
-          <div class="videos__container" v-if="!loading">
-            <div
-              class="video__wrapper"
-              v-for="(workout, index) in workouts"
-              :key="index"
-            >
-              <img
-                src="@/assets/sample.png"
-                alt="video
-          thumbnail"
-                class="thumbnail"
-                @click="
-                  $router.push({
-                    name: 'workoutPage',
-                    params: {
-                      workoutType: $attrs.workoutType,
-                      id: workout.sys.id,
-                      workout: workout
-                    }
-                  })
-                "
-              />
-              <div class="title__container">
-                <h2 v-if="$attrs.workoutType === 'daily'">
-                  {{ workout.fields.dayOfTheWeek }}
-                </h2>
-                <h2 v-else-if="$attrs.workoutType === 'warm-up'">
-                  {{ workout.fields.title }}
-                </h2>
-                <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
-              </div>
-              <div class="button__wrapper">
-                <button
-                  type="button"
-                  class="dark"
-                  @click="
-                    $router.push({
-                      name: 'workoutPage',
-                      params: {
-                        workoutType: $attrs.workoutType,
-                        id: workout.sys.id,
-                        workout: workout
-                      }
-                    })
-                  "
-                >
-                  Zobacz więcej
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="videos__container" v-else>
-            <div
-              class="video__wrapper skeleton"
-              v-for="(mockItem, index) in mockItems"
-              :key="index"
-            >
-              <q-skeleton type="rect" />
-              <q-skeleton type="text" />
-              <q-skeleton type="rect" />
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </section>
@@ -383,14 +310,10 @@ export default class Workouts extends Vue {
             }
 
             &.skeleton {
-              display: grid;
-              grid-template-rows: minmax(200px, 1fr) repeat(2, 75px);
-              grid-row-gap: 2vh;
-              > * {
-                min-width: 50%;
-              }
-              .q-skeleton--type-rect:last-of-type {
-                max-width: 50%;
+              .q-skeleton {
+                width: 100%;
+                height: 100%;
+                min-height: 200px;
                 margin: 0 auto;
               }
             }

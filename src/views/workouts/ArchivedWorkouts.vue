@@ -14,7 +14,7 @@
               :key="index"
             >
               <img
-                src="@/assets/sample.png"
+                src="@/assets/sample.jpg"
                 alt="video
           thumbnail"
                 class="thumbnail"
@@ -60,8 +60,6 @@
               v-for="(mockItem, index) in mockItems"
               :key="index"
             >
-              <q-skeleton type="rect" />
-              <q-skeleton type="text" />
               <q-skeleton type="rect" />
             </div>
           </div>
