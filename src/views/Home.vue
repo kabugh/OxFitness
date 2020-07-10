@@ -86,22 +86,11 @@
           >
             <h2>{{ item.title }}</h2>
             <router-link
-              v-if="item.link"
               tag="button"
               type="button"
-              :to="{ path: item.link }"
+              :to="{ name: item.route, params: { authMode: 'signUp' } }"
               >{{ item.button }}</router-link
             >
-            <button
-              type="button"
-              v-else
-              @click="
-                navigateOutside(item.externalLink);
-                $router.push('/features');
-              "
-            >
-              {{ item.button }}
-            </button>
           </li>
         </ul>
       </div>
@@ -181,19 +170,19 @@ export default class Home extends Vue {
       title: "Czym jest OxFitness?",
       button: "Dowiedz się więcej",
       image: "1.jpg",
-      link: "/features"
+      route: "features"
     },
     {
       title: "Chcę dołączyć do programu",
       button: "Zarejestruj się",
       image: "2.jpg",
-      externalLink: "https://wod.guru/athlete-registration-form/wolow"
+      route: "authentication"
     },
     {
       title: "Należę do OxFitness",
       button: "Zaloguj się",
       image: "3.jpg",
-      link: "/dashboard"
+      route: "dashboard"
     }
   ];
 
@@ -202,10 +191,6 @@ export default class Home extends Vue {
     { value: 50, description: "unikalnych workoutów" },
     { value: 8, description: "treningów na żywo" }
   ];
-
-  navigateOutside(link: string) {
-    window.open(link, "_blank");
-  }
 }
 </script>
 

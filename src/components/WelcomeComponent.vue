@@ -18,7 +18,7 @@
           <q-input
             ref="name"
             filled
-            v-model="passedUserName"
+            v-model.trim="passedUserName"
             label="Imię *"
             hint="Przywitaj się, podaj imię/ksywkę"
             :rules="[val => (val && val.length > 0) || 'Proszę uzupełnić pole']"

@@ -1,5 +1,5 @@
 <template>
-  <section ref="overlay" class="overlay topView">
+  <section ref="overlay" class="overlay">
     <div class="overlay__wrapper">
       <div class="account__preview">
         <div class="account__details">
@@ -109,7 +109,7 @@ export default class TheOverlay extends Vue {
   background-color: #3e3e3e;
   z-index: 99;
   .overlay__wrapper {
-    padding: 2vh 4vh 4vh 4vh;
+    padding: 12vh 4vh 4vh 4vh;
     @include flex;
     flex-direction: column;
     .account__preview {

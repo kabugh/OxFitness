@@ -22,14 +22,15 @@ import { loadStripe } from "@stripe/stripe-js";
 @Component
 export default class AccessDeniedComponent extends Vue {
   sessionId = "";
-  created() {
-    axios
+  async checkout() {
+    await axios
       .post(process.env.VUE_APP_cloudFunctionUrl)
-      .then((response: any) => (this.sessionId = response.data.id))
+      .then((response: any) => {
+        this.sessionId = response.data.id;
+        // send response.data.payment_intent to user account on firebase
+      })
       // eslint-disable-next-line no-console
       .catch((error: Error) => console.log(error));
-  }
-  async checkout() {
     const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);
     stripe
       .redirectToCheckout({

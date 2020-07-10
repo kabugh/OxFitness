@@ -214,7 +214,7 @@ export default class WorkoutPage extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
 .workoutPage {
   width: 100%;

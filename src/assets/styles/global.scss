@@ -161,6 +161,14 @@ select:-webkit-autofill:focus {
   font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 }
 
+  @media (min-width: 700px) and (min-height: 1024px) {
+    section{
+      &.topView {
+        padding-top: 6vh;
+      }
+    }
+  }
+
 @media only screen and (orientation: landscape) and (min-width: 1300px) and (min-height: 1000px) {
   section {
     > .container {
@@ -267,5 +275,10 @@ select:-webkit-autofill:focus {
         }
       }
     }
+  }
+}
+@media only screen {
+  * {
+      touch-action: manipulation;
   }
 }

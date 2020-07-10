@@ -19,7 +19,7 @@
       <div class="back" v-go-back.single>Powrót</div>
     </div>
     <ul v-else></ul>
-    <div class="logowhite">
+    <div class="logo">
       <h3>OxFitness</h3>
     </div>
     <div class="burger__wrapper">
@@ -86,7 +86,7 @@ nav.topNavbar {
       }
     }
   }
-  .logowhite {
+  .logo {
     width: 10vw;
     height: 6vh;
     color: white;

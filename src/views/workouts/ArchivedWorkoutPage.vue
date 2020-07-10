@@ -136,3 +136,75 @@ export default class ArchivedWorkoutPage extends Vue {
   }
 }
 </script>
+<style lang="scss">
+@import "@/assets/styles/global.scss";
+.workoutPage {
+  width: 100%;
+  min-height: 100vh;
+  color: black;
+  .workoutPage__container {
+    @include flex;
+    flex-direction: column;
+    padding: 2vh 6vw;
+    width: 100%;
+    height: 100%;
+    .title__container {
+      padding: 2vh 0 4vh 0;
+      text-align: center;
+      text-transform: capitalize;
+      h1 {
+        font-size: 2rem;
+        font-weight: bolder;
+      }
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .q-skeleton--type-text {
+      padding: 4vh 0 4vh 0;
+      margin: 0 0 4vh 0;
+    }
+    .q-skeleton--type-rect {
+      min-height: 40vh;
+    }
+    .routines__container {
+      padding: 4vh 0;
+      h3 {
+        font-size: 1.5rem;
+      }
+      ul,
+      ol {
+        padding-left: 3vh;
+        li {
+          list-style-type: square;
+        }
+      }
+      a {
+        color: black;
+      }
+    }
+    .q-item__label {
+      text-transform: capitalize;
+    }
+    .results__container,
+    .rating__container {
+      @include flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4vh 0;
+      h2 {
+        font-size: 1rem;
+        margin-bottom: 2vh;
+      }
+    }
+  }
+}
+.q-card {
+  .text-h6 {
+    text-transform: capitalize;
+    text-align: center !important;
+  }
+}
+</style>
