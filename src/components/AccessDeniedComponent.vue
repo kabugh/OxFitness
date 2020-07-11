@@ -27,19 +27,15 @@ export default class AccessDeniedComponent extends Vue {
       .post(process.env.VUE_APP_cloudFunctionUrl)
       .then((response: any) => {
         this.sessionId = response.data.id;
-        // send response.data.payment_intent to user account on firebase
-      })
-      // eslint-disable-next-line no-console
-      .catch((error: Error) => console.log(error));
-    const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);
-    stripe
-      .redirectToCheckout({
-        sessionId: this.sessionId
-      })
-      .then((result: any) => {
-        // eslint-disable-next-line no-console
-        console.log(result);
+        this.$store.dispatch(
+          "updateUserTransactions",
+          response.data.payment_intent
+        );
       });
+    const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);
+    stripe.redirectToCheckout({
+      sessionId: this.sessionId
+    });
   }
 }
 </script>
@@ -51,6 +47,9 @@ export default class AccessDeniedComponent extends Vue {
     max-width: 60vw;
     max-height: 40vh;
     margin: 0 auto;
+    @media (min-width: 700px) {
+      max-width: 40vw;
+    }
   }
   h2 {
     margin-top: 2vh;

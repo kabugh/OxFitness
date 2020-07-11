@@ -36,6 +36,9 @@ const mutations = {
   ) {
     state.user.settings = payload;
   },
+  setUserTransactions(state: any, payload: string[]) {
+    state.user.transactions = payload;
+  },
   setLoading(state: { loading: boolean }, payload: boolean) {
     state.loading = payload;
   },
@@ -77,6 +80,7 @@ const actions = {
               notifications: true,
               displayResults: true
             },
+            transactions: [],
             workouts: []
           };
           commit("setUser", newUser);
@@ -127,6 +131,7 @@ const actions = {
               notifications: true,
               displayResults: true
             },
+            transactions: [],
             workouts: []
           };
           firebase
@@ -140,6 +145,7 @@ const actions = {
                 newUser.premiumAccount = (value as User).premiumAccount;
                 newUser.name = (value as User).name;
                 newUser.settings = (value as User).settings;
+                newUser.transactions = (value as User).transactions;
               }
               newUser.workouts = value.workouts;
             });
@@ -167,10 +173,7 @@ const actions = {
         }
       });
   },
-  autoSignIn(
-    { commit }: any,
-    payload: { uid: string; email: string; name: string; workouts: any }
-  ) {
+  autoSignIn({ commit }: any, payload: any) {
     const cachedUser: User = {
       id: payload.uid,
       email: payload.email,
@@ -184,6 +187,7 @@ const actions = {
         notifications: true,
         displayResults: true
       },
+      transactions: payload.transactions,
       workouts: payload.workouts
     };
     firebase
@@ -196,6 +200,7 @@ const actions = {
           cachedUser.premiumAccount = (value as User).premiumAccount;
           cachedUser.name = (value as User).name;
           cachedUser.settings = (value as User).settings;
+          cachedUser.transactions = (value as User).transactions;
         }
         cachedUser.workouts = value.workouts;
       });
@@ -241,6 +246,27 @@ const actions = {
       });
     commit("setSettings", payload);
     commit("setLoading", false);
+  },
+  updateUserTransactions({ commit, getters }: any, payload: string) {
+    commit("setLoading", true);
+    if (!getters.user.transactions) {
+      getters.user.transactions = [];
+    }
+    const userTransactions: string[] = getters.user.transactions;
+    userTransactions.push(payload);
+    commit("setUserTransactions", userTransactions);
+
+    firebase
+      .database()
+      .ref(`/users/${getters.user.id}/`)
+      .update({ transactions: userTransactions })
+      .then(() => {
+        commit("setLoading", false);
+      })
+      .catch(e => {
+        commit("setLoading", false);
+        commit("setError", e);
+      });
   },
   verifyAccount({ commit }: any) {
     commit("setLoading", true);

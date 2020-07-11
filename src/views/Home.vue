@@ -107,6 +107,7 @@
           src="@/assets/illustrations/develop.svg"
           class="illustration unselectable"
           loading="lazy"
+          alt="develop"
         />
       </div>
     </section>

@@ -259,6 +259,7 @@ export default class Profile extends Vue {
     return (start - end) / oneDay;
   }
 
+  @Watch("user.premiumAccount.validUntil")
   calculateDaysLeft() {
     const currentDate = new Date();
     const validUntilDate = new Date(this.user.premiumAccount.validUntil);
