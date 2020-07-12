@@ -1,20 +1,24 @@
 /* eslint-disable no-console */
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 const cors = require("cors")({ origin: true });
 const stripe = require("stripe")(functions.config().stripe.secret);
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: functions.config().database.url
+}); // When user's account is created, the function updates user's premiumAccount Object
 
-// When user's account is created, the function updates user's premiumAccount Object
+// pure function - currying
+const addDays = (days: number) => (date: string | number | Date) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+
+  return result;
+};
+
 export const premiumAccess = functions.database
   .ref("/users/{id}")
   .onCreate(event => {
-    // pure function - currying
-    const addDays = (days: number) => (date: string | number | Date) => {
-      const result = new Date(date);
-      result.setDate(result.getDate() + days);
-
-      return result;
-    };
-
     const currentTime = new Date();
     const accessTime: Date = addDays(7)(currentTime);
 
@@ -83,11 +87,45 @@ export const successfulPayment = functions.https.onRequest(
     } catch (err) {
       return response.status(400).send(`Webhook Error: ${err.message}`);
     }
-    // Handle the checkout.session.completed event
-    // Update user's premiumAccount
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      console.log(`Event passed: ${session}`);
+      let foundUser: any = {};
+      admin
+        .database()
+        .ref("users")
+        .orderByChild("transactions")
+        .once("value")
+        .then((snapshot: any) => {
+          const users = snapshot.val();
+          foundUser = Object.values(users).find((user: any, index: any) =>
+            Object.keys(user.transactions).find(
+              key => key === session.payment_intent
+            )
+          );
+          if (foundUser.premiumAccount) {
+            const currentTime = new Date();
+            const accessTime: Date = addDays(30)(currentTime);
+            const access = {
+              activationDate: currentTime,
+              isActive: true,
+              validUntil: accessTime
+            }; // doesnt work as intended - the dates dont get updated
+
+            foundUser.premiumAccount = access;
+            foundUser.transactions[session.payment_intent] = "succeeded";
+            admin
+              .database()
+              .ref(`/users/${foundUser.id}/`)
+              .update({
+                premiumAccount: foundUser.premiumAccount,
+                transactions: foundUser.transactions
+              })
+              .catch((e: Error) => {
+                console.log(e);
+              });
+          }
+        })
+        .catch((e: Error) => console.log(e));
     }
     // Return a response to acknowledge receipt of the event
     response.json({ received: true });

@@ -250,10 +250,10 @@ const actions = {
   updateUserTransactions({ commit, getters }: any, payload: string) {
     commit("setLoading", true);
     if (!getters.user.transactions) {
-      getters.user.transactions = [];
+      getters.user.transactions = {};
     }
-    const userTransactions: string[] = getters.user.transactions;
-    userTransactions.push(payload);
+    const userTransactions = getters.user.transactions;
+    userTransactions[payload] = "incomplete";
     commit("setUserTransactions", userTransactions);
 
     firebase

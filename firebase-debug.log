@@ -1,0 +1,117 @@
+[debug] [2020-07-12T11:52:36.307Z] ----------------------------------------------------------------------
+[debug] [2020-07-12T11:52:36.310Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve --only functions
+[debug] [2020-07-12T11:52:36.310Z] CLI Version:   8.2.0
+[debug] [2020-07-12T11:52:36.310Z] Platform:      darwin
+[debug] [2020-07-12T11:52:36.310Z] Node Version:  v10.16.3
+[debug] [2020-07-12T11:52:36.312Z] Time:          Sun Jul 12 2020 13:52:36 GMT+0200 (Central European Summer Time)
+[debug] [2020-07-12T11:52:36.312Z] ----------------------------------------------------------------------
+[debug] [2020-07-12T11:52:36.312Z] 
+[debug] [2020-07-12T11:52:36.446Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-07-12T11:52:36.447Z] > authorizing via signed-in user
+[debug] [2020-07-12T11:52:36.448Z] [iam] checking project oxfit-0001 for permissions ["firebase.projects.get"]
+[debug] [2020-07-12T11:52:36.463Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/oxfit-0001:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-07-12T11:52:37.488Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 12 Jul 2020 11:52:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=631","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-07-12T11:52:37.492Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/oxfit-0001  
+ 
+[debug] [2020-07-12T11:52:37.808Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 12 Jul 2020 11:52:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  functions: Using node@10 from host.
+[info] ✔  functions: functions emulator started at http://localhost:5000
+[info] i  functions: Watching "/Users/jakubtkaczyk/Projects/oxfit/functions" for Cloud Functions...
+[debug] [2020-07-12T11:52:37.877Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-07-12T11:52:37.878Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-07-12T11:52:37.879Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-07-12T11:52:37.881Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: Assigning socketPath: /var/folders/xz/pgnrd4ns4_l7j96wx3y60ykh0000gn/T/fire_emu_2677.sock 
+[debug] [2020-07-12T11:52:37.883Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: BUSY 
+[debug] [2020-07-12T11:52:38.398Z] [runtime-status] [2677] Functions runtime initialized. {"cwd":"/Users/jakubtkaczyk/Projects/oxfit/functions","node_version":"10.16.3"} 
+[debug] [2020-07-12T11:52:38.400Z] [runtime-status] [2677] Disabled runtime features: undefined 
+[debug] [2020-07-12T11:52:38.404Z] [runtime-status] [2677] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:52:38.406Z] [runtime-status] [2677] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:52:38.411Z] [runtime-status] [2677] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-07-12T11:52:38.460Z] [runtime-status] [2677] Checked functions.config() {"config":{}} 
+[debug] [2020-07-12T11:52:38.461Z] [runtime-status] [2677] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:52:38.462Z] [runtime-status] [2677] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:52:38.462Z] [runtime-status] [2677] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:52:38.463Z] [runtime-status] [2677] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"}} 
+[debug] [2020-07-12T11:52:38.493Z] [runtime-status] [2677] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.secret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[debug] [2020-07-12T11:52:38.498Z] [runtime-status] [2677] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.whsecret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[info] ✔  functions[payment]: http function initialized (http://localhost:5000/oxfit-0001/us-central1/payment).
+[info] ✔  functions[successfulPayment]: http function initialized (http://localhost:5000/oxfit-0001/us-central1/successfulPayment).
+[info] i  functions[premiumAccess]: function ignored because the database emulator does not exist or is not running.
+[debug] [2020-07-12T11:52:38.502Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: IDLE 
+[debug] [2020-07-12T11:53:52.740Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-07-12T11:53:52.741Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-07-12T11:53:52.744Z] Accepted request GET /oxfit-0001/us-central1/successfulPayment --> successfulPayment
+[debug] [2020-07-12T11:53:52.767Z] [worker-pool] addWorker(successfulPayment) 
+[debug] [2020-07-12T11:53:52.767Z] [worker-pool] Adding worker with key successfulPayment, total=1 
+[debug] [2020-07-12T11:53:52.768Z] [worker-pool] submitWork(triggerId=successfulPayment) 
+[debug] [2020-07-12T11:53:52.769Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: Assigning socketPath: /var/folders/xz/pgnrd4ns4_l7j96wx3y60ykh0000gn/T/fire_emu_2810.sock 
+[debug] [2020-07-12T11:53:52.769Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: BUSY 
+[debug] [2020-07-12T11:53:53.975Z] [runtime-status] [2810] Functions runtime initialized. {"cwd":"/Users/jakubtkaczyk/Projects/oxfit/functions","node_version":"10.16.3"} 
+[debug] [2020-07-12T11:53:53.978Z] [runtime-status] [2810] Disabled runtime features: undefined 
+[debug] [2020-07-12T11:53:53.981Z] [runtime-status] [2810] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:53:53.983Z] [runtime-status] [2810] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:53:53.988Z] [runtime-status] [2810] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-07-12T11:53:54.036Z] [runtime-status] [2810] Checked functions.config() {"config":{}} 
+[debug] [2020-07-12T11:53:54.037Z] [runtime-status] [2810] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:53:54.038Z] [runtime-status] [2810] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:53:54.038Z] [runtime-status] [2810] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:53:54.038Z] [runtime-status] [2810] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"}} 
+[debug] [2020-07-12T11:53:54.073Z] [runtime-status] [2810] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.secret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[debug] [2020-07-12T11:53:54.084Z] [runtime-status] [2810] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.whsecret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[debug] [2020-07-12T11:53:54.085Z] [runtime-status] [2810] Trigger "successfulPayment" has been found, beginning invocation! 
+[info] i  functions: Beginning execution of "successfulPayment"
+[debug] [2020-07-12T11:53:54.085Z] [runtime-status] [2810] triggerDefinition {"httpsTrigger":{},"name":"successfulPayment","entryPoint":"successfulPayment"} 
+[debug] [2020-07-12T11:53:54.085Z] [runtime-status] [2810] Running successfulPayment in mode HTTPS 
+[debug] [2020-07-12T11:53:54.104Z] [runtime-status] [2810] Attempting to listen to socketPath: /var/folders/xz/pgnrd4ns4_l7j96wx3y60ykh0000gn/T/fire_emu_2810.sock 
+[debug] [2020-07-12T11:53:54.110Z] [functions] Runtime ready! Sending request! 
+[debug] [2020-07-12T11:53:54.124Z] [runtime-status] [2810] Ephemeral server handling GET request 
+[debug] [2020-07-12T11:53:54.139Z] [runtime-status] [2810] Ephemeral server survived. 
+[info] i  functions: Finished "successfulPayment" in ~1s
+[debug] [2020-07-12T11:53:54.141Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: IDLE 
+[debug] [2020-07-12T11:53:54.142Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-07-12T11:55:16.160Z] File /Users/jakubtkaczyk/Projects/oxfit/functions/src/index.ts changed, reloading triggers 
+[debug] [2020-07-12T11:55:17.163Z] [worker-pool] Shutting down IDLE worker (~diagnostic~) 
+[debug] [2020-07-12T11:55:17.164Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: FINISHING 
+[debug] [2020-07-12T11:55:17.165Z] [worker-pool] Shutting down IDLE worker (successfulPayment) 
+[debug] [2020-07-12T11:55:17.165Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: FINISHING 
+[debug] [2020-07-12T11:55:17.173Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-07-12T11:55:17.174Z] [worker-pool] Adding worker with key ~diagnostic~, total=2 
+[debug] [2020-07-12T11:55:17.174Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-07-12T11:55:17.174Z] [worker-~diagnostic~-40d36c8e-ab73-4df7-9cf4-51740a419f20]: Assigning socketPath: /var/folders/xz/pgnrd4ns4_l7j96wx3y60ykh0000gn/T/fire_emu_2887.sock 
+[debug] [2020-07-12T11:55:17.174Z] [worker-~diagnostic~-40d36c8e-ab73-4df7-9cf4-51740a419f20]: BUSY 
+[debug] [2020-07-12T11:55:17.176Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: exited 
+[debug] [2020-07-12T11:55:17.176Z] [worker-~diagnostic~-db98a537-6d1d-4df9-911b-9c2f8478fe4b]: FINISHED 
+[debug] [2020-07-12T11:55:17.177Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: exited 
+[debug] [2020-07-12T11:55:17.177Z] [worker-successfulPayment-06e0b220-c047-48c1-a043-473dcd11d094]: FINISHED 
+[debug] [2020-07-12T11:55:17.580Z] [runtime-status] [2887] Functions runtime initialized. {"cwd":"/Users/jakubtkaczyk/Projects/oxfit/functions","node_version":"10.16.3"} 
+[debug] [2020-07-12T11:55:17.583Z] [runtime-status] [2887] Disabled runtime features: undefined 
+[debug] [2020-07-12T11:55:17.585Z] [runtime-status] [2887] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:55:17.587Z] [runtime-status] [2887] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:55:17.591Z] [runtime-status] [2887] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-07-12T11:55:17.639Z] [runtime-status] [2887] Checked functions.config() {"config":{}} 
+[debug] [2020-07-12T11:55:17.640Z] [runtime-status] [2887] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:55:17.641Z] [runtime-status] [2887] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"} 
+[debug] [2020-07-12T11:55:17.642Z] [runtime-status] [2887] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-functions/lib/index.js"} 
+[debug] [2020-07-12T11:55:17.642Z] [runtime-status] [2887] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.12.1","resolution":"/Users/jakubtkaczyk/Projects/oxfit/functions/node_modules/firebase-admin/lib/index.js"}} 
+[debug] [2020-07-12T11:55:17.673Z] [runtime-status] [2887] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.secret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[debug] [2020-07-12T11:55:17.676Z] [runtime-status] [2887] config() parent accessed! {"parentKey":"stripe","parentConfig":{}} 
+[warn] ⚠  Non-existent functions.config() value requested!
+   - Path: "stripe.whsecret"
+   - Learn more at https://firebase.google.com/docs/functions/local-emulator
+[debug] [2020-07-12T11:55:17.679Z] [worker-~diagnostic~-40d36c8e-ab73-4df7-9cf4-51740a419f20]: IDLE 
