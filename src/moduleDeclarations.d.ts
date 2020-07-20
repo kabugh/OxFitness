@@ -3,3 +3,4 @@ declare module "@/contentful/customRenderers";
 declare module "aos";
 declare module "vue-plyr";
 declare module "vue-password-strength-meter";
+declare module "vue-offline";

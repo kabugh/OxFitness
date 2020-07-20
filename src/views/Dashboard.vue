@@ -63,6 +63,8 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { VueOfflineMixin } from "vue-offline";
+
 import AccessDeniedComponent from "../components/AccessDeniedComponent.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
 import WelcomeComponent from "../components/WelcomeComponent.vue";
@@ -75,6 +77,7 @@ import { User } from "@/store/models";
     LoadingComponent,
     WelcomeComponent
   },
+  mixins: [VueOfflineMixin],
   beforeRouteEnter(to, from, next) {
     if (to.fullPath === "/success" || to.fullPath === "/cancel")
       next(vm => {

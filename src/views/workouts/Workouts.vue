@@ -17,10 +17,11 @@
               :key="index"
             >
               <img
+                v-if="isOnline"
                 src="@/assets/sample.jpg"
                 alt="video
           thumbnail"
-                class="thumbnail"
+                class="thumbnail unselectable"
                 @click="
                   $router.push({
                     name: 'workoutPage',
@@ -69,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="archive__videos__container">
+        <div class="archive__videos__container" v-if="isOnline">
           <h2>
             Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
             klikając poniżej.
@@ -173,13 +174,15 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { VueOfflineMixin } from "vue-offline";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import { Workout } from "@/store/models";
 
 @Component({
   components: {
     LoadingComponent
-  }
+  },
+  mixins: [VueOfflineMixin]
 })
 export default class Workouts extends Vue {
   mockItems = 6;

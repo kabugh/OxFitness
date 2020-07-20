@@ -6,7 +6,10 @@ import store from "./store";
 import * as firebase from "firebase";
 import VueScrollTo from "vue-scrollto";
 import VuePlyr from "vue-plyr";
-// The second argument is optional and sets the default config values for every player.
+import VueOffline from "vue-offline";
+
+Vue.use(VueOffline, { mixin: false, storage: false });
+
 Vue.use(VuePlyr, {
   plyr: {
     fullscreen: { enabled: false }

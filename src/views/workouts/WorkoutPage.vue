@@ -12,7 +12,7 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <vue-plyr class="video__wrapper">
+      <vue-plyr class="video__wrapper" v-if="isOnline">
         <div
           data-plyr-provider="vimeo"
           :data-plyr-embed-id="currentWorkout.fields.videoId"
@@ -54,7 +54,7 @@
       </q-list>
 
       <div class="results__container" v-if="$attrs.workoutType === 'daily'">
-        <div class="results__wrapper" v-if="!isFinished">
+        <div class="results__wrapper" v-if="!isFinished && isOnline">
           <h2>
             Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!
           </h2>
@@ -64,11 +64,11 @@
             @click="card = true"
           />
         </div>
-        <div class="results__wrapper" v-else>
+        <div class="results__wrapper" v-else-if="isFinished && isOnline">
           <h2>Ukończyłeś juz ten trening. Edytuj podany przez siebie wynik.</h2>
           <q-btn label="Edytuj wynik" color="secondary" @click="card = true" />
         </div>
-        <q-dialog v-model="card">
+        <q-dialog v-model="card" v-if="isOnline">
           <q-card class="my-card q-p-xl">
             <q-card-section>
               <div class="row no-wrap items-center">
@@ -116,6 +116,7 @@ import RichTextRenderer from "contentful-rich-text-vue-renderer";
 import LeaderboardComponent from "@/components/LeaderboardComponent.vue";
 import WorkoutForm from "@/components/WorkoutForm.vue";
 import VuePlyr from "vue-plyr";
+import { VueOfflineMixin } from "vue-offline";
 
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
@@ -133,7 +134,8 @@ const options = {
     WorkoutForm,
     RichTextRenderer,
     VuePlyr
-  }
+  },
+  mixins: [VueOfflineMixin]
 })
 export default class WorkoutPage extends Vue {
   created() {

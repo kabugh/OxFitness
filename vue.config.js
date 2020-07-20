@@ -12,6 +12,7 @@ module.exports = {
   },
 
   pwa: {
+    name: "OxFitness",
     themeColor: "#000000"
   },
 

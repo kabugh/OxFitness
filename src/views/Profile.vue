@@ -96,6 +96,7 @@
                     <q-card-section v-else>
                       <p>Płatność nieuregulowana</p>
                       <q-btn
+                        v-if="isOnline"
                         @click="$router.push('/dashboard')"
                         class="bg-primary text-white"
                         >Opłać konto</q-btn
@@ -173,7 +174,7 @@
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable @click="changePassword">
+                  <q-item clickable @click="changePassword" v-if="isOnline">
                     <q-item-section>
                       <q-item-label>Zmień hasło</q-item-label>
                       <q-item-label caption>
@@ -183,7 +184,11 @@
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable @click="verifyAccount" v-if="!isVerified">
+                  <q-item
+                    clickable
+                    @click="verifyAccount"
+                    v-if="!isVerified && isOnline"
+                  >
                     <q-item-section>
                       <q-item-label>Zweryfikuj konto</q-item-label>
                       <q-item-label caption>
@@ -193,7 +198,7 @@
                     </q-item-section>
                   </q-item>
 
-                  <!-- <q-item clickable @click="changeEmail">
+                  <!-- <q-item clickable @click="changeEmail" v-if="isOnline">
                     <q-item-section>
                       <q-item-label>Zmień adres email</q-item-label>
                       <q-item-label caption>
@@ -226,11 +231,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import ChangeEmailComponent from "@/components/authentication/ChangeEmailComponent.vue";
 import { User } from "@/store/models";
 import * as firebase from "firebase";
+import { VueOfflineMixin } from "vue-offline";
 
 @Component({
   components: {
     ChangeEmailComponent
   },
+  mixins: [VueOfflineMixin],
   filters: {
     date(value: any) {
       return new Date(value).toLocaleString();

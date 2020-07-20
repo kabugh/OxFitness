@@ -20,7 +20,18 @@ if (process.env.NODE_ENV === "production") {
       console.log("New content is downloading.");
     },
     updated() {
-      console.log("New content is available; please refresh.");
+      // New content is available
+      const updateBanner = <HTMLElement>(
+        document.getElementById("update-banner")
+      );
+      const updateButton = <HTMLElement>(
+        document.getElementById("update-button")
+      );
+
+      updateBanner.style.display = "block";
+      updateButton.addEventListener("click", () => {
+        location.reload();
+      });
     },
     offline() {
       console.log(

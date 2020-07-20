@@ -32,6 +32,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import { VueOfflineMixin } from "vue-offline";
 
 import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
@@ -47,7 +48,8 @@ import { User } from "./store/models";
     TheOverlay,
     TransitionComponent
     // TheFooter
-  }
+  },
+  mixins: [VueOfflineMixin]
 })
 export default class App extends Vue {
   get isNavOpen(): boolean {
@@ -74,6 +76,17 @@ export default class App extends Vue {
       )
         this.$router.replace("/dashboard");
     }
+  }
+
+  mounted() {
+    this.$on("offline", () => {
+      this.$q.notify({
+        position: "top",
+        icon: "warning",
+        color: "primary",
+        message: "Brak połączenia z internetem"
+      });
+    });
   }
 }
 </script>
