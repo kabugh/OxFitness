@@ -23,12 +23,13 @@
             >
               <li @click="$router.push('/authentication')">Logowanie</li>
               <li
-                class="highlighted"
                 @click="
-                  navigateOutside(
-                    'https://wod.guru/athlete-registration-form/wolow'
-                  )
+                  $router.push({
+                    name: 'authentication',
+                    params: { authMode: 'signUp' }
+                  })
                 "
+                class="highlighted"
               >
                 Rejestracja
               </li>
@@ -79,10 +80,10 @@
           <li
             v-for="(item, index) in selectionItems"
             :key="index"
+            class="selection__item"
             :style="{
               backgroundImage: 'url(' + require(`@/assets/${item.image}`) + ')'
             }"
-            class="selection__item"
           >
             <h2>{{ item.title }}</h2>
             <router-link
@@ -434,13 +435,14 @@ $secondaryColor: #666;
         padding: 4vh 0;
         .selection__item {
           @include flex;
-          width: 100%;
-          min-height: 60vh;
+
           justify-content: space-around;
           align-items: center;
           flex-direction: column;
           text-align: center;
           @include backgroundDefault;
+          width: 100%;
+          min-height: 60vh;
           padding: 6vh;
           h2 {
             font-size: 2rem;

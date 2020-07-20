@@ -83,11 +83,11 @@ export default class TheOverlay extends Vue {
 // enter/leave overlay animation
 .theOverlay-enter-active,
 .theOverlay-leave-active {
-  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .theOverlay-leave-active {
-  transition-duration: 0.3s;
+  transition-duration: 1s;
 }
 
 .theOverlay-enter,
@@ -157,6 +157,16 @@ export default class TheOverlay extends Vue {
             height: 16vh;
           }
         }
+      }
+    }
+    @media (min-width: 768px) {
+      max-width: 70vw;
+      margin: 0 auto;
+      align-items: center;
+      .q-list {
+        @include flex;
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   }

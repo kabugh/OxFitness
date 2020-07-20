@@ -90,8 +90,36 @@
                 >
                   <q-separator />
                   <q-card>
+                    <q-card-section v-if="daysLeft >= 0"
+                      >Płatność uregulowana</q-card-section
+                    >
+                    <q-card-section v-else>
+                      <p>Płatność nieuregulowana</p>
+                      <q-btn
+                        @click="$router.push('/dashboard')"
+                        class="bg-primary text-white"
+                        >Opłać konto</q-btn
+                      >
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-expansion-item
+                  group="accordion"
+                  popup
+                  icon="card_membership"
+                  label="Historia płatności"
+                >
+                  <q-separator />
+                  <q-card>
                     <q-card-section>
-                      Płatność uregulowana
+                      <ul>
+                        <li
+                          v-for="(transaction, i) in user.transactions"
+                          :key="i"
+                        >
+                          <strong>{{ i }}</strong> - {{ transaction }}
+                        </li>
+                      </ul>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -358,11 +386,19 @@ export default class Profile extends Vue {
       justify-content: center;
       align-items: center;
       &.validity {
-        grid-row-gap: 1vh;
+        grid-row-gap: 2vh;
         padding: 4vh 0;
-        @media (min-width: 700px) {
+        .q-list .q-card__section .q-btn {
+          margin-top: 2vh;
+        }
+        @media (min-width: 768px) {
           .q-list {
             padding: 0 4vw;
+          }
+        }
+        @media (min-width: 1024px) {
+          .q-list {
+            padding: 0 24vw;
           }
         }
       }
@@ -375,7 +411,7 @@ export default class Profile extends Vue {
         }
       }
       h3 {
-        font-size: 1.25rem;
+        font-size: 1rem;
       }
       h4 {
         font-size: 1rem;
@@ -398,6 +434,11 @@ export default class Profile extends Vue {
           button {
             margin-top: 2vh;
           }
+        }
+      }
+      @media (min-width: 360px) {
+        h3 {
+          font-size: 1.25rem;
         }
       }
     }

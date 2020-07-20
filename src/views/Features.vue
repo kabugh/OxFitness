@@ -57,6 +57,20 @@
           <span class="faq" @click="$router.push('/faq')">FAQ</span>
           lub skontaktuj się z nami.
         </h2>
+        <div class="register__section">
+          <h1>
+            Zacznij już teraz!
+            <span
+              @click="
+                $router.push({
+                  name: 'authentication',
+                  params: { authMode: 'signUp' }
+                })
+              "
+              >Zarejestruj się</span
+            >
+          </h1>
+        </div>
       </div>
       <LoadingComponent v-else></LoadingComponent>
     </div>
@@ -138,6 +152,7 @@ export default class Features extends Vue {
       }
     }
     .additionalInfo__container {
+      h1,
       h2 {
         font-size: 1rem;
         font-weight: bolder;
@@ -146,6 +161,14 @@ export default class Features extends Vue {
           &:hover {
             cursor: pointer;
           }
+        }
+      }
+      h1 {
+        padding-top: 2vh;
+        font-size: 1.5rem;
+        font-weight: bolder;
+        span {
+          margin-left: 10px;
         }
       }
     }
