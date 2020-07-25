@@ -88,7 +88,7 @@ nav.topNavbar {
   }
   .logo {
     width: 10vw;
-    height: 6vh;
+    min-height: 4vh;
     color: white;
     background-position: center;
     background-repeat: no-repeat;
