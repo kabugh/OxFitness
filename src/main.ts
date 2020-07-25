@@ -52,6 +52,7 @@ new Vue({
       messagingSenderId: process.env.VUE_APP_messagingSenderId,
       appId: process.env.VUE_APP_appId
     });
+    const functions = firebase.app().functions("europe-west3");
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

@@ -154,6 +154,10 @@ const actions = {
           router.push("/dashboard").catch(e => {
             console.log(e);
           });
+
+          // account validity cloud function call
+          const checkAccess = firebase.functions().httpsCallable("checkAccess");
+          checkAccess();
         }
       })
       .catch(e => {
@@ -205,6 +209,9 @@ const actions = {
         cachedUser.workouts = value.workouts;
       });
     commit("setUser", cachedUser);
+    // account validity cloud function call
+    const checkAccess = firebase.functions().httpsCallable("checkAccess");
+    checkAccess();
   },
   signUserOut({ commit, state }: any) {
     commit("setLoading", true);

@@ -29,17 +29,41 @@ export const premiumAccess = functions.database
     };
     return event.ref.child("premiumAccount").update(access);
   });
-// export const checkAccess = functions.database
-//   .ref("/users/{id}/workouts")
-//   .onUpdate(event => {
-//     const currentTime = new Date();
-//     const premiumAccount = event.after.child("premiumAccount").val();
-//     if (new Date(premiumAccount.validUntil) < currentTime)
-//       premiumAccount.isActive = false;
-//     return event.after.ref.child("premiumAccount").update(premiumAccount);
-//   });
-// https://firebase.google.com/docs/functions/schedule-functions#before_you_begin
-// Create scheduled function for instance 'every day at 7am' to check whether user's premiumAccess is still valid.
+
+export const checkAccess = functions.https.onCall((data, context) => {
+  let uid = "";
+  if (context.auth) uid = context.auth.uid;
+
+  const currentTime = new Date();
+  let premiumAccount: {
+    activationDate: string;
+    isActive: boolean;
+    validUntil: string;
+  } = {
+    activationDate: "",
+    isActive: false,
+    validUntil: ""
+  };
+
+  const user = admin.database().ref(`users/${uid}`);
+  user
+    .once("value")
+    .then(snapshot => {
+      premiumAccount = snapshot.val().premiumAccount;
+      if (new Date(premiumAccount.validUntil) < currentTime) {
+        premiumAccount = {
+          activationDate: premiumAccount.activationDate,
+          isActive: false,
+          validUntil: premiumAccount.validUntil
+        };
+        user
+          .child("premiumAccount")
+          .update(premiumAccount)
+          .catch(e => console.log(e));
+      }
+    })
+    .catch(e => console.log(e));
+});
 
 export const payment = functions.https.onRequest((request, response) => {
   cors(request, response, async () => {
@@ -96,21 +120,23 @@ export const successfulPayment = functions.https.onRequest(
         .orderByChild("transactions")
         .once("value")
         .then((snapshot: any) => {
-          const users = snapshot.val();
-          foundUser = Object.values(users).find((user: any, index: any) =>
-            Object.keys(user.transactions).find(
-              key => key === session.payment_intent
-            )
-          );
-          if (foundUser.premiumAccount) {
+          const users: Object = snapshot.val();
+          foundUser = Object.values(users).find((user: any) => {
+            if (user.transactions)
+              return Object.keys(user.transactions).find(
+                key => key === "pi_1H8pt4IoGuaNqlfQ2Izr9xm7"
+              );
+            else return undefined;
+          });
+          if (foundUser && foundUser.premiumAccount) {
             const currentTime = new Date();
             const accessTime: Date = addDays(30)(currentTime);
             const access = {
               activationDate: currentTime,
               isActive: true,
               validUntil: accessTime
-            }; // doesnt work as intended - the dates dont get updated
-
+            };
+            console.log(access.validUntil);
             foundUser.premiumAccount = access;
             foundUser.transactions[session.payment_intent] = "succeeded";
             admin
