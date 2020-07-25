@@ -9,8 +9,14 @@
       />
       <div class="articles__container" v-if="features.length > 0">
         <article class="article__container">
-          <h1>Czym jest Ox Fitness?</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <h1>Nie masz czasu ani miejsca na trening?</h1>
+          <p>
+            Nasze treningi możesz wykonać w domu, dysponując bardzo małą
+            przestrzenią. W Ox Fitness dostajesz codziennie inny trening, który
+            pozwoli Ci skutecznie zrealizować Twoje cele sylwetkowe lub
+            zdrowotne! Ćwiczenia są proste, bezpieczne i dodatkowo opisane oraz
+            przedstawione na filmie instruktażowym.
+          </p>
         </article>
         <article
           class="article__container"
@@ -60,16 +66,17 @@
         <div class="register__section">
           <h1>
             Zacznij już teraz!
-            <span
-              @click="
-                $router.push({
-                  name: 'authentication',
-                  params: { authMode: 'signUp' }
-                })
-              "
-              >Zarejestruj się</span
-            >
           </h1>
+          <q-btn
+            @click="
+              $router.push({
+                name: 'authentication',
+                params: { authMode: 'signUp' }
+              })
+            "
+            class="bg-primary text-white"
+            >Zarejestruj się</q-btn
+          >
         </div>
       </div>
       <LoadingComponent v-else></LoadingComponent>
@@ -165,10 +172,17 @@ export default class Features extends Vue {
       }
       h1 {
         padding-top: 2vh;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: bolder;
-        span {
-          margin-left: 10px;
+      }
+
+      .register__section {
+        padding-top: 4vh;
+        @include flex;
+        align-items: center;
+        flex-direction: column;
+        .q-btn {
+          margin-top: 2vh;
         }
       }
     }

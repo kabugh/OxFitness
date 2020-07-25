@@ -7,7 +7,7 @@
       </h2>
       <div class="payment__container">
         <h2>
-          Aby kontynuować, musisz kupić dostęp.
+          Aby kontynuować, musisz wykupić 1-miesięczny dostęp.
         </h2>
         <button type="button" class="dark" @click="checkout">Zapłać</button>
       </div>

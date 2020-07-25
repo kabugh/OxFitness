@@ -112,8 +112,6 @@ export default class BottomTabs extends Vue {
           cursor: pointer;
         }
       }
-      .nav__items {
-      }
       .avatar__container {
         display: flex;
         align-items: center;

@@ -1,5 +1,5 @@
 <template>
-  <section class="dashboard bottomView">
+  <section class="dashboard topView bottomView">
     <div class="dashboard__container container">
       <div
         class="workouts__sections--container"

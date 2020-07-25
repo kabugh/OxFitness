@@ -45,7 +45,11 @@
       >
         <q-tab-panel name="validity"
           ><div class="details__container validity">
-            <h3 v-if="daysLeft >= 0 && user.premiumAccount.isActive">
+            <h3
+              v-if="
+                daysLeft >= 0 && user.premiumAccount.isActive && accountExpiry
+              "
+            >
               <span>Dostęp do treningów wygasa:</span>
               {{ user.premiumAccount.validUntil | date }}
             </h3>
@@ -54,7 +58,9 @@
               {{ user.premiumAccount.validUntil | date }}
             </h3>
             <q-circular-progress
-              v-if="daysLeft >= 0 && user.premiumAccount.isActive"
+              v-if="
+                daysLeft >= 0 && user.premiumAccount.isActive && accountExpiry
+              "
               show-value
               font-size="14px"
               :value="daysLeft"
@@ -109,6 +115,10 @@
                   popup
                   icon="card_membership"
                   label="Historia płatności"
+                  v-if="
+                    user.transactions &&
+                      Object.values(user.transactions).length > 0
+                  "
                 >
                   <q-separator />
                   <q-card>
@@ -256,6 +266,7 @@ export default class Profile extends Vue {
   isVerified = false;
   daysLeft = 0;
   created() {
+    this.accountExpiry();
     let user = firebase.auth().currentUser;
     if (user && this.user.premiumAccount.validUntil.length !== 0) {
       this.isVerified = user.emailVerified;
@@ -309,6 +320,12 @@ export default class Profile extends Vue {
   @Watch("user.settings.notifications")
   updateSettings() {
     this.$store.dispatch("updateUserSettings", this.user.settings);
+  }
+
+  accountExpiry() {
+    const currentDate = new Date();
+    const validUntilDate = new Date(this.user.premiumAccount.validUntil);
+    return validUntilDate > currentDate;
   }
 
   verifyAccount() {
@@ -389,11 +406,11 @@ export default class Profile extends Vue {
     .details__container {
       display: grid;
       grid-template-columns: 1fr;
-      grid-row-gap: 0.5vh;
+      row-gap: 0.5vh;
       justify-content: center;
       align-items: center;
       &.validity {
-        grid-row-gap: 2vh;
+        row-gap: 2vh;
         padding: 4vh 0;
         .q-list .q-card__section .q-btn {
           margin-top: 2vh;
