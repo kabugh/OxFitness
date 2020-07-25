@@ -21,7 +21,9 @@
               data-aos="fade-down"
               data-aos-delay="300"
             >
-              <li @click="$router.push('/authentication')">Logowanie</li>
+              <li @click="$router.push('/authentication')" class="highlighted">
+                Logowanie
+              </li>
               <li
                 @click="
                   $router.push({
@@ -44,26 +46,29 @@
           </h1>
           <h1>Codzienne treningi.</h1>
           <p>
-            OxFitness jest aplikacją treningową skierowaną do wszystkich, którzy
-            nie mają czasu, dostępu lub nie sprawia im przyjemności uczęszczanie
-            na siłownię.
+            W domu, w garażu, na podwórku, w mieszkaniu. Przed pracą, po pracy,
+            rano, w południe, wieczorem. Treningi Ox Fitness możesz wykonywać
+            gdzie chcesz i kiedy chcesz!
           </p>
-          <button
-            type="button"
-            class="homeButton"
-            v-scroll-to="{ element: '.selection' }"
-            data-aos="fade-left"
-          >
-            Sprawdź treningi
-          </button>
-          <button
-            type="button"
-            class="homeButton login"
-            data-aos="fade-left"
-            @click="$router.push('/authentication')"
-          >
-            Zaloguj się
-          </button>
+
+          <div class="buttons__container">
+            <button
+              type="button"
+              class="homeButton"
+              v-scroll-to="{ element: '.introduction' }"
+              data-aos="fade-left"
+            >
+              Zacznij przygodę
+            </button>
+            <button
+              type="button"
+              class="homeButton login"
+              data-aos="fade-left"
+              @click="$router.push('/authentication')"
+            >
+              Zaloguj się
+            </button>
+          </div>
         </div>
         <div class="heroImage__wrapper" data-aos="fade-down">
           <img
@@ -74,28 +79,45 @@
         </div>
       </div>
     </div>
-    <div class="selection">
-      <div class="selection__container">
-        <ul>
-          <li
-            v-for="(item, index) in selectionItems"
-            :key="index"
-            class="selection__item"
-            :style="{
-              backgroundImage: 'url(' + require(`@/assets/${item.image}`) + ')'
-            }"
-          >
-            <h2>{{ item.title }}</h2>
-            <router-link
-              tag="button"
+    <section class="introduction">
+      <div class="introduction__container">
+        <div
+          class="item__container"
+          v-for="(item, index) in introductionItems"
+          :key="index"
+        >
+          <div class="description__container">
+            <h1 data-aos="fade-up" :data-aos-delay="100 + index * 50">
+              {{ item.title }}
+            </h1>
+            <p data-aos="fade-up" :data-aos-delay="200 + index * 50">
+              {{ item.description }}
+            </p>
+            <button
+              data-aos="fade-up"
+              :data-aos-delay="300 + index * 50"
               type="button"
-              :to="{ name: item.route, params: { authMode: 'signUp' } }"
-              >{{ item.button }}</router-link
+              @click="
+                $router.push({
+                  name: item.routeName,
+                  params: { authMode: 'signUp' }
+                })
+              "
             >
-          </li>
-        </ul>
+              {{ item.buttonText }}
+            </button>
+          </div>
+          <img
+            :src="require(`@/assets/illustrations/${item.image}`)"
+            class="illustration unselectable"
+            loading="lazy"
+            alt="develop"
+            data-aos="fade-left"
+            :data-aos-delay="200 + index * 50"
+          />
+        </div>
       </div>
-    </div>
+    </section>
     <section class="start">
       <div class="start__container">
         <h1 data-aos="fade-up" data-aos-delay="200">Zacznij za darmo.</h1>
@@ -134,6 +156,7 @@
         </div>
       </div>
     </section>
+    <Contact />
     <!-- <section class="brands">
       <h1>Partnerzy.</h1>
       <div class="brands__container">
@@ -152,39 +175,37 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Contact from "@/components/Contact.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 AOS.init({
   easing: "ease-in-out-quart"
 });
 
-@Component
+@Component({ components: { Contact } })
 export default class Home extends Vue {
   navItems = [
     { name: "Funkcjonalności", slug: "/features" },
-    { name: "Cennik", slug: "/pricing" },
     { name: "FAQ", slug: "/faq" },
     { name: "Kontakt", slug: "/contact" }
   ];
 
-  selectionItems = [
+  introductionItems = [
     {
-      title: "Czym jest OxFitness?",
-      button: "Dowiedz się więcej",
-      image: "1.jpg",
-      route: "features"
+      title: "Członkostwo Ox Fitness to 40 PLN za miesiąc - bez żadnej umowy!",
+      description:
+        "Daj sobie szansę przekonać się, jak trening w domu działa na Ciebie. Wszystko, czego potrzebujesz to para hantli i chęć do trenowania.",
+      buttonText: "Zobacz więcej",
+      routeName: "features",
+      image: "introduction1.svg"
     },
     {
-      title: "Chcę dołączyć do programu",
-      button: "Zarejestruj się",
-      image: "2.jpg",
-      route: "authentication"
-    },
-    {
-      title: "Należę do OxFitness",
-      button: "Zaloguj się",
-      image: "3.jpg",
-      route: "dashboard"
+      title: "Masz być z siebie dumny, świetnie się czuć i wyglądać!",
+      description:
+        "Każde ćwiczenie jest podane w różnych wersjach sprzętowych, oraz przygotowane pod Ciebie! Bez względu na to, jaki poziom sportowy reprezentujesz 🔥",
+      buttonText: "Wypróbuj",
+      routeName: "authentication",
+      image: "introduction2.svg"
     }
   ];
 
@@ -205,6 +226,9 @@ $secondaryColor: #666;
 .homePage {
   width: 100%;
   color: white;
+  p {
+    line-height: 1.75;
+  }
   .hero {
     position: relative;
     width: 100%;
@@ -236,6 +260,11 @@ $secondaryColor: #666;
           font-size: 1em;
           font-weight: 500;
           margin: 6vh 0;
+        }
+        .buttons__container {
+          @include flex;
+          flex-direction: column;
+          align-items: center;
         }
         button {
           padding: 16px 20px;
@@ -335,14 +364,14 @@ $secondaryColor: #666;
     @media (min-width: 370px) {
       .hero__container .hero__wrapper {
         h1 {
-          font-size: 2rem !important;
+          font-size: 1.75rem !important;
         }
         p {
           font-size: 1.25em;
         }
       }
     }
-    @media (min-width: 700px) {
+    @media (min-width: 700px) and (min-height: 500px) {
       .static__nav .nav__container {
         grid-template-columns: 1fr 4fr;
         .logo {
@@ -381,6 +410,45 @@ $secondaryColor: #666;
         }
         .heroImage__wrapper {
           display: flex;
+        }
+      }
+    }
+    @media (min-width: 550px) and (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+      display: block;
+      .hero__container {
+        padding: $verticalPadding * 2 $horizontalPadding;
+        .hero__wrapper {
+          h1 {
+            font-size: 1.25rem !important;
+          }
+          p {
+            font-size: 0.875rem;
+          }
+          .buttons__container {
+            flex-direction: row;
+          }
+          button {
+            font-size: 12px !important;
+            &:first-of-type {
+              margin-right: 2vw;
+            }
+            &:last-of-type {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+    @media (min-width: 550px) and (max-width: 750px) and (max-height: 400px) and (orientation: landscape) {
+      .hero__container {
+        padding: $verticalPadding * 3 / 2 $horizontalPadding;
+        .hero__wrapper {
+          h1 {
+            font-size: 1rem !important;
+          }
+          p {
+            font-size: 0.75rem;
+          }
         }
       }
     }
@@ -423,57 +491,14 @@ $secondaryColor: #666;
     }
   }
 
-  .selection {
-    width: 100%;
-    .selection__container {
-      width: 90%;
-      margin: 0 auto;
-      ul {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 4vh;
-        padding: 4vh 0;
-        .selection__item {
-          @include flex;
-
-          justify-content: space-around;
-          align-items: center;
-          flex-direction: column;
-          text-align: center;
-          @include backgroundDefault;
-          width: 100%;
-          min-height: 60vh;
-          padding: 6vh;
-          h2 {
-            font-size: 2rem;
-            line-height: 3rem;
-            font-weight: bolder;
-          }
-          button {
-            background: transparent;
-            font-weight: 600 !important;
-            font-size: 16px !important;
-            &:hover {
-              background-color: white;
-            }
-          }
-          a {
-            color: white;
-            text-decoration: none;
-          }
-        }
-        @media (min-width: 1200px) {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-    }
-  }
-  .start {
+  .start,
+  .introduction {
     width: 100%;
     background-color: $backgroundColor;
     color: white;
     padding: $verticalPadding $horizontalPadding;
-    .start__container {
+    .start__container,
+    .introduction__container .item__container {
       text-align: center;
       h1 {
         font-size: 1.25rem !important;
@@ -508,6 +533,92 @@ $secondaryColor: #666;
       }
     }
   }
+
+  .introduction {
+    background-color: white;
+    color: black;
+    overflow: hidden;
+    .introduction__container {
+      display: grid;
+      grid-template-rows: repeat(2, auto);
+      row-gap: $verticalPadding * 3 / 2;
+      .item__container {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: $verticalPadding;
+        &:first-of-type {
+          h1 span {
+            color: #6b108e;
+          }
+        }
+        button {
+          font-size: 14px;
+          background-color: #6b108e;
+          border: none;
+          &:hover {
+            background-color: #80389c;
+            color: white;
+          }
+        }
+        &:nth-of-type(2) button {
+          margin-top: 2vh;
+        }
+        &:nth-of-type(even) {
+          .illustration {
+            display: none;
+          }
+        }
+      }
+      @media (min-width: 700px) and (min-height: 500px) {
+        .item__container {
+          .description__container {
+            h1 {
+              font-size: 2.5rem !important;
+            }
+            p {
+              font-size: 1.25rem;
+            }
+          }
+        }
+      }
+      @media (min-width: 1250px) and (min-height: 800px) and (orientation: landscape) {
+        .item__container {
+          display: grid;
+          grid-template-rows: 1fr;
+          grid-template-columns: 1fr 0.75fr;
+          align-items: center;
+          column-gap: $horizontalPadding / 2;
+          button {
+            font-size: 16px;
+          }
+          .description__container {
+            text-align: left;
+          }
+          .illustration {
+            max-width: 30vw;
+            margin: 0;
+          }
+          &:nth-of-type(odd) .illustration {
+            margin-left: auto;
+          }
+          &:nth-of-type(even) {
+            .description__container {
+              grid-column: 2;
+              grid-row: 1;
+              text-align: right;
+            }
+            .illustration {
+              display: block;
+              grid-column: 1;
+              grid-row: 1;
+              margin-right: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .statistics {
     width: 100%;
     background-color: white;
