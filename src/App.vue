@@ -1,14 +1,7 @@
 <template>
   <div id="app">
     <BottomTabs
-      v-if="
-        user &&
-          $route.path !== '/' &&
-          $route.path !== '/features' &&
-          $route.path !== '/faq' &&
-          $route.path !== '/authentication' &&
-          !isNavOpen
-      "
+      v-if="user && !$route.meta.unauthenticatedAccess && !isNavOpen"
     ></BottomTabs>
     <TopNavbar></TopNavbar>
     <transition name="theOverlay">
@@ -19,6 +12,11 @@
         <router-view />
       </keep-alive>
     </TransitionComponent>
+    <Contact
+      v-if="
+        $route.meta.unauthenticatedAccess && $route.path !== '/authentication'
+      "
+    />
     <!-- an error occurs because conentful-vue-render components are rendered as TheFooter template -->
     <!-- <TheFooter
       v-if="
@@ -38,7 +36,7 @@ import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
 import TheOverlay from "./components/TheOverlay.vue";
 import TransitionComponent from "./components/util/TransitionComponent.vue";
-// import TheFooter from "./components/TheFooter.vue";
+import Contact from "./components/Contact.vue";
 import { User } from "./store/models";
 
 @Component({
@@ -46,8 +44,8 @@ import { User } from "./store/models";
     TopNavbar,
     BottomTabs,
     TheOverlay,
-    TransitionComponent
-    // TheFooter
+    TransitionComponent,
+    Contact
   },
   mixins: [VueOfflineMixin]
 })
@@ -69,9 +67,7 @@ export default class App extends Vue {
   checkAccountStatus() {
     if (!this.user.premiumAccount.isActive) {
       if (
-        this.$route.path !== "/" &&
-        this.$route.path !== "/features" &&
-        this.$route.path !== "/faq" &&
+        !this.$route.meta.unauthenticatedAccess &&
         this.$route.path !== "/dashboard"
       )
         this.$router.replace("/dashboard");

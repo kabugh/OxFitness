@@ -7,6 +7,9 @@ import * as firebase from "firebase";
 import VueScrollTo from "vue-scrollto";
 import VuePlyr from "vue-plyr";
 import VueOffline from "vue-offline";
+import { gsap, TimelineLite } from "gsap";
+
+gsap.registerPlugin(TimelineLite);
 
 Vue.use(VueOffline, { mixin: false, storage: false });
 

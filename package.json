@@ -17,6 +17,7 @@
     "contentful-rich-text-vue-renderer": "^1.1.5",
     "core-js": "^3.6.5",
     "firebase": "^7.16.1",
+    "gsap": "^3.4.2",
     "plyr": "^3.6.2",
     "quasar": "^1.12.12",
     "register-service-worker": "^1.7.1",
