@@ -2,7 +2,7 @@
   <section class="authentication">
     <div class="logo__container">
       <div class="text__wrapper">
-        <h1>OxFitness</h1>
+        <h1 @click="$router.push('/')">OxFitness</h1>
         <h3>Codzienne treningi</h3>
       </div>
     </div>
@@ -112,6 +112,9 @@ export default class Authentication extends Vue {
       font-weight: 600;
       letter-spacing: -1px;
       text-align: center;
+      &:hover {
+        cursor: pointer;
+      }
     }
     h3 {
       text-align: center;

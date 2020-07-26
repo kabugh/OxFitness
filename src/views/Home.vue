@@ -15,6 +15,7 @@
               >
                 {{ item.name }}
               </li>
+              <li v-scroll-to="'.contact'">Kontakt</li>
             </div>
             <div
               class="separated__items"
@@ -123,8 +124,7 @@
         <h1 data-aos="fade-up" data-aos-delay="200">Zacznij za darmo.</h1>
         <h1 data-aos="fade-up" data-aos-delay="300">Ćwicz z naszą pomocą.</h1>
         <p data-aos="fade-up" data-aos-delay="400">
-          Wypróbuj plan OxFitness przez cały miesiąc bez opłat i pozostań na
-          dłużej.
+          Skorzystaj z darmowego tygodnia w OxFitness i pozostań na dłużej.
         </p>
         <img
           src="@/assets/illustrations/develop.svg"
@@ -134,6 +134,32 @@
         />
       </div>
     </section>
+    <div class="coaches">
+      <div class="coaches__container">
+        <img
+          data-aos="fade-up"
+          data-aos-delay="200"
+          src="@/assets/team.jpg"
+          alt="coaches"
+          class="coaches__image unselectable"
+        />
+        <h1 data-aos="fade-up" data-aos-delay="200">
+          Poznaj naszych trenerów.
+        </h1>
+        <p data-aos="fade-up" data-aos-delay="300">
+          Nie tylko przygotowujemy treningi, ale również dbamy o ich jakość i
+          różnorodność.
+        </p>
+        <button
+          data-aos="fade-up"
+          data-aos-delay="400"
+          type="button"
+          @click="$router.push('/coaches')"
+        >
+          Sprawdź
+        </button>
+      </div>
+    </div>
     <section class="statistics">
       <div class="statistics__container">
         <div class="statistics__header">
@@ -156,7 +182,7 @@
         </div>
       </div>
     </section>
-    <Contact />
+
     <!-- <section class="brands">
       <h1>Partnerzy.</h1>
       <div class="brands__container">
@@ -185,9 +211,9 @@ AOS.init({
 @Component({ components: { Contact } })
 export default class Home extends Vue {
   navItems = [
-    { name: "Funkcjonalności", slug: "/features" },
+    { name: "Treningi", slug: "/features" },
     { name: "FAQ", slug: "/faq" },
-    { name: "Kontakt", slug: "/contact" }
+    { name: "Trenerzy", slug: "/coaches" }
   ];
 
   introductionItems = [
@@ -492,13 +518,15 @@ $secondaryColor: #666;
   }
 
   .start,
-  .introduction {
+  .introduction,
+  .coaches {
     width: 100%;
     background-color: $backgroundColor;
     color: white;
     padding: $verticalPadding $horizontalPadding;
     .start__container,
-    .introduction__container .item__container {
+    .introduction__container .item__container,
+    .coaches__container {
       text-align: center;
       h1 {
         font-size: 1.25rem !important;
@@ -509,6 +537,15 @@ $secondaryColor: #666;
         font-size: 1em;
         font-weight: 500;
         margin: 3vh 0;
+      }
+      button {
+        font-size: 14px;
+        background-color: #6b108e;
+        border: none;
+        &:hover {
+          background-color: #80389c;
+          color: white;
+        }
       }
       .illustration {
         max-width: 60vw;
@@ -531,6 +568,14 @@ $secondaryColor: #666;
           margin: 3vh 0;
         }
       }
+      @media (min-width: 500px) and (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+        h1 {
+          font-size: 2.25rem !important;
+        }
+        p {
+          font-size: 1em;
+        }
+      }
     }
   }
 
@@ -551,15 +596,6 @@ $secondaryColor: #666;
             color: #6b108e;
           }
         }
-        button {
-          font-size: 14px;
-          background-color: #6b108e;
-          border: none;
-          &:hover {
-            background-color: #80389c;
-            color: white;
-          }
-        }
         &:nth-of-type(2) button {
           margin-top: 2vh;
         }
@@ -577,6 +613,18 @@ $secondaryColor: #666;
             }
             p {
               font-size: 1.25rem;
+            }
+          }
+        }
+      }
+      @media (min-width: 500px) and (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+        .item__container {
+          .description__container {
+            h1 {
+              font-size: 1.5rem !important;
+            }
+            p {
+              font-size: 1rem;
             }
           }
         }
@@ -619,10 +667,29 @@ $secondaryColor: #666;
     }
   }
 
-  .statistics {
-    width: 100%;
+  .coaches {
     background-color: white;
     color: black;
+    .coaches__container {
+      .coaches__image {
+        max-width: 50vw;
+        max-height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      h1 {
+        margin-top: 4vh;
+      }
+    }
+  }
+
+  .statistics {
+    width: 100%;
+    background-color: $backgroundColor;
+    color: white;
     .statistics__container {
       padding: $verticalPadding $horizontalPadding;
       text-align: center;
@@ -636,7 +703,6 @@ $secondaryColor: #666;
           font-size: 1em;
           font-weight: 500;
           margin: 2vh 0;
-          color: $secondaryColor;
         }
       }
       .data__container {
@@ -657,7 +723,6 @@ $secondaryColor: #666;
             text-transform: uppercase;
             font-size: 0.75rem;
             font-weight: 600;
-            color: $secondaryColor;
           }
           &:last-of-type {
             border-bottom: none;

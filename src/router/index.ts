@@ -10,20 +10,43 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
-    meta: { transition: "transition-left-full" }
+    meta: {
+      transition: "transition-left-full",
+      unauthenticatedAccess: true,
+      displayNav: false
+    }
   },
   {
     path: "/features",
     name: "features",
     component: () =>
       import(/* webpackChunkName: "features" */ "../views/Features.vue"),
-    meta: { transition: "transition-left-full" }
+    meta: {
+      transition: "transition-left-full",
+      unauthenticatedAccess: true,
+      displayNav: true
+    }
   },
   {
     path: "/faq",
     name: "faq",
     component: () => import(/* webpackChunkName: "faq" */ "../views/Faq.vue"),
-    meta: { transition: "transition-left-full" }
+    meta: {
+      transition: "transition-left-full",
+      unauthenticatedAccess: true,
+      displayNav: true
+    }
+  },
+  {
+    path: "/coaches",
+    name: "coaches",
+    component: () =>
+      import(/* webpackChunkName: "coaches" */ "../views/Coaches.vue"),
+    meta: {
+      transition: "transition-left-full",
+      unauthenticatedAccess: true,
+      displayNav: false
+    }
   },
   {
     path: "/authentication",
@@ -32,7 +55,11 @@ const routes = [
       import(
         /* webpackChunkName: "authentication" */ "../views/authentication/Authentication.vue"
       ),
-    meta: { transition: "transition-left-full" }
+    meta: {
+      transition: "transition-left-full",
+      unauthenticatedAccess: true,
+      displayNav: false
+    }
   },
   {
     path: "/dashboard",
@@ -40,7 +67,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
     beforeEnter: AuthGuard,
-    meta: { transition: "transition-left-full" }
+    meta: { transition: "transition-left-full", displayNav: false }
   },
   {
     path: "/plans/:workoutType",
@@ -50,7 +77,8 @@ const routes = [
         /* webpackChunkName: "dashboard" */ "../views/workouts/Workouts.vue"
       ),
     beforeEnter: AuthGuard,
-    props: true
+    props: true,
+    meta: { displayNav: true }
   },
   {
     path: "/plans/:workoutType/:id",
@@ -60,7 +88,8 @@ const routes = [
         /* webpackChunkName: "workout" */ "../views/workouts/WorkoutPage.vue"
       ),
     beforeEnter: AuthGuard,
-    props: true
+    props: true,
+    meta: { displayNav: true }
   },
   {
     path: "/archived",
@@ -69,7 +98,8 @@ const routes = [
       import(
         /* webpackChunkName: "archivedWorkouts" */ "../views/workouts/ArchivedWorkouts.vue"
       ),
-    beforeEnter: AuthGuard
+    beforeEnter: AuthGuard,
+    meta: { displayNav: true }
   },
   {
     path: "/archived/:id",
@@ -79,7 +109,8 @@ const routes = [
         /* webpackChunkName: "archivedWorkoutPage" */ "../views/workouts/ArchivedWorkoutPage.vue"
       ),
     beforeEnter: AuthGuard,
-    props: true
+    props: true,
+    meta: { displayNav: true }
   },
   {
     path: "/plans",
@@ -90,7 +121,8 @@ const routes = [
     name: "Profile",
     component: () =>
       import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
-    beforeEnter: AuthGuard
+    beforeEnter: AuthGuard,
+    meta: { displayNav: false }
   },
   {
     path: "/success",
@@ -99,7 +131,7 @@ const routes = [
       import(
         /* webpackChunkName: "successPage" */ "../views/paymentRedirections/SuccessPage.vue"
       ),
-    beforeEnter: AuthGuard
+    meta: { unauthenticatedAccess: true, displayNav: false }
   },
   {
     path: "/cancel",
@@ -108,7 +140,11 @@ const routes = [
       import(
         /* webpackChunkName: "cancelPage" */ "../views/paymentRedirections/CancelPage.vue"
       ),
-    beforeEnter: AuthGuard
+    meta: { unauthenticatedAccess: true, displayNav: false }
+  },
+  {
+    path: "*",
+    redirect: "/"
   }
 ];
 

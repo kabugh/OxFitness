@@ -1,16 +1,5 @@
 <template>
-  <nav
-    class="topNavbar bg-grey-10"
-    v-if="
-      ($route.path !== '/' &&
-        $route.path !== '/authentication' &&
-        $route.path !== '/dashboard' &&
-        $route.path !== '/profile' &&
-        $route.path !== '/success' &&
-        $route.path !== '/cancel') ||
-        isNavOpen
-    "
-  >
+  <nav class="topNavbar bg-grey-10" v-if="$route.meta.displayNav || isNavOpen">
     <div
       class="back__wrapper"
       v-if="$route.path !== '/' && $route.path !== '/dashboard'"
@@ -28,7 +17,7 @@
         id="nav-icon"
         :class="{ open: isNavOpen }"
         @click="isNavOpen = !isNavOpen"
-        v-if="$route.path !== '/features' && $route.path != '/faq'"
+        v-if="!$route.meta.unauthenticatedAccess"
       >
         <span></span>
         <span></span>

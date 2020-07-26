@@ -50,11 +50,9 @@ export default class Contact extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
-$verticalPadding: 6vh;
-$horizontalPadding: 12vw;
 .contact {
   width: 100%;
-  padding: $verticalPadding / 4 0 $verticalPadding 0;
+  padding: $verticalPadding / 2 0 $verticalPadding 0;
   .contact__container {
     color: black;
     padding: $verticalPadding / 4 $horizontalPadding;
@@ -70,7 +68,7 @@ $horizontalPadding: 12vw;
         transition: color 0.5s ease-in-out;
         &:hover {
           cursor: pointer;
-          color: gray;
+          color: #6b108e;
         }
       }
     }
@@ -99,6 +97,10 @@ $horizontalPadding: 12vw;
             font-weight: 500;
             text-decoration: none;
             color: black;
+            transition: color 0.5s ease-in-out;
+            &:hover {
+              color: #6b108e;
+            }
           }
         }
       }
@@ -142,6 +144,7 @@ $horizontalPadding: 12vw;
     }
   }
   @media (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+    padding-top: $verticalPadding;
     .contact__container {
       .logo {
         max-width: 35vw;

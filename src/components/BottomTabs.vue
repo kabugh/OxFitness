@@ -19,7 +19,10 @@
         :label="item.title"
       />
     </q-tabs>
-    <nav class="topNav bg-grey-10 text-white" v-if="$route.path !== '/profile'">
+    <nav
+      class="topNav bg-grey-10 text-white"
+      v-if="$route.meta.displayNav || $route.path === '/dashboard'"
+    >
       <div class="logo" @click="$router.push('/dashboard')">
         <h3>OxFitness</h3>
       </div>
@@ -105,7 +108,7 @@ export default class BottomTabs extends Vue {
       .logo {
         h3 {
           font-weight: 600;
-          font-size: 2rem;
+          font-size: 1.75rem;
           text-transform: uppercase;
         }
         &:hover {
