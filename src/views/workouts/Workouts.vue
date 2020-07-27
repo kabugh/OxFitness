@@ -229,7 +229,6 @@ export default class Workouts extends Vue {
   }
 
   groupWorkouts(arr: any, prop: any) {
-    // temporarily casted as any :/
     const groups = arr.reduce(
       (groups: any, item: any) => ({
         ...groups,

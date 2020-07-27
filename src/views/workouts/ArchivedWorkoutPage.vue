@@ -12,12 +12,21 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <vue-plyr class="video__wrapper">
+      <vue-plyr
+        class="video__wrapper"
+        v-if="isOnline && currentWorkout.fields.videoId"
+      >
         <div
           data-plyr-provider="vimeo"
           :data-plyr-embed-id="currentWorkout.fields.videoId"
         ></div>
       </vue-plyr>
+      <div
+        class="image__wrapper"
+        v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
+      >
+        <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
+      </div>
       <div class="routines__container">
         <div class="programs__container"></div>
       </div>
@@ -60,6 +69,7 @@ import RichTextRenderer from "contentful-rich-text-vue-renderer";
 import LeaderboardComponent from "@/components/LeaderboardComponent.vue";
 import WorkoutForm from "@/components/WorkoutForm.vue";
 import VuePlyr from "vue-plyr";
+import { VueOfflineMixin } from "vue-offline";
 
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
@@ -77,7 +87,8 @@ const options = {
     WorkoutForm,
     RichTextRenderer,
     VuePlyr
-  }
+  },
+  mixins: [VueOfflineMixin]
 })
 export default class ArchivedWorkoutPage extends Vue {
   created() {
@@ -158,6 +169,20 @@ export default class ArchivedWorkoutPage extends Vue {
       }
       h2 {
         font-size: 1.25rem;
+      }
+    }
+
+    .image__wrapper {
+      max-width: 100%;
+      height: 40vh;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @media (min-width: 1024px) and (min-height: 500px) {
+        max-width: 70%;
+        margin: 0 auto;
       }
     }
 

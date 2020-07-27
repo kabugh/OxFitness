@@ -12,12 +12,21 @@
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
-      <vue-plyr class="video__wrapper" v-if="isOnline">
+      <vue-plyr
+        class="video__wrapper"
+        v-if="isOnline && currentWorkout.fields.videoId"
+      >
         <div
           data-plyr-provider="vimeo"
           :data-plyr-embed-id="currentWorkout.fields.videoId"
         ></div>
       </vue-plyr>
+      <div
+        class="image__wrapper"
+        v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
+      >
+        <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
+      </div>
       <div class="routines__container">
         <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
           <!-- <RichTextRenderer
@@ -238,6 +247,20 @@ export default class WorkoutPage extends Vue {
       }
       h2 {
         font-size: 1.25rem;
+      }
+    }
+
+    .image__wrapper {
+      max-width: 100%;
+      height: 40vh;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @media (min-width: 1024px) and (min-height: 500px) {
+        max-width: 70%;
+        margin: 0 auto;
       }
     }
 

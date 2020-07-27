@@ -36,13 +36,12 @@
   </q-dialog>
 </template>
 <script lang="ts">
-import { Component, Watch, Vue } from "vue-property-decorator";
+import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 import { User } from "../store/models";
 
-@Component({
-  props: ["welcomeDialog"]
-})
+@Component
 export default class WelcomeComponent extends Vue {
+  @Prop({ required: true }) welcomeDialog = false;
   passedUserName = "";
 
   get user(): User {

@@ -49,6 +49,13 @@ section {
     width: 100%;
     min-height: 100vh;
   }
+  &.topView.bottomView {
+    padding-bottom: 12vh;
+    @media (min-width: 1024px) {
+      padding-bottom: 0;
+      padding-top: 12vh;
+    }
+  }
   > .container {
     @include flex;
     flex-direction: column;
