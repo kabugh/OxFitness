@@ -1,4 +1,5 @@
 # OxFitness - fitness app
+Online fitness platform containing daily workouts, warm-ups and accessories created by passionates.
 
 # 💡 Development
  * Front-end app built using Vue, Vuex, Vue-Router with Typescript and its awesome class-based components
