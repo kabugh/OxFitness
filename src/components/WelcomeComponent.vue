@@ -41,7 +41,7 @@ import { User } from "../store/models";
 
 @Component
 export default class WelcomeComponent extends Vue {
-  @Prop({ required: true }) welcomeDialog = false;
+  @Prop({ required: true, default: false }) welcomeDialog!: boolean;
   passedUserName = "";
 
   get user(): User {

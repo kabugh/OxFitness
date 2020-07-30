@@ -44,6 +44,9 @@
                 }"
               >
                 <h2>{{ item.title }}</h2>
+                <h3 v-if="item.workouts.length > 0">
+                  {{ item.workouts.length | wordEnding }}
+                </h3>
               </div>
             </div>
           </div>
@@ -84,6 +87,14 @@ import { User } from "@/store/models";
         vm.$router.replace(to.fullPath);
       });
     else next();
+  },
+  filters: {
+    wordEnding: (numberOfWorkouts: number) => {
+      if (numberOfWorkouts === 1) return `${numberOfWorkouts} trening`;
+      else if (numberOfWorkouts > 1 && numberOfWorkouts <= 4)
+        return `${numberOfWorkouts} treningi`;
+      else return `${numberOfWorkouts} treningów`;
+    }
   }
 })
 export default class Dashboard extends Vue {
@@ -156,7 +167,6 @@ export default class Dashboard extends Vue {
       align-items: center;
       color: white;
       .workout__wrapper {
-        // width: 100%;
         height: 30vh;
         .thumbnail {
           width: 100%;
@@ -164,9 +174,9 @@ export default class Dashboard extends Vue {
           @include backgroundDefault();
           padding: 4vh;
           display: flex;
-          justify-content: flex-start;
-          align-items: flex-end;
-
+          align-items: flex-start;
+          justify-content: flex-end;
+          flex-direction: column;
           &:hover {
             cursor: pointer;
           }
@@ -174,6 +184,10 @@ export default class Dashboard extends Vue {
             padding: 0;
             font-weight: bolder;
             font-size: 1.75rem;
+            text-align: left;
+          }
+          h3 {
+            font-size: 1.125rem;
           }
         }
       }
