@@ -158,6 +158,7 @@ const actions = {
         .getEntries({
           order: "sys.updatedAt",
           content_type: "workoutCategory",
+          include: 2,
           "fields.category[match]": payload.workoutType
         })
         .then((entries: { items: any[] }) => {
@@ -192,6 +193,7 @@ const actions = {
         .getEntries({
           order: "sys.updatedAt",
           content_type: "archivedWorkouts",
+          include: 2,
           "fields.category[match]": payload.workoutType
         })
         .then((entries: { items: any[] }) => {

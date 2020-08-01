@@ -28,23 +28,19 @@
         <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
       </div>
       <div class="routines__container">
-        <div class="programs__container" v-if="$attrs.workoutType === 'daily'">
-          <!-- <RichTextRenderer
-            v-if="currentWorkout.fields.programA"
-            :document="currentWorkout.fields.programA"
-          />
-          <RichTextRenderer
-            v-if="currentWorkout.fields.programB"
-            :document="currentWorkout.fields.programB"
-          /> -->
-        </div>
-        <!-- <RichTextRenderer
-          v-else
-          :document="currentWorkout.fields.description"
-        /> -->
-        <div class="editor__container" v-html="receivedData" v-else></div>
+        <div
+          class="editor__container"
+          v-html="receivedData"
+          v-if="$attrs.workoutType !== 'daily'"
+        ></div>
       </div>
-      <q-list bordered v-if="Object.keys(this.accordionItems).length > 0">
+      <q-list
+        bordered
+        v-if="
+          Object.keys(this.accordionItems).length > 0 &&
+            $attrs.workoutType === 'daily'
+        "
+      >
         <q-expansion-item
           group="accordion"
           icon="emoji_events"
@@ -55,7 +51,12 @@
         >
           <q-card>
             <q-card-section>
-              <RichTextRenderer :document="item" :nodeRenderers="nodes" />
+              <div id="rich--text__content" class="rich--text__content">
+                <RichTextRenderer
+                  :document="item"
+                  :nodeRenderers="renderNodes()"
+                />
+              </div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -127,16 +128,21 @@ import WorkoutForm from "@/components/WorkoutForm.vue";
 import VuePlyr from "vue-plyr";
 import { VueOfflineMixin } from "vue-offline";
 
-import { BLOCKS } from "@contentful/rich-text-types";
+import {
+  BLOCKS,
+  INLINES,
+  Block,
+  EntryLinkInline
+} from "@contentful/rich-text-types";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { User, WorkoutContent, Workout } from "@/store/models";
+import { Route } from "vue-router";
 
 const options = {
   renderNode: {
-    [BLOCKS.HR]: (node: any, next: any) => `\n`
+    [BLOCKS.HR]: (node: any, next: any) => `<br />`
   }
 };
-
 @Component({
   components: {
     LeaderboardComponent,
@@ -153,20 +159,75 @@ export default class WorkoutPage extends Vue {
     } else {
       this.$store.dispatch("fetchWorkout", this.$route.params);
     }
+
     this.initialiseAccordionItems();
     this.receivedData = documentToHtmlString(
       this.currentWorkout.fields.description,
       options
     );
   }
-  nodes = options.renderNode;
+
   mounted() {
     this.isFin();
   }
+
+  @Watch("$route", { immediate: false, deep: true })
+  onRouteChange(route: Route) {
+    const camelize = (text: string) => {
+      text = text.replace(/[-_\s.]+(.)?/g, (_, c) =>
+        c ? c.toUpperCase() : ""
+      );
+      return text.substr(0, 1).toLowerCase() + text.substr(1);
+    };
+
+    const categories = this.$store.getters.workoutCategories;
+    let foundCategory = categories.find(
+      (item: any) => camelize(item.category) === route.params.workoutType
+    );
+
+    let foundWorkout = foundCategory.workouts.find(
+      (item: Workout) => (item as Workout).sys.id === route.params.id
+    );
+    this.currentWorkout = foundWorkout;
+    this.receivedData = documentToHtmlString(
+      this.currentWorkout.fields.description,
+      options
+    );
+  }
+
+  renderNodes() {
+    return {
+      [INLINES.ENTRY_HYPERLINK]: (node: any, key: any, h: any, next: any) => {
+        const linkDetails = {
+          id: node.data.target.sys.id,
+          entryType: node.data.target.sys.contentType.sys.id
+        };
+        return h(
+          "router-link",
+          {
+            props: {
+              to: `/plans/${
+                linkDetails.entryType === "accessoryWorkout"
+                  ? "accessories"
+                  : linkDetails.entryType
+              }/${linkDetails.id}`
+            }
+          },
+          next(node.content)
+        );
+      }
+    };
+  }
+
+  nodes = options.renderNode;
   card = false;
   accordionItems = {};
   receivedData = {};
   isFinished = false;
+
+  richTextData(program: any) {
+    return documentToHtmlString(program, options);
+  }
 
   initialiseAccordionItems() {
     this.findItemInObject("programA", this.currentWorkout.fields);
@@ -193,6 +254,7 @@ export default class WorkoutPage extends Vue {
     this.isFin();
     this.card = value;
   }
+
   @Watch("user.workouts")
   isFin() {
     // if there's only one workout left and gets removed, the watcher doesnt work
@@ -225,7 +287,7 @@ export default class WorkoutPage extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/styles/global.scss";
 .workoutPage {
   width: 100%;
@@ -289,6 +351,38 @@ export default class WorkoutPage extends Vue {
     }
     .q-item__label {
       text-transform: capitalize;
+    }
+    #rich--text__content {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 1vh 0;
+      }
+      p {
+        padding: 1vh 0;
+        &:first-of-type {
+          padding-top: 0;
+        }
+        &:last-of-type {
+          padding-bottom: 0;
+        }
+      }
+      ul {
+        margin-left: 20px;
+        li {
+          list-style-type: initial;
+          margin: 10px 0;
+          p {
+            padding: 0;
+          }
+        }
+      }
+      hr {
+        display: none;
+      }
     }
     .results__container,
     .rating__container {
