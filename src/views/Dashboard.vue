@@ -5,7 +5,22 @@
         class="workouts__sections--container"
         v-if="user.premiumAccount.isActive"
       >
-        <q-pull-to-refresh @refresh="pullData">
+        <div class="components__container">
+          <HelloSection
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-offset="0"
+          />
+          <WorkoutsStatistics
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-offset="50"
+          />
+          <LastWatched
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-offset="50"
+          />
           <div
             class="workout__container"
             v-if="loading || workoutCategories <= 0"
@@ -14,6 +29,9 @@
               class="workout__wrapper"
               v-for="(skeleton, n) in mockItems"
               :key="n"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-offset="50"
             >
               <q-skeleton class="thumbnail" square />
             </div>
@@ -23,6 +41,7 @@
               class="workout__wrapper"
               v-for="(item, index) in workoutCategories"
               :key="index"
+              data-aos="fade-in"
             >
               <div
                 class="thumbnail"
@@ -50,7 +69,7 @@
               </div>
             </div>
           </div>
-        </q-pull-to-refresh>
+        </div>
       </div>
       <AccessDeniedComponent
         v-else-if="!user.premiumAccount.isActive"
@@ -68,6 +87,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueOfflineMixin } from "vue-offline";
 
+import HelloSection from "../components/visuals/HelloSection.vue";
+import WorkoutsStatistics from "../components/visuals/WorkoutsStatistics.vue";
+import LastWatched from "../components/visuals/LastWatched.vue";
+
 import AccessDeniedComponent from "../components/AccessDeniedComponent.vue";
 import LoadingComponent from "../components/LoadingComponent.vue";
 import WelcomeComponent from "../components/WelcomeComponent.vue";
@@ -76,6 +99,9 @@ import { User } from "@/store/models";
 
 @Component({
   components: {
+    HelloSection,
+    WorkoutsStatistics,
+    LastWatched,
     AccessDeniedComponent,
     LoadingComponent,
     WelcomeComponent
@@ -149,48 +175,64 @@ export default class Dashboard extends Vue {
       text-align: center;
       padding: 2vh 0;
     }
-    .workouts__sections--container
-      .q-pull-to-refresh
-      .q-pull-to-refresh__content
-      .workout__container {
+    .workouts__sections--container .components__container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
-        grid-template-columns: 100%;
-        grid-gap: 10vh;
-        .workout__wrapper {
-          min-height: 50vh;
-        }
-      }
       grid-gap: 4vh;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      .workout__wrapper {
-        height: 30vh;
-        .thumbnail {
-          width: 100%;
-          height: 100%;
-          @include backgroundDefault();
-          padding: 4vh;
-          display: flex;
-          align-items: flex-start;
-          justify-content: flex-end;
-          flex-direction: column;
-          &:hover {
-            cursor: pointer;
+      .workout__container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
+          grid-template-columns: 100%;
+          grid-gap: 10vh;
+          .workout__wrapper {
+            min-height: 50vh;
           }
-          h2 {
-            padding: 0;
-            font-weight: bolder;
-            font-size: 1.75rem;
-            text-align: left;
-          }
-          h3 {
-            font-size: 1.125rem;
+        }
+        grid-gap: 4vh;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        .workout__wrapper {
+          height: 30vh;
+          .thumbnail {
+            width: 100%;
+            height: 100%;
+            @include backgroundDefault();
+            opacity: 0.99;
+            padding: 4vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            flex-direction: column;
+            border-radius: 10px;
+            &:hover {
+              cursor: pointer;
+            }
+            h2 {
+              padding: 0;
+              font-weight: bolder;
+              font-size: 1.75rem;
+              text-align: left;
+            }
+            h3 {
+              font-size: 1.125rem;
+              font-weight: 500;
+            }
           }
         }
       }
+    }
+  }
+  @media (min-width: 1300px) and (min-height: 700px) {
+    .dashboard__container {
+      max-width: 90vw;
+      padding: 4vh;
+    }
+  }
+  @media (min-width: 1650px) and (min-height: 700px) {
+    .dashboard__container {
+      max-width: 50vw;
+      padding: 4vh;
     }
   }
 }

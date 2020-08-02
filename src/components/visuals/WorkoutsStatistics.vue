@@ -1,0 +1,79 @@
+<template>
+  <section class="workoutsStatistics">
+    <div class="workoutsStatistics__container" v-if="finishedDailyWorkouts > 0">
+      <div
+        class="statisticsItem__container"
+        v-for="(item, index) in statistics"
+        :key="index"
+      >
+        <h1>{{ item.value }}</h1>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+  </section>
+</template>
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+
+@Component
+export default class WorkoutsStatistics extends Vue {
+  get user() {
+    return this.$store.getters.user;
+  }
+
+  get finishedDailyWorkouts() {
+    return Object.keys(this.user.workouts).length;
+  }
+  statistics = [
+    {
+      value: this.finishedDailyWorkouts,
+      description: "Ukończone treningi codzienne"
+    },
+    {
+      value: 8,
+      description: "Nowe treningi w tym tygodniu"
+    }
+  ];
+}
+</script>
+<style lang="scss">
+@import "@/assets/styles/global.scss";
+
+.workoutsStatistics {
+  width: 100%;
+  .workoutsStatistics__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 4vh;
+    .statisticsItem__container {
+      background-color: #f5f5f7;
+      color: black;
+      // background: #6b108e;
+      // background: -webkit-linear-gradient(to bottom, #958efa, #6b108e);
+      // background: linear-gradient(to bottom, #958efa, #6b108e);
+      // &:last-of-type {
+      //   background: #4568dc;
+      //   background: -webkit-linear-gradient(to bottom, #958efa, #f1c40f);
+      //   background: linear-gradient(to bottom, #958efa, #f1c40f);
+      // }
+      // color: white;
+      border-radius: 10px;
+      max-height: 30vh;
+      @include flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 2vh;
+      text-align: center;
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+</style>

@@ -169,6 +169,8 @@ export default class WorkoutPage extends Vue {
 
   mounted() {
     this.isFin();
+    if (this.currentWorkout)
+      this.$store.commit("setLastWatched", this.currentWorkout);
   }
 
   @Watch("$route", { immediate: false, deep: true })

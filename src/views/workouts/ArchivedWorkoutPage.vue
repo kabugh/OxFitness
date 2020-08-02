@@ -103,6 +103,12 @@ export default class ArchivedWorkoutPage extends Vue {
       options
     );
   }
+
+  mounted() {
+    if (this.currentWorkout)
+      this.$store.commit("setLastWatched", this.currentWorkout);
+  }
+
   nodes = options.renderNode;
   card = false;
   accordionItems = {};
