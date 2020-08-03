@@ -2,19 +2,37 @@
   <section class="workoutPage topView">
     <div class="workoutPage__container container" v-if="currentWorkout.fields">
       <div class="title__container">
-        <h1 v-if="currentWorkout.fields.dayOfTheWeek">
+        <h1
+          v-if="currentWorkout.fields.dayOfTheWeek"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="800"
+        >
           {{ currentWorkout.fields.dayOfTheWeek }}
         </h1>
-        <h1 v-if="currentWorkout.fields.title">
+        <h1
+          v-if="currentWorkout.fields.title"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="800"
+        >
           {{ currentWorkout.fields.title }}
         </h1>
-        <h2 v-if="currentWorkout.fields.date">
+        <h2
+          v-if="currentWorkout.fields.date"
+          data-aos="fade-up"
+          data-aos-delay="300"
+          data-aos-duration="800"
+        >
           {{ currentWorkout.fields.date }}
         </h2>
       </div>
       <vue-plyr
         class="video__wrapper"
         v-if="isOnline && currentWorkout.fields.videoId"
+        data-aos="fade-up"
+        data-aos-delay="600"
+        data-aos-duration="800"
       >
         <div
           data-plyr-provider="vimeo"
@@ -24,6 +42,9 @@
       <div
         class="image__wrapper"
         v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
+        data-aos="fade-up"
+        data-aos-delay="600"
+        data-aos-duration="800"
       >
         <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
       </div>
@@ -32,6 +53,9 @@
           class="editor__container"
           v-html="receivedData"
           v-if="$attrs.workoutType !== 'daily'"
+          data-aos="fade-up"
+          data-aos-delay="800"
+          data-aos-duration="800"
         ></div>
       </div>
       <q-list
@@ -40,6 +64,9 @@
           Object.keys(this.accordionItems).length > 0 &&
             $attrs.workoutType === 'daily'
         "
+        data-aos="fade-up"
+        data-aos-delay="800"
+        data-aos-duration="800"
       >
         <q-expansion-item
           group="accordion"
@@ -63,7 +90,13 @@
         <q-separator />
       </q-list>
 
-      <div class="results__container" v-if="$attrs.workoutType === 'daily'">
+      <div
+        class="results__container"
+        v-if="$attrs.workoutType === 'daily'"
+        data-aos="fade-up"
+        data-aos-delay="800"
+        data-aos-duration="800"
+      >
         <div class="results__wrapper" v-if="!isFinished && isOnline">
           <h2>
             Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!

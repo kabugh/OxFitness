@@ -1,7 +1,7 @@
 <template>
   <section
     class="lastWatched"
-    v-if="lastWatched"
+    v-if="lastWatched.fields"
     :style="{ backgroundImage: 'url(' + require('@/assets/1.jpg') + ')' }"
     @click="
       $router.push({
@@ -16,7 +16,7 @@
   >
     <div class="lastWatched__container">
       <h1>Ostatnio oglądany trening</h1>
-      <h2 v-if="lastWatched.fields.title">{{ lastWatched.fields.title }}</h2>
+      <h2>{{ lastWatched.fields.title }}</h2>
       <h3 v-if="lastWatched.fields.date">{{ lastWatched.fields.date }}</h3>
       <h3 v-else-if="lastWatched.fields.category">
         <strong>Kategoria:</strong> {{ lastWatched.fields.category }}
@@ -40,7 +40,16 @@ export default class lastWatched extends Vue {
         workoutType = "accessories";
         break;
       case "dailyWorkout":
-        workoutType = "daily";
+        // check if the workout is active (dailyWorkouts) or archived
+        if (
+          this.$store.getters.workoutCategories
+            .find((cat: any) => cat.category === "daily")
+            .workouts.includes(this.lastWatched)
+        ) {
+          workoutType = "daily";
+        } else {
+          workoutType = "archived";
+        }
         break;
       default:
         workoutType = this.lastWatched.sys.contentType.sys.id;

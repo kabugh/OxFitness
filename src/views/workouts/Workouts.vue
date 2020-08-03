@@ -2,8 +2,12 @@
   <section class="workouts topView">
     <div class="workouts__container container">
       <div class="workout__description" v-if="categoryDetails">
-        <h2>{{ categoryDetails.title }}</h2>
-        <p>{{ categoryDetails.description }}</p>
+        <h2 data-aos="fade-up" data-aos-duration="800">
+          {{ categoryDetails.title }}
+        </h2>
+        <p data-aos="fade-up" data-aos-duration="800">
+          {{ categoryDetails.description }}
+        </p>
       </div>
       <div
         class="videos__section__container"
@@ -15,6 +19,9 @@
               class="video__wrapper"
               v-for="(workout, index) in workouts"
               :key="index"
+              data-aos="fade-up"
+              data-aos-duration="800"
+              :data-aos-delay="200 + index * 50"
             >
               <img
                 v-if="isOnline"
@@ -70,7 +77,13 @@
             </div>
           </div>
         </div>
-        <div class="archive__videos__container" v-if="isOnline">
+        <div
+          class="archive__videos__container"
+          v-if="isOnline"
+          data-aos="fade-up"
+          data-aos-duration="800"
+          data-aos-delay="600"
+        >
           <h2>
             Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
             klikając poniżej.
@@ -87,7 +100,15 @@
         </div>
       </div>
       <div class="videos__section__container" v-else>
-        <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
+        <q-tabs
+          v-model="tab"
+          align="justify"
+          narrow-indicator
+          class="q-mb-lg"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          data-aos-duration="800"
+        >
           <q-tab
             v-for="(element, index) in Object.keys(this.groupedWorkouts)"
             :name="element"
@@ -99,15 +120,18 @@
           v-model="tab"
           animated
           swipeable
-          transition-prev="scale"
-          transition-next="scale"
-          class="videos__section__wrapper text-center"
+          class="videos__section__wrapper text-center easeInOutQuart"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          data-aos-duration="800"
+          data-aos-offset="50"
         >
           <q-tab-panel
             :name="i"
             class="videos__section__wrapper"
             v-for="(workouts, i) in groupedWorkouts"
             :key="i"
+            style="overflow: hidden"
           >
             <h2>{{ i }}</h2>
             <div class="videos__container" v-if="!loading">
@@ -342,5 +366,15 @@ export default class Workouts extends Vue {
       }
     }
   }
+}
+.easeInOutQuart .q-transition--slide-right-enter-active,
+.easeInOutQuart .q-transition--slide-left-enter-active,
+.easeInOutQuart .q-transition--slide-up-enter-active,
+.easeInOutQuart .q-transition--slide-down-enter-active,
+.easeInOutQuart .q-transition--slide-right-leave-active,
+.easeInOutQuart .q-transition--slide-left-leave-active,
+.easeInOutQuart .q-transition--slide-up-leave-active,
+.easeInOutQuart .q-transition--slide-down-leave-active {
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) !important;
 }
 </style>
