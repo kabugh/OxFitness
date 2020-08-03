@@ -99,6 +99,8 @@ export default class Authentication extends Vue {
   width: 100%;
   height: 100vh;
   position: relative;
+  display: grid;
+  grid-template-rows: 0.2fr minmax(0.8fr, auto);
   .logo__container {
     display: flex;
     justify-content: center;
@@ -127,8 +129,15 @@ export default class Authentication extends Vue {
     width: 80%;
     margin: 0 auto;
     padding: 2vh 2vh;
-    // @include flex;
-    // align-items: center;
+    @include flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    min-height: 80vh;
+    > section {
+      width: 100%;
+    }
     @media (min-width: 360px) {
       padding: 8vh 2vh 4vh 2vh;
     }
@@ -146,12 +155,15 @@ export default class Authentication extends Vue {
       opacity: 0;
     }
     .status {
+      @include flex;
+      align-items: center;
+      flex-direction: column;
       text-align: center;
       margin-top: 40px;
-      position: absolute;
+      // position: absolute;
       bottom: 10vh;
-      left: 50%;
-      transform: translate(-50%, 0);
+      // left: 50%;
+      // transform: translate(-50%, 0);
       h4 {
         color: $secondaryColor;
         text-transform: uppercase;
@@ -186,6 +198,10 @@ export default class Authentication extends Vue {
         }
       }
     }
+  }
+  @media (min-width: 500px) and (max-width: 1100px) and (min-height: 320px) and (max-height: 800px) and (orientation: landscape) {
+    height: auto;
+    min-height: 100vh;
   }
 }
 </style>

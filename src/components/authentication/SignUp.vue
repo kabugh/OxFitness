@@ -227,7 +227,7 @@ $error: #c10015;
 
         @media (min-width: 360px) {
           > input {
-            margin-top: 20px;
+            margin-top: 8px;
           }
           span.error {
             font-size: 1rem;
@@ -237,6 +237,11 @@ $error: #c10015;
           }
           button {
             margin-top: 4vh;
+          }
+        }
+        @media (min-width: 500px) {
+          > input {
+            margin-top: 20px;
           }
         }
       }
