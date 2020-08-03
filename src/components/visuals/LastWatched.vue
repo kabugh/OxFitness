@@ -9,7 +9,8 @@
         params: {
           workoutType: findWorkoutType,
           id: lastWatched.sys.id,
-          workout: lastWatched
+          workout: lastWatched,
+          hasInsideCategories: hasInsideCategories
         }
       })
     "
@@ -29,6 +30,7 @@ import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class lastWatched extends Vue {
+  hasInsideCategories = false;
   get lastWatched() {
     return this.$store.getters.lastWatched;
   }
@@ -38,6 +40,7 @@ export default class lastWatched extends Vue {
     switch (this.lastWatched.sys.contentType.sys.id) {
       case "accessoryWorkout":
         workoutType = "accessories";
+        this.hasInsideCategories = true;
         break;
       case "dailyWorkout":
         // check if the workout is active (dailyWorkouts) or archived
@@ -50,6 +53,11 @@ export default class lastWatched extends Vue {
         } else {
           workoutType = "archived";
         }
+        this.hasInsideCategories = false;
+        break;
+      case "warmUp":
+        workoutType = "warm-up";
+        this.hasInsideCategories = true;
         break;
       default:
         workoutType = this.lastWatched.sys.contentType.sys.id;

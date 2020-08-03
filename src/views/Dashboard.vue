@@ -53,7 +53,8 @@
                       workouts: item.workouts,
                       categoryDetails: {
                         title: item.title,
-                        description: item.description
+                        description: item.description,
+                        hasInsideCategories: item.hasInsideCategories
                       }
                     }
                   })

@@ -15,7 +15,6 @@ const state = {
 
   workoutCategories: [] as any[],
   workouts: [],
-  archivedWorkoutsCategory: [],
   currentWorkout: {},
   currentLeaderboard: {}
 };
@@ -29,12 +28,6 @@ const mutations = {
   },
   setWorkouts(state: { workouts: any }, payload: Workout[]) {
     state.workouts = payload;
-  },
-  setArchivedWorkoutsCategory(
-    state: { archivedWorkoutsCategory: any },
-    payload: Workout[]
-  ) {
-    state.archivedWorkoutsCategory = payload;
   },
   setCurrentWorkout(state: { currentWorkout: any }, payload: Workout) {
     state.currentWorkout = payload;
@@ -102,25 +95,6 @@ const actions = {
         });
     }
   },
-  fetchArchivedWorkoutType({ commit, state }: any) {
-    if (state.archivedWorkoutsCategory.length <= 0) {
-      commit("setLoading", true);
-      commit("clearError");
-      client
-        .getEntries({
-          order: "sys.createdAt",
-          content_type: "archivedWorkouts"
-        })
-        .then((entries: { items: any[] }) => {
-          entries.items.forEach((element: { fields: any }) => {
-            commit("setArchivedWorkoutsCategory", element.fields);
-          });
-          commit("setLoading", false);
-        });
-    } else {
-      commit("setArchivedWorkoutsCategory", state.archivedWorkoutsCategory);
-    }
-  },
   fetchWorkoutType({ commit, state }: any, payload: any) {
     if (state.workoutCategories.length <= 0) {
       commit("setLoading", true);
@@ -180,37 +154,6 @@ const actions = {
       commit("setCurrentWorkout", foundWorkout);
       state.workouts = [];
       // state.currentWorkout = {};
-    }
-  },
-  fetchArchivedWorkout(
-    { commit, state }: any,
-    payload: { workoutType: any; id: string }
-  ) {
-    if (state.archivedWorkoutsCategory.length <= 0) {
-      commit("setLoading", true);
-      commit("clearError");
-      client
-        .getEntries({
-          order: "sys.updatedAt",
-          content_type: "archivedWorkouts",
-          include: 2,
-          "fields.category[match]": payload.workoutType
-        })
-        .then((entries: { items: any[] }) => {
-          entries.items.forEach((element: { fields: any }) => {
-            state.archivedWorkoutsCategory.push(element.fields);
-          });
-          commit("setLoading", false);
-        });
-    } else {
-      commit("setWorkouts", state.archivedWorkoutsCategory.workouts);
-
-      let foundWorkout = state.workouts.find(
-        (item: Workout) => (item as Workout).sys.id === payload.id
-      );
-
-      commit("setCurrentWorkout", foundWorkout);
-      state.workouts = [];
     }
   },
   uploadWorkoutResults(
@@ -380,9 +323,6 @@ const getters = {
   },
   workouts(state: { workouts: Workout[] }) {
     return state.workouts;
-  },
-  archivedWorkoutsCategory(state: { archivedWorkoutsCategory: Workout[] }) {
-    return state.archivedWorkoutsCategory;
   },
   currentWorkout(state: { currentWorkout: Workout }) {
     return state.currentWorkout;

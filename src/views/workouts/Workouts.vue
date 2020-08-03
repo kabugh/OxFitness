@@ -11,7 +11,7 @@
       </div>
       <div
         class="videos__section__container"
-        v-if="$attrs.workoutType === 'daily'"
+        v-if="!categoryDetails.hasInsideCategories"
       >
         <div class="videos__section__wrapper">
           <div class="videos__container" v-if="!loading">
@@ -35,7 +35,8 @@
                     params: {
                       workoutType: $attrs.workoutType,
                       id: workout.sys.id,
-                      workout: workout
+                      workout: workout,
+                      hasInsideCategories: categoryDetails.hasInsideCategories
                     }
                   })
                 "
@@ -57,7 +58,8 @@
                       params: {
                         workoutType: $attrs.workoutType,
                         id: workout.sys.id,
-                        workout: workout
+                        workout: workout,
+                        hasInsideCategories: categoryDetails.hasInsideCategories
                       }
                     })
                   "
@@ -75,27 +77,6 @@
             >
               <q-skeleton type="rect" />
             </div>
-          </div>
-        </div>
-        <div
-          class="archive__videos__container"
-          v-if="isOnline"
-          data-aos="fade-up"
-          data-aos-duration="800"
-          data-aos-delay="600"
-        >
-          <h2>
-            Chciałbyś nadrobić opuszczony tydzień? Wróć do zeszłych treningów
-            klikając poniżej.
-          </h2>
-          <div class="button__wrapper">
-            <button
-              type="button"
-              class="dark"
-              @click="$router.push('/archived')"
-            >
-              Wróć
-            </button>
           </div>
         </div>
       </div>
@@ -150,7 +131,8 @@
                       params: {
                         workoutType: $attrs.workoutType,
                         id: workout.sys.id,
-                        workout: workout
+                        workout: workout,
+                        hasInsideCategories: categoryDetails.hasInsideCategories
                       }
                     })
                   "
@@ -171,7 +153,9 @@
                         params: {
                           workoutType: $attrs.workoutType,
                           id: workout.sys.id,
-                          workout: workout
+                          workout: workout,
+                          hasInsideCategories:
+                            categoryDetails.hasInsideCategories
                         }
                       })
                     "
@@ -225,7 +209,8 @@ export default class Workouts extends Vue {
       );
       this.categoryDetails = {
         title: foundWorkoutCategory.title,
-        description: foundWorkoutCategory.description
+        description: foundWorkoutCategory.description,
+        hasInsideCategories: foundWorkoutCategory.hasInsideCategories
       };
     }
     if (this.$attrs.workouts) {

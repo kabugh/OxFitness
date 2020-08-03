@@ -1,13 +1,13 @@
 <template>
-  <section class="workoutsStatistics">
-    <div class="workoutsStatistics__container" v-if="finishedDailyWorkouts > 0">
-      <div
-        class="statisticsItem__container"
-        v-for="(item, index) in statistics"
-        :key="index"
-      >
-        <h1>{{ item.value }}</h1>
-        <p>{{ item.description }}</p>
+  <section class="workoutsStatistics" v-if="finishedDailyWorkouts > 0">
+    <div class="workoutsStatistics__container">
+      <div class="statisticsItem__container">
+        <h1>{{ finishedDailyWorkouts }}</h1>
+        <p>Ukończone treningi codzienne</p>
+      </div>
+      <div class="statisticsItem__container">
+        <h1>8</h1>
+        <p>Nowe treningi w tym tygodniu</p>
       </div>
     </div>
   </section>
@@ -22,18 +22,9 @@ export default class WorkoutsStatistics extends Vue {
   }
 
   get finishedDailyWorkouts() {
-    return Object.keys(this.user.workouts).length;
+    if (this.user.workouts) return Object.keys(this.user.workouts).length;
+    else return 0;
   }
-  statistics = [
-    {
-      value: this.finishedDailyWorkouts,
-      description: "Ukończone treningi codzienne"
-    },
-    {
-      value: 8,
-      description: "Nowe treningi w tym tygodniu"
-    }
-  ];
 }
 </script>
 <style lang="scss">

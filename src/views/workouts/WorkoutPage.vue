@@ -37,6 +37,7 @@
         <div
           data-plyr-provider="vimeo"
           :data-plyr-embed-id="currentWorkout.fields.videoId"
+          allowfullscreen
         ></div>
       </vue-plyr>
       <div
@@ -52,7 +53,7 @@
         <div
           class="editor__container"
           v-html="receivedData"
-          v-if="$attrs.workoutType !== 'daily'"
+          v-if="hasInsideCategories || $attrs.hasInsideCategories"
           data-aos="fade-up"
           data-aos-delay="800"
           data-aos-duration="800"
@@ -62,7 +63,7 @@
         bordered
         v-if="
           Object.keys(this.accordionItems).length > 0 &&
-            $attrs.workoutType === 'daily'
+            !(hasInsideCategories || $attrs.hasInsideCategories)
         "
         data-aos="fade-up"
         data-aos-delay="800"
@@ -217,13 +218,17 @@ export default class WorkoutPage extends Vue {
 
     const categories = this.$store.getters.workoutCategories;
     let foundCategory = categories.find(
-      (item: any) => camelize(item.category) === route.params.workoutType
+      (item: any) => item.category === route.params.workoutType
     );
 
     let foundWorkout = foundCategory.workouts.find(
       (item: Workout) => (item as Workout).sys.id === route.params.id
     );
     this.currentWorkout = foundWorkout;
+
+    const contentType = this.currentWorkout.sys.contentType.sys.id;
+    this.hasInsideCategories = foundCategory.hasInsideCategories;
+
     this.receivedData = documentToHtmlString(
       this.currentWorkout.fields.description,
       options
@@ -237,15 +242,26 @@ export default class WorkoutPage extends Vue {
           id: node.data.target.sys.id,
           entryType: node.data.target.sys.contentType.sys.id
         };
+
+        const workoutType =
+          linkDetails.entryType === "accessoryWorkout"
+            ? "accessories"
+            : linkDetails.entryType === "warmUp"
+            ? "warm-up"
+            : linkDetails.entryType;
+
         return h(
           "router-link",
           {
             props: {
-              to: `/plans/${
-                linkDetails.entryType === "accessoryWorkout"
-                  ? "accessories"
-                  : linkDetails.entryType
-              }/${linkDetails.id}`
+              to: {
+                name: "workoutPage",
+                params: {
+                  workoutType: workoutType,
+                  id: linkDetails.id,
+                  hasInsideCategories: true
+                }
+              }
             }
           },
           next(node.content)
@@ -253,6 +269,8 @@ export default class WorkoutPage extends Vue {
       }
     };
   }
+
+  hasInsideCategories = false;
 
   nodes = options.renderNode;
   card = false;

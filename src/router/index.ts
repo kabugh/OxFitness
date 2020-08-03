@@ -92,27 +92,6 @@ const routes = [
     meta: { displayNav: true }
   },
   {
-    path: "/archived",
-    name: "archivedWorkouts",
-    component: () =>
-      import(
-        /* webpackChunkName: "archivedWorkouts" */ "../views/workouts/ArchivedWorkouts.vue"
-      ),
-    beforeEnter: AuthGuard,
-    meta: { displayNav: true }
-  },
-  {
-    path: "/archived/:id",
-    name: "archivedWorkoutPage",
-    component: () =>
-      import(
-        /* webpackChunkName: "archivedWorkoutPage" */ "../views/workouts/ArchivedWorkoutPage.vue"
-      ),
-    beforeEnter: AuthGuard,
-    props: true,
-    meta: { displayNav: true }
-  },
-  {
     path: "/plans",
     redirect: { name: "dashboard" }
   },

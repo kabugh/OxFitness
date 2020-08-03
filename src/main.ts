@@ -15,7 +15,7 @@ Vue.use(VueOffline, { mixin: false, storage: false });
 
 Vue.use(VuePlyr, {
   plyr: {
-    fullscreen: { enabled: false }
+    fullscreen: { enabled: true }
   },
   emit: ["ended"]
 });

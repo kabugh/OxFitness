@@ -50,6 +50,7 @@ section {
     min-height: 100vh;
   }
   &.topView.bottomView {
+    padding-top: 0;
     padding-bottom: 12vh;
     @media (min-width: 1024px) {
       padding-bottom: 0;
