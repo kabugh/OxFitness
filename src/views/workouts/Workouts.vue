@@ -352,14 +352,4 @@ export default class Workouts extends Vue {
     }
   }
 }
-.easeInOutQuart .q-transition--slide-right-enter-active,
-.easeInOutQuart .q-transition--slide-left-enter-active,
-.easeInOutQuart .q-transition--slide-up-enter-active,
-.easeInOutQuart .q-transition--slide-down-enter-active,
-.easeInOutQuart .q-transition--slide-right-leave-active,
-.easeInOutQuart .q-transition--slide-left-leave-active,
-.easeInOutQuart .q-transition--slide-up-leave-active,
-.easeInOutQuart .q-transition--slide-down-leave-active {
-  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) !important;
-}
 </style>

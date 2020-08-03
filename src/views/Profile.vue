@@ -39,9 +39,7 @@
         animated
         swipeable
         infinite
-        transition-prev="scale"
-        transition-next="scale"
-        class="tab-panels text-center"
+        class="tab-panels text-center easeInOutQuart"
       >
         <q-tab-panel name="validity"
           ><div class="details__container validity">

@@ -129,17 +129,13 @@ export default class Dashboard extends Vue {
   isComponentReady = false;
 
   created() {
-    this.isComponentReady = true;
-    this.$store.dispatch("fetchWorkoutTypes");
+    this.$store.dispatch("fetchWorkoutTypes").then(() => {
+      this.isComponentReady = true;
+    });
   }
 
   mounted() {
     this.$store.dispatch("bindUser");
-  }
-
-  pullData(done: Function) {
-    this.$store.dispatch("fetchWorkoutTypes");
-    done();
   }
 
   get user(): User {

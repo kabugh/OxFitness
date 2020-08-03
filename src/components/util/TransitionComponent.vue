@@ -43,7 +43,7 @@ export default class TransitionComponent extends Vue {
   width: 100%;
   background: var(--overlay-bg);
   transition-duration: var(--transition-duration);
-  z-index: 200;
+  z-index: 6001;
   &.left {
     transform: translateX(100vw); // maybe use 100% - in case of wide scrollbar?
   }

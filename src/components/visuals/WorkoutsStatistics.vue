@@ -39,15 +39,6 @@ export default class WorkoutsStatistics extends Vue {
     .statisticsItem__container {
       background-color: #f5f5f7;
       color: black;
-      // background: #6b108e;
-      // background: -webkit-linear-gradient(to bottom, #958efa, #6b108e);
-      // background: linear-gradient(to bottom, #958efa, #6b108e);
-      // &:last-of-type {
-      //   background: #4568dc;
-      //   background: -webkit-linear-gradient(to bottom, #958efa, #f1c40f);
-      //   background: linear-gradient(to bottom, #958efa, #f1c40f);
-      // }
-      // color: white;
       border-radius: 10px;
       max-height: 30vh;
       @include flex;

@@ -86,7 +86,7 @@ export default class HelloSection extends Vue {
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
     }
     @media (min-width: 768px) {
