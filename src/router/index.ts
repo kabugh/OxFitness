@@ -131,27 +131,15 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
-  // scrollBehavior(to, from, savedPosition) {
-  //   if (savedPosition) {
-  //     return savedPosition;
-  //   } else {
-  //     return { x: 0, y: 0 };
-  //   }
-  // }
   scrollBehavior(to, from, savedPosition) {
     if (to.meta.transition) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           if (savedPosition) resolve(savedPosition);
-          else resolve({ x: 0, y: 0 });
         }, 500);
       });
     } else {
-      if (savedPosition) {
-        return savedPosition;
-      } else {
-        return { x: 0, y: 0 };
-      }
+      if (savedPosition) return savedPosition;
     }
   }
 });

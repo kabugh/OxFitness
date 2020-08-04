@@ -68,6 +68,7 @@
         data-aos="fade-up"
         data-aos-delay="800"
         data-aos-duration="800"
+        data-aos-offset="50"
       >
         <q-expansion-item
           group="accordion"
@@ -352,6 +353,7 @@ export default class WorkoutPage extends Vue {
     padding: 2vh 6vw;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     .title__container {
       padding: 2vh 0 4vh 0;
       text-align: center;

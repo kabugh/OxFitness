@@ -223,6 +223,9 @@ export default class Workouts extends Vue {
 
   mounted() {
     this.tab = Object.keys(this.groupedWorkouts)[0];
+    if (window.scrollY !== 0) {
+      this.$scrollTo(".topView", 1500);
+    }
   }
 
   get workouts() {
@@ -254,6 +257,7 @@ export default class Workouts extends Vue {
 @import "@/styles/quasar.variables.scss";
 .workouts {
   .workouts__container {
+    overflow: hidden;
     .workout__description {
       @include flex;
       flex-direction: column;
@@ -315,6 +319,7 @@ export default class Workouts extends Vue {
               width: 100%;
               max-width: 400px;
               margin: 0 auto;
+              border-radius: 10px;
               &:hover {
                 cursor: pointer;
               }

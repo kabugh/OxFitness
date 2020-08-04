@@ -2,10 +2,12 @@
   <div id="app">
     <BottomTabs
       v-if="user && !$route.meta.unauthenticatedAccess && !isNavOpen"
-    ></BottomTabs>
-    <TopNavbar></TopNavbar>
+    />
+    <transition name="topNav">
+      <TopNavbar />
+    </transition>
     <transition name="theOverlay">
-      <TheOverlay v-if="isNavOpen" :user="user"></TheOverlay>
+      <TheOverlay v-if="isNavOpen" :user="user" />
     </transition>
     <TransitionComponent>
       <keep-alive include="Dashboard">
@@ -65,12 +67,14 @@ export default class App extends Vue {
 
   @Watch("user.premiumAccount.isActive")
   checkAccountStatus() {
-    if (!this.user.premiumAccount.isActive) {
-      if (
-        !this.$route.meta.unauthenticatedAccess &&
-        this.$route.path !== "/dashboard"
-      )
-        this.$router.replace("/dashboard");
+    if (this.user) {
+      if (!this.user.premiumAccount.isActive) {
+        if (
+          !this.$route.meta.unauthenticatedAccess &&
+          this.$route.path !== "/dashboard"
+        )
+          this.$router.replace("/dashboard");
+      }
     }
   }
 
