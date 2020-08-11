@@ -32,7 +32,7 @@ import { Vue, Component } from "vue-property-decorator";
 export default class lastWatched extends Vue {
   hasInsideCategories = false;
   get lastWatched() {
-    return this.$store.getters.lastWatched;
+    return this.$store.getters.user.lastWatched;
   }
 
   get findWorkoutType() {

@@ -59,7 +59,7 @@ export default class BottomTabs extends Vue {
     //   link: "/dashboard"
     // },
     {
-      title: "Profile",
+      title: "Profil",
       icon: "account_circle",
       link: "/profile"
     }
