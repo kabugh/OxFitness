@@ -14,6 +14,7 @@ export interface User {
   transactions: string[];
   imageURL?: string;
   workouts: [];
+  lastWatched: Workout;
 }
 
 export interface Feature {
@@ -32,7 +33,7 @@ export interface Workout {
 
 export interface WorkoutContent {
   date: string;
-  dayOfTheWeek: string;
+  title: string;
   videoId: string;
   resultKey: string;
   programA?: Object;

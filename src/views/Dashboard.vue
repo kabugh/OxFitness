@@ -223,13 +223,11 @@ export default class Dashboard extends Vue {
   @media (min-width: 1300px) and (min-height: 700px) {
     .dashboard__container {
       max-width: 90vw;
-      padding: 4vh;
     }
   }
   @media (min-width: 1650px) and (min-height: 700px) {
     .dashboard__container {
       max-width: 50vw;
-      padding: 4vh;
     }
   }
 }

@@ -168,13 +168,22 @@ select:-webkit-autofill:focus {
   font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 }
 
-  @media (min-width: 700px) and (min-height: 1024px) {
-    section{
-      &.topView {
-        padding-top: 6vh;
-      }
+@media (min-width: 700px) and (min-height: 1024px) {
+  section{
+    &.topView {
+      padding-top: 6vh;
     }
   }
+}
+
+@media only screen and (orientation: landscape) and (min-width: 1024px) and (min-height: 900px) {
+  section {
+    > .container {
+      max-width: 80vw;
+      margin: 0 auto;
+    }
+  }
+}  
 
 @media only screen and (orientation: landscape) and (min-width: 1300px) and (min-height: 1000px) {
   section {
@@ -208,7 +217,7 @@ select:-webkit-autofill:focus {
 @media only screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
   section {
     > .container {
-      max-width: 90vw;
+      max-width: 80vw;
       margin: 0 auto;
     }
   }

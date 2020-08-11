@@ -68,7 +68,7 @@
         data-aos="fade-up"
         data-aos-delay="800"
         data-aos-duration="800"
-        data-aos-offset="50"
+        data-aos-offset="-500"
       >
         <q-expansion-item
           group="accordion"
@@ -98,6 +98,7 @@
         data-aos="fade-up"
         data-aos-delay="800"
         data-aos-duration="800"
+        data-aos-offset="-500"
       >
         <div class="results__wrapper" v-if="!isFinished && isOnline">
           <h2>
@@ -205,7 +206,7 @@ export default class WorkoutPage extends Vue {
   mounted() {
     this.isFin();
     if (this.currentWorkout)
-      this.$store.commit("setLastWatched", this.currentWorkout);
+      this.$store.dispatch("updateLastWatched", this.currentWorkout);
   }
 
   @Watch("$route", { immediate: false, deep: true })

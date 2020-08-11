@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import router from "@/router/index";
 import * as firebase from "firebase";
-import { User } from "../models";
+import { User, Workout } from "../models";
 import { Notify } from "quasar";
 import { firebaseAction } from "vuexfire";
 
@@ -38,6 +38,9 @@ const mutations = {
   },
   setUserTransactions(state: any, payload: string[]) {
     state.user.transactions = payload;
+  },
+  setLastWatched(state: { user: { lastWatched: Workout } }, payload: any) {
+    state.user.lastWatched = payload;
   },
   setLoading(state: { loading: boolean }, payload: boolean) {
     state.loading = payload;
@@ -81,7 +84,8 @@ const actions = {
               displayResults: true
             },
             transactions: [],
-            workouts: []
+            workouts: [],
+            lastWatched: {} as any
           };
           commit("setUser", newUser);
           firebase
@@ -132,20 +136,22 @@ const actions = {
               displayResults: true
             },
             transactions: [],
-            workouts: []
+            workouts: [],
+            lastWatched: {} as any
           };
           firebase
             .database()
             .ref("/users/" + newUser.id)
             .once("value")
             .then(snapshot => {
-              let value = snapshot.val();
+              let value: User = snapshot.val();
               // useless check?
-              if (newUser.id === (value as User).id) {
-                newUser.premiumAccount = (value as User).premiumAccount;
-                newUser.name = (value as User).name;
-                newUser.settings = (value as User).settings;
-                newUser.transactions = (value as User).transactions;
+              if (newUser.id === value.id) {
+                newUser.premiumAccount = value.premiumAccount;
+                newUser.name = value.name;
+                newUser.settings = value.settings;
+                newUser.transactions = value.transactions;
+                if (value.lastWatched) newUser.lastWatched = value.lastWatched;
               }
               newUser.workouts = value.workouts;
             });
@@ -192,19 +198,21 @@ const actions = {
         displayResults: true
       },
       transactions: payload.transactions,
-      workouts: payload.workouts
+      workouts: payload.workouts,
+      lastWatched: payload.lastWatched
     };
     firebase
       .database()
       .ref("/users/" + payload.uid)
       .once("value")
       .then(snapshot => {
-        let value = snapshot.val();
-        if (payload.uid === (value as User).id) {
-          cachedUser.premiumAccount = (value as User).premiumAccount;
-          cachedUser.name = (value as User).name;
-          cachedUser.settings = (value as User).settings;
-          cachedUser.transactions = (value as User).transactions;
+        let value: User = snapshot.val();
+        if (payload.uid === value.id) {
+          cachedUser.premiumAccount = value.premiumAccount;
+          cachedUser.name = value.name;
+          cachedUser.settings = value.settings;
+          cachedUser.transactions = value.transactions;
+          if (value.lastWatched) cachedUser.lastWatched = value.lastWatched;
         }
         cachedUser.workouts = value.workouts;
       });
@@ -274,6 +282,19 @@ const actions = {
         commit("setLoading", false);
         commit("setError", e);
       });
+  },
+  updateLastWatched({ commit, getters }: any, payload: Workout) {
+    commit("setLoading", true);
+    firebase
+      .database()
+      .ref(`/users/${getters.user.id}/`)
+      .update({ lastWatched: payload })
+      .catch(e => {
+        commit("setLoading", false);
+        commit("setError", e);
+      });
+    commit("setLastWatched", payload);
+    commit("setLoading", false);
   },
   verifyAccount({ commit }: any) {
     commit("setLoading", true);
