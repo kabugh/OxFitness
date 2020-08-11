@@ -124,7 +124,7 @@ export const successfulPayment = functions.https.onRequest(
           foundUser = Object.values(users).find((user: any) => {
             if (user.transactions)
               return Object.keys(user.transactions).find(
-                key => key === "pi_1H8pt4IoGuaNqlfQ2Izr9xm7"
+                key => key === session.payment_intent
               );
             else return undefined;
           });
