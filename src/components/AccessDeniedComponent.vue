@@ -23,8 +23,15 @@ import { loadStripe } from "@stripe/stripe-js";
 export default class AccessDeniedComponent extends Vue {
   sessionId = "";
   async checkout() {
+    const headers = {
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type, Origin",
+        "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
+        "Access-Control-Allow-Credentials": "true"
+      }
+    };
     await axios
-      .post(process.env.VUE_APP_cloudFunctionUrl)
+      .post(process.env.VUE_APP_cloudFunctionUrl, headers)
       .then((response: any) => {
         this.sessionId = response.data.id;
         this.$store.dispatch(

@@ -58,12 +58,12 @@ export default class App extends Vue {
   get user(): User {
     return this.$store.getters.user;
   }
-  @Watch("isNavOpen")
-  blockOverflow() {
-    this.isNavOpen
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
-  }
+  // @Watch("isNavOpen")
+  // blockOverflow() {
+  //   this.isNavOpen
+  //     ? (document.body.style.overflow = "hidden")
+  //     : (document.body.style.overflow = "auto");
+  // }
 
   @Watch("user.premiumAccount.isActive")
   checkAccountStatus() {
