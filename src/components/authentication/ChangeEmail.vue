@@ -32,8 +32,9 @@
       persistent
       transition-show="scale"
       transition-hide="scale"
+      style="min-width: 320px; max-width: 400px"
     >
-      <q-card class="bg-primary text-white" style="width: 300px">
+      <q-card class="bg-primary text-white">
         <q-card-section>
           <div class="text-h6">Zmiana adresu email</div>
         </q-card-section>
@@ -54,7 +55,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class AccountVerification extends Vue {
+export default class ChangeEmail extends Vue {
   email = "";
   confirm = false;
 

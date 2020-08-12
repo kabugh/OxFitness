@@ -8,6 +8,7 @@ import { firebaseAction } from "vuexfire";
 const state = {
   isNavOpen: false,
   emailDialog: false,
+  usernameDialog: false,
 
   user: null,
   loading: false,
@@ -23,6 +24,9 @@ const mutations = {
   },
   setEmailDialog(state: { emailDialog: boolean }, payload: boolean) {
     state.emailDialog = payload;
+  },
+  setUsernameDialog(state: { usernameDialog: boolean }, payload: boolean) {
+    state.usernameDialog = payload;
   },
   setUser(state: { user: User }, payload: User) {
     state.user = payload;
@@ -373,6 +377,9 @@ const getters = {
   },
   emailDialog(state: { emailDialog: boolean }) {
     return state.emailDialog;
+  },
+  usernameDialog(state: { usernameDialog: boolean }) {
+    return state.usernameDialog;
   },
   user(state: { user: User }) {
     return state.user;

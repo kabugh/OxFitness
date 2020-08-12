@@ -182,6 +182,15 @@
                     </q-item-section>
                   </q-item>
 
+                  <q-item clickable @click="changeUsername" v-if="isOnline">
+                    <q-item-section>
+                      <q-item-label>Zmień nazwę</q-item-label>
+                      <q-item-label caption>
+                        Kliknij, aby zmienić nazwę użytkownika.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+
                   <q-item clickable @click="changePassword" v-if="isOnline">
                     <q-item-section>
                       <q-item-label>Zmień hasło</q-item-label>
@@ -225,7 +234,8 @@
                     </q-item-section>
                   </q-item>
                 </q-list>
-                <ChangeEmailComponent />
+                <ChangeEmail />
+                <ChangeUsername />
               </div>
             </div>
           </div>
@@ -236,14 +246,17 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import ChangeEmailComponent from "@/components/authentication/ChangeEmailComponent.vue";
+import ChangeEmail from "@/components/authentication/ChangeEmail.vue";
+import ChangeUsername from "@/components/authentication/ChangeUsername.vue";
+
 import { User } from "@/store/models";
 import * as firebase from "firebase";
 import { VueOfflineMixin } from "vue-offline";
 
 @Component({
   components: {
-    ChangeEmailComponent
+    ChangeEmail,
+    ChangeUsername
   },
   mixins: [VueOfflineMixin],
   filters: {
@@ -283,6 +296,14 @@ export default class Profile extends Vue {
 
   set emailDialog(value: boolean) {
     this.$store.commit("setEmailDialog", value);
+  }
+
+  get usernameDialog(): boolean {
+    return this.$store.getters.usernameDialog;
+  }
+
+  set usernameDialog(value: boolean) {
+    this.$store.commit("setUsernameDialog", value);
   }
 
   findDaysBetween(startDate: Date, endDate: Date) {
@@ -332,6 +353,10 @@ export default class Profile extends Vue {
 
   changeEmail() {
     this.emailDialog = true;
+  }
+
+  changeUsername() {
+    this.usernameDialog = true;
   }
 
   changePassword() {
