@@ -69,11 +69,11 @@ export const payment = functions.https.onRequest((request, response) => {
   cors(request, response, async () => {
     response.set("Access-Control-Allow-Headers", "Content-Type, Origin");
     response.set("Access-Control-Allow-Credentials", "true");
+    response.set("Access-Control-Allow-Method", "POST");
     response.set(
       "Access-Control-Allow-Origin",
       "https://oxfitness.netlify.app"
     ); // to be changed on https://oxfitness.pl on production
-
     console.log(response.headersSent);
     await stripe.checkout.sessions.create(
       {

@@ -27,7 +27,8 @@ export default class AccessDeniedComponent extends Vue {
       headers: {
         "Access-Control-Allow-Headers": "Content-Type, Origin",
         "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
-        "Access-Control-Allow-Credentials": "true"
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Method": "POST"
       }
     };
     await axios
