@@ -197,6 +197,7 @@ export default class WorkoutPage extends Vue {
     }
 
     this.initialiseAccordionItems();
+
     this.receivedData = documentToHtmlString(
       this.currentWorkout.fields.description,
       options
@@ -205,8 +206,11 @@ export default class WorkoutPage extends Vue {
 
   mounted() {
     this.isFin();
-    if (this.currentWorkout)
+
+    if (this.currentWorkout) {
+      this.onRouteChange(this.$route);
       this.$store.dispatch("updateLastWatched", this.currentWorkout);
+    }
   }
 
   @Watch("$route", { immediate: false, deep: true })
@@ -228,8 +232,8 @@ export default class WorkoutPage extends Vue {
     );
     this.currentWorkout = foundWorkout;
 
-    const contentType = this.currentWorkout.sys.contentType.sys.id;
     this.hasInsideCategories = foundCategory.hasInsideCategories;
+    this.initialiseAccordionItems();
 
     this.receivedData = documentToHtmlString(
       this.currentWorkout.fields.description,

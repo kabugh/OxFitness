@@ -38,27 +38,33 @@ export default class lastWatched extends Vue {
   get findWorkoutType() {
     let workoutType = "";
     switch (this.lastWatched.sys.contentType.sys.id) {
-      case "accessoryWorkout":
+      case "accessoryWorkout": {
         workoutType = "accessories";
         this.hasInsideCategories = true;
         break;
-      case "dailyWorkout":
+      }
+      case "dailyWorkout": {
         // check if the workout is active (dailyWorkouts) or archived
-        if (
-          this.$store.getters.workoutCategories
-            .find((cat: any) => cat.category === "daily")
-            .workouts.includes(this.lastWatched)
-        ) {
+        const dailyCategory = this.$store.getters.workoutCategories.find(
+          (cat: any) => cat.category === "daily"
+        );
+
+        const matchingWorkout = dailyCategory.workouts.find(
+          (workout: any) => workout.sys.id === this.lastWatched.sys.id
+        );
+        if (matchingWorkout) {
           workoutType = "daily";
         } else {
           workoutType = "archived";
         }
         this.hasInsideCategories = false;
         break;
-      case "warmUp":
+      }
+      case "warmUp": {
         workoutType = "warm-up";
         this.hasInsideCategories = true;
         break;
+      }
       default:
         workoutType = this.lastWatched.sys.contentType.sys.id;
     }
