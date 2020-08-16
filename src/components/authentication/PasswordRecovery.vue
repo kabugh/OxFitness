@@ -41,6 +41,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
+
 @Component({
   mixins: [validationMixin],
   validations: {

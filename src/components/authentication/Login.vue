@@ -62,6 +62,7 @@ import { User } from "../../store/models";
 
 import { validationMixin } from "vuelidate";
 import { required, email, minLength } from "vuelidate/lib/validators";
+
 @Component({
   mixins: [validationMixin],
   validations: {
@@ -89,12 +90,15 @@ export default class Login extends Vue {
   get user(): User {
     return this.$store.getters.user;
   }
+
   get disableInputs() {
     return this.$store.state.loading;
   }
+
   set disableInputs(value) {
     this.$store.commit("setLoading", value);
   }
+
   onSignIn() {
     this.$store
       .dispatch("signUserIn", {

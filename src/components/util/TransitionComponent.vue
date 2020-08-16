@@ -12,14 +12,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-@Component({
-  props: ["name"]
-})
+@Component
 export default class TransitionComponent extends Vue {
+  @Prop() name!: string;
+
   transition = "transition-left-full";
   mode = "out-in";
+
   created() {
     this.$router.beforeEach((to, from, next) => {
       this.transition = to.meta.transition

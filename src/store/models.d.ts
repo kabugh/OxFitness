@@ -34,6 +34,7 @@ export interface Workout {
 export interface WorkoutContent {
   date: string;
   title: string;
+  frontImage: Object;
   videoId: string;
   resultKey: string;
   programA?: Object;

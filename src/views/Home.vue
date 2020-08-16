@@ -202,11 +202,20 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Contact from "@/components/Contact.vue";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 AOS.init({
   easing: "ease-in-out-quart"
 });
+
+interface IntroductionItem {
+  title: string;
+  description: string;
+  buttonText: string;
+  routeName: string;
+  image: string;
+}
 
 @Component({ components: { Contact } })
 export default class Home extends Vue {
@@ -216,7 +225,7 @@ export default class Home extends Vue {
     { name: "Trenerzy", slug: "/coaches" }
   ];
 
-  introductionItems = [
+  introductionItems: IntroductionItem[] = [
     {
       title: "Członkostwo Ox Fitness to 40 PLN za miesiąc - bez żadnej umowy!",
       description:

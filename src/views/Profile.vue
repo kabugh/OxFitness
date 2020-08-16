@@ -271,11 +271,13 @@ export default class Profile extends Vue {
     { title: "Ważność karnetu", name: "validity" },
     { title: "Ustawienia", name: "settings" }
   ];
+
   currentTab = this.tabs[0].name;
 
   isLoaded = false;
   isVerified = false;
   daysLeft = 0;
+
   created() {
     this.accountExpiry();
     let user = firebase.auth().currentUser;
@@ -285,25 +287,6 @@ export default class Profile extends Vue {
     } else {
       this.logOut();
     }
-  }
-  get user(): User {
-    return this.$store.getters.user;
-  }
-
-  get emailDialog(): boolean {
-    return this.$store.getters.emailDialog;
-  }
-
-  set emailDialog(value: boolean) {
-    this.$store.commit("setEmailDialog", value);
-  }
-
-  get usernameDialog(): boolean {
-    return this.$store.getters.usernameDialog;
-  }
-
-  set usernameDialog(value: boolean) {
-    this.$store.commit("setUsernameDialog", value);
   }
 
   findDaysBetween(startDate: Date, endDate: Date) {
@@ -357,6 +340,26 @@ export default class Profile extends Vue {
 
   changeUsername() {
     this.usernameDialog = true;
+  }
+
+  get user(): User {
+    return this.$store.getters.user;
+  }
+
+  get emailDialog(): boolean {
+    return this.$store.getters.emailDialog;
+  }
+
+  set emailDialog(value: boolean) {
+    this.$store.commit("setEmailDialog", value);
+  }
+
+  get usernameDialog(): boolean {
+    return this.$store.getters.usernameDialog;
+  }
+
+  set usernameDialog(value: boolean) {
+    this.$store.commit("setUsernameDialog", value);
   }
 
   changePassword() {

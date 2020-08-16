@@ -391,6 +391,7 @@ const getters = {
     return state.error;
   }
 };
+
 export default {
   state,
   getters,

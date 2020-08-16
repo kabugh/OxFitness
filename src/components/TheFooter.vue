@@ -38,7 +38,7 @@
     </div>
   </footer>
 </template>
-<script>
+<script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 export default class TheFooter extends Vue {
   menuItems = [
@@ -51,6 +51,7 @@ export default class TheFooter extends Vue {
     "Poradniki",
     "Sklep"
   ];
+
   icons = ["insta.png", "fb.png", "yt.png"];
 }
 </script>

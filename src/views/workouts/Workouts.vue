@@ -25,7 +25,7 @@
             >
               <img
                 v-if="isOnline"
-                src="@/assets/sample.jpg"
+                :src="workout.fields.frontImage.fields.file.url"
                 alt="video
           thumbnail"
                 class="thumbnail unselectable"

@@ -88,6 +88,7 @@ import { User } from "../../store/models";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import Password from "vue-password-strength-meter";
+
 @Component({
   mixins: [validationMixin],
   components: {

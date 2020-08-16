@@ -179,6 +179,7 @@ const options = {
     [BLOCKS.HR]: (node: any, next: any) => `<br />`
   }
 };
+
 @Component({
   components: {
     LeaderboardComponent,
@@ -189,6 +190,13 @@ const options = {
   mixins: [VueOfflineMixin]
 })
 export default class WorkoutPage extends Vue {
+  hasInsideCategories = false;
+  nodes = options.renderNode;
+  card = false;
+  accordionItems = {};
+  receivedData = {};
+  isFinished = false;
+
   created() {
     if (this.$attrs.workout) {
       this.currentWorkout = this.$attrs.workout;
@@ -276,14 +284,6 @@ export default class WorkoutPage extends Vue {
     };
   }
 
-  hasInsideCategories = false;
-
-  nodes = options.renderNode;
-  card = false;
-  accordionItems = {};
-  receivedData = {};
-  isFinished = false;
-
   richTextData(program: any) {
     return documentToHtmlString(program, options);
   }
@@ -370,6 +370,10 @@ export default class WorkoutPage extends Vue {
       h2 {
         font-size: 1.25rem;
       }
+    }
+
+    @media (min-width: 1300px) {
+      padding: 4vh 18vw;
     }
 
     .image__wrapper {

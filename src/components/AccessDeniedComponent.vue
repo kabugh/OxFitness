@@ -29,6 +29,7 @@ export default class AccessDeniedComponent extends Vue {
         "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Method": "POST"
+        // Access-Control-Max-Age: 86400
       }
     };
     await axios

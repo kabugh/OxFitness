@@ -39,6 +39,7 @@ export default class Contact extends Vue {
   navigateOutside(link: string) {
     window.open(link, "_blank");
   }
+
   socialsItems = [
     {
       icon: "instagram.svg",

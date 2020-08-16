@@ -39,12 +39,13 @@
     </div>
   </section>
 </template>
-<script>
-import { Component, Vue, Watch } from "vue-property-decorator";
-@Component({
-  props: ["user"]
-})
+<script lang="ts">
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import { User } from "@/store/models";
+
+@Component
 export default class TheOverlay extends Vue {
+  @Prop() user!: User;
   navItems = [
     {
       title: "Home",
@@ -59,7 +60,7 @@ export default class TheOverlay extends Vue {
   ];
 
   get filteredNavItems() {
-    let fitleredItems = [];
+    let fitleredItems: any = [];
     this.navItems.forEach(item => {
       if (this.$route.path !== item.link) {
         fitleredItems.push(item);
@@ -70,7 +71,7 @@ export default class TheOverlay extends Vue {
 
   closeOverlay() {
     document.body.classList.add("scrollbar");
-    this.$refs.overlay.style.display = "none";
+    (this.$refs.overlay as HTMLElement).style.display = "none";
   }
 
   logOut() {
@@ -80,7 +81,6 @@ export default class TheOverlay extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
-// enter/leave overlay animation
 .theOverlay-enter-active,
 .theOverlay-leave-active {
   transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);

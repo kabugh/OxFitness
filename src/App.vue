@@ -19,6 +19,7 @@
         $route.meta.unauthenticatedAccess && $route.path !== '/authentication'
       "
     />
+
     <!-- an error occurs because conentful-vue-render components are rendered as TheFooter template -->
     <!-- <TheFooter
       v-if="
@@ -52,18 +53,15 @@ import { User } from "./store/models";
   mixins: [VueOfflineMixin]
 })
 export default class App extends Vue {
-  get isNavOpen(): boolean {
-    return this.$store.getters.isNavOpen;
+  mounted() {
+    this.$on("offline", () => {
+      this.$q.notify({
+        position: "top",
+        color: "primary",
+        message: "Brak połączenia z internetem"
+      });
+    });
   }
-  get user(): User {
-    return this.$store.getters.user;
-  }
-  // @Watch("isNavOpen")
-  // blockOverflow() {
-  //   this.isNavOpen
-  //     ? (document.body.style.overflow = "hidden")
-  //     : (document.body.style.overflow = "auto");
-  // }
 
   @Watch("user.premiumAccount.isActive")
   checkAccountStatus() {
@@ -78,14 +76,11 @@ export default class App extends Vue {
     }
   }
 
-  mounted() {
-    this.$on("offline", () => {
-      this.$q.notify({
-        position: "top",
-        color: "primary",
-        message: "Brak połączenia z internetem"
-      });
-    });
+  get isNavOpen(): boolean {
+    return this.$store.getters.isNavOpen;
+  }
+  get user(): User {
+    return this.$store.getters.user;
   }
 }
 </script>

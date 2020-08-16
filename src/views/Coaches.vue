@@ -34,11 +34,19 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import HeroPage from "@/components/HeroPage.vue";
+
+interface Description {
+  image: string;
+  title: string;
+  subTitle: string;
+  description: string;
+}
+
 @Component({
   components: { HeroPage }
 })
 export default class Coaches extends Vue {
-  descs = [
+  descs: Description[] = [
     {
       image: "1.jpg",
       title: "O Nas",

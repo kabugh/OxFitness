@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import { Workout } from "../store/models";
+import { Workout, User } from "../store/models";
 
 interface Column {
   name: string;
@@ -42,15 +42,11 @@ interface Column {
   required?: boolean;
   format?: Function;
 }
-@Component({
-  props: ["user", "isFinished"]
-})
+@Component
 export default class LeaderboardComponent extends Vue {
-  created() {
-    this.tab = (this.$attrs.currentWorkout as any).fields.date;
-    this.findColumns();
-    this.updateLeaderboard();
-  }
+  @Prop() user!: User;
+  @Prop() isFinished!: boolean;
+
   tab = "";
   tabs: any[] = [];
   dynamicColumns: Column[] = [
@@ -112,15 +108,20 @@ export default class LeaderboardComponent extends Vue {
   ];
   data: Object[] = [];
 
+  created() {
+    this.tab = (this.$attrs.currentWorkout as any).fields.date;
+    this.findColumns();
+    this.updateLeaderboard();
+  }
+
   updateLeaderboard() {
-    // eslint-disable-next-line no-console
-    console.log("updateLeaderboard");
     this.$store
       .dispatch("fetchWorkoutLeaderboard", this.$route.params.id)
       .then(() => {
         this.transformLeaderboardData();
       });
   }
+
   get currentLeaderboard() {
     return this.$store.getters.currentLeaderboard;
   }
@@ -145,8 +146,6 @@ export default class LeaderboardComponent extends Vue {
 
   @Watch("currentLeaderboard")
   transformLeaderboardData() {
-    // eslint-disable-next-line no-console
-    console.log("transformLeaderboard");
     this.data = [];
     if (
       this.currentLeaderboard !== undefined &&

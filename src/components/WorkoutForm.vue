@@ -187,17 +187,21 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { Workout, User } from "../store/models";
 
-@Component({
-  props: ["isFinished", "user", "resultKey", "currentWorkout"]
-})
+@Component
 export default class WorkoutForm extends Vue {
+  @Prop() isFinished!: boolean;
+  @Prop() user!: User;
+  @Prop() resultKey!: string;
+  @Prop() currentWorkout!: Workout;
+
   mounted() {
     this.updateInputs();
     this.workoutResults.name = this.$props.user.name;
   }
+
   workoutResults = {
     name: "",
     reps: 0,
@@ -220,8 +224,6 @@ export default class WorkoutForm extends Vue {
       weight: 0,
       note: ""
     };
-    // this.$refs.name.resetValidation();
-    // this.$refs.age.resetValidation();
   }
 
   updateInputs() {
@@ -240,7 +242,7 @@ export default class WorkoutForm extends Vue {
   }
 
   onSubmit() {
-    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
+    const currentWorkout = this.$props.currentWorkout as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {
@@ -256,8 +258,9 @@ export default class WorkoutForm extends Vue {
       });
     });
   }
+
   onUpdate() {
-    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
+    const currentWorkout = this.$props.currentWorkout as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {
@@ -272,8 +275,9 @@ export default class WorkoutForm extends Vue {
       });
     });
   }
+
   onRemove() {
-    const currentWorkout = (this.$props.currentWorkout as unknown) as Workout;
+    const currentWorkout = this.$props.currentWorkout as Workout;
     let workout = {
       workoutId: currentWorkout.sys.id,
       workoutResults: {
