@@ -10,6 +10,9 @@
           Aby kontynuować, musisz wykupić 1-miesięczny dostęp.
         </h2>
         <button type="button" class="dark" @click="checkout">Zapłać</button>
+        <p>
+          Jeśli opłaciłeś już dostęp, poczekaj kilka sekund, pracujemy nad tym!
+        </p>
       </div>
     </div>
   </div>
@@ -25,11 +28,11 @@ export default class AccessDeniedComponent extends Vue {
   async checkout() {
     const headers = {
       headers: {
-        "Access-Control-Allow-Headers": "Content-Type, Origin",
+        "Access-Control-Allow-Headers": "Content-Type, Origin, Authorization",
         "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
         "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Method": "POST"
-        // Access-Control-Max-Age: 86400
+        "Access-Control-Allow-Method": "POST",
+        "Access-Control-Max-Age": 86400
       }
     };
     await axios
@@ -69,6 +72,11 @@ export default class AccessDeniedComponent extends Vue {
     color: black;
     text-decoration: underline;
     font-weight: 600;
+  }
+  p {
+    margin-top: 4vh;
+    font-weight: 500;
+    font-size: 0.75rem;
   }
 }
 </style>
