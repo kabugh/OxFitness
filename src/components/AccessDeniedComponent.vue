@@ -28,11 +28,13 @@ export default class AccessDeniedComponent extends Vue {
   async checkout() {
     const headers = {
       headers: {
-        "Access-Control-Allow-Headers": "Content-Type, Origin, Authorization",
+        "Access-Control-Allow-Headers":
+          "Content-Type, Accept, Origin, Authorization",
         "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
         "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Method": "POST",
-        "Access-Control-Max-Age": 86400
+        "Access-Control-Allow-Method": "POST, OPTIONS",
+        "Access-Control-Max-Age": 86400,
+        "Content-Type": "application/json"
       }
     };
     await axios
