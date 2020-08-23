@@ -233,9 +233,19 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
+
+                  <q-item clickable @click="deleteAccount">
+                    <q-item-section>
+                      <q-item-label>Usuń konto</q-item-label>
+                      <q-item-label caption>
+                        Kliknij, aby bezpowrotnie usunąć swoje konto.
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
                 </q-list>
                 <ChangeEmail />
                 <ChangeUsername />
+                <DeleteConfirmation :user="user" />
               </div>
             </div>
           </div>
@@ -248,6 +258,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import ChangeEmail from "@/components/authentication/ChangeEmail.vue";
 import ChangeUsername from "@/components/authentication/ChangeUsername.vue";
+import DeleteConfirmation from "@/components/authentication/DeleteConfirmation.vue";
 
 import { User } from "@/store/models";
 import * as firebase from "firebase";
@@ -256,7 +267,8 @@ import { VueOfflineMixin } from "vue-offline";
 @Component({
   components: {
     ChangeEmail,
-    ChangeUsername
+    ChangeUsername,
+    DeleteConfirmation
   },
   mixins: [VueOfflineMixin],
   filters: {
@@ -342,6 +354,10 @@ export default class Profile extends Vue {
     this.usernameDialog = true;
   }
 
+  deleteAccount() {
+    this.deleteDialog = true;
+  }
+
   get user(): User {
     return this.$store.getters.user;
   }
@@ -360,6 +376,14 @@ export default class Profile extends Vue {
 
   set usernameDialog(value: boolean) {
     this.$store.commit("setUsernameDialog", value);
+  }
+
+  get deleteDialog(): boolean {
+    return this.$store.getters.deleteDialog;
+  }
+
+  set deleteDialog(value: boolean) {
+    this.$store.commit("setDeleteDialog", value);
   }
 
   changePassword() {

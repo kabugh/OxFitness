@@ -9,6 +9,7 @@ const state = {
   isNavOpen: false,
   emailDialog: false,
   usernameDialog: false,
+  deleteDialog: false,
 
   user: null,
   loading: false,
@@ -27,6 +28,9 @@ const mutations = {
   },
   setUsernameDialog(state: { usernameDialog: boolean }, payload: boolean) {
     state.usernameDialog = payload;
+  },
+  setDeleteDialog(state: { deleteDialog: boolean }, payload: boolean) {
+    state.deleteDialog = payload;
   },
   setUser(state: { user: User }, payload: User) {
     state.user = payload;
@@ -368,6 +372,37 @@ const actions = {
         commit("setLoading", false);
         commit("setError", e);
       });
+  },
+  deleteAccount({ commit, dispatch }: any) {
+    commit("setLoading", true);
+    const user = firebase.auth().currentUser;
+    if (user) {
+      const id = user.uid;
+      user
+        .delete()
+        .then(() => {
+          commit("setLoading", false);
+          if (state.user) {
+            dispatch("signUserOut");
+            commit("setUser", null);
+          } else {
+            router.push("/");
+          }
+          firebase
+            .database()
+            .ref(`/users/${id}`)
+            .remove();
+
+          Notify.create({
+            type: "positive",
+            message: `Konto zostało usunięte.`
+          });
+        })
+        .catch(e => {
+          commit("setLoading", false);
+          commit("setError", e);
+        });
+    }
   }
 };
 
@@ -380,6 +415,9 @@ const getters = {
   },
   usernameDialog(state: { usernameDialog: boolean }) {
     return state.usernameDialog;
+  },
+  deleteDialog(state: { deleteDialog: boolean }) {
+    return state.deleteDialog;
   },
   user(state: { user: User }) {
     return state.user;

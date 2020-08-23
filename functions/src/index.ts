@@ -20,11 +20,11 @@ export const premiumAccess = functions.database
   .ref("/users/{id}")
   .onCreate(event => {
     const currentTime = new Date();
-    const accessTime: Date = addDays(7)(currentTime);
+    const accessTime: Date = addDays(0)(currentTime);
 
     const access = {
       activationDate: currentTime,
-      isActive: true,
+      isActive: false,
       validUntil: accessTime
     };
     return event.ref.child("premiumAccount").update(access);
