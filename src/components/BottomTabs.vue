@@ -75,12 +75,17 @@ export default class BottomTabs extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
-
+.platform-ios-only {
+  .q-gutter-y-md .q-tabs {
+    padding-bottom: 20px;
+  }
+}
 .q-gutter-y-md {
   position: fixed;
   width: 100%;
   bottom: 0;
   z-index: 99;
+
   nav {
     display: none;
   }
