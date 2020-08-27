@@ -63,6 +63,22 @@ export default class App extends Vue {
     });
   }
 
+  @Watch("isNavOpen")
+  blockOverflow() {
+    const verticalMobile = window.matchMedia(
+      "(max-width: 450px) and (max-height: 850px) and (orientation: portrait)"
+    );
+
+    const horizontalMobile = window.matchMedia(
+      "(max-height: 450px) and (max-width: 850px) and (orientation: landscape)"
+    );
+
+    if (verticalMobile.matches || horizontalMobile.matches)
+      this.isNavOpen
+        ? (document.body.style.overflow = "hidden")
+        : (document.body.style.overflow = "auto");
+  }
+
   @Watch("user.premiumAccount.isActive")
   checkAccountStatus() {
     if (this.user) {

@@ -191,7 +191,11 @@
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable @click="changePassword" v-if="isOnline">
+                  <q-item
+                    clickable
+                    @click="changePassword"
+                    v-if="isOnline && isVerified"
+                  >
                     <q-item-section>
                       <q-item-label>Zmień hasło</q-item-label>
                       <q-item-label caption>

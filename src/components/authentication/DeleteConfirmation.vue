@@ -53,6 +53,7 @@ export default class DeleteConfirmation extends Vue {
   confirmationPattern = "";
 
   created() {
+    this.deleteDialog = false;
     this.confirmationPattern = `konto/${this.user.name}`;
   }
 

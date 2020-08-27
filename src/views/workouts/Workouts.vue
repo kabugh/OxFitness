@@ -124,7 +124,7 @@
                 <img
                   src="@/assets/sample.jpg"
                   alt="video thumbnail"
-                  class="thumbnail"
+                  class="thumbnail unselectable"
                   @click="
                     $router.push({
                       name: 'workoutPage',
