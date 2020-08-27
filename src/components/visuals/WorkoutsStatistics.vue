@@ -47,13 +47,21 @@ export default class WorkoutsStatistics extends Vue {
       padding: 2vh;
       text-align: center;
       h1 {
-        font-size: 2.5rem;
+        font-size: 1.75rem;
         font-weight: 700;
         white-space: nowrap;
       }
       p {
-        font-size: 1rem;
+        font-size: 0.875rem;
         font-weight: 500;
+      }
+      @media (min-width: 360px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+        p {
+          font-size: 1rem;
+        }
       }
     }
   }

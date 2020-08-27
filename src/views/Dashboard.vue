@@ -20,6 +20,7 @@
             data-aos="fade-up"
             data-aos-delay="200"
             data-aos-offset="50"
+            v-if="user.lastWatched"
           />
           <div
             class="workout__container"
@@ -177,7 +178,10 @@ export default class Dashboard extends Vue {
       grid-gap: 4vh;
       .workout__container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        @media (min-width: 360px) {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
         @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
           grid-template-columns: 100%;
           grid-gap: 10vh;
@@ -208,12 +212,17 @@ export default class Dashboard extends Vue {
             h2 {
               padding: 0;
               font-weight: bolder;
-              font-size: 1.75rem;
+              font-size: 1.25rem;
               text-align: left;
             }
             h3 {
               font-size: 1.125rem;
               font-weight: 500;
+            }
+            @media (min-width: 360px) {
+              h2 {
+                font-size: 1.75rem;
+              }
             }
           }
         }

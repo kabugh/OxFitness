@@ -1,7 +1,7 @@
 <template>
   <section
     class="lastWatched"
-    v-if="lastWatched.fields"
+    v-if="Object.keys(lastWatched).length > 0"
     :style="{ backgroundImage: 'url(' + require('@/assets/1.jpg') + ')' }"
     @click="
       $router.push({
@@ -82,6 +82,7 @@ export default class lastWatched extends Vue {
   border-radius: 10px;
   min-height: 20vh;
   max-height: 30vh;
+  overflow: hidden;
   @include backgroundDefault;
   &:hover {
     cursor: pointer;
@@ -92,8 +93,9 @@ export default class lastWatched extends Vue {
     @include flex;
     align-items: flex-start;
     flex-direction: column;
+    overflow: hidden;
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.25rem;
       font-weight: 700;
     }
     h2,
@@ -107,6 +109,19 @@ export default class lastWatched extends Vue {
       font-size: 0.875rem;
       text-transform: capitalize;
     }
+  }
+  @media (min-width: 360px) {
+    .lastWatched__container {
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+  .lastWatched {
+    max-height: 45vh;
   }
 }
 </style>
