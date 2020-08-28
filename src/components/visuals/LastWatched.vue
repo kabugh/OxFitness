@@ -1,7 +1,7 @@
 <template>
   <section
     class="lastWatched"
-    v-if="Object.keys(lastWatched).length > 0"
+    v-if="lastWatched && Object.keys(lastWatched).length > 0"
     :style="{ backgroundImage: 'url(' + require('@/assets/1.jpg') + ')' }"
     @click="
       $router.push({
@@ -31,42 +31,46 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class lastWatched extends Vue {
   hasInsideCategories = false;
+
   get lastWatched() {
     return this.$store.getters.user.lastWatched;
   }
 
   get findWorkoutType() {
     let workoutType = "";
-    switch (this.lastWatched.sys.contentType.sys.id) {
-      case "accessoryWorkout": {
-        workoutType = "accessories";
-        this.hasInsideCategories = true;
-        break;
-      }
-      case "dailyWorkout": {
-        // check if the workout is active (dailyWorkouts) or archived
-        const dailyCategory = this.$store.getters.workoutCategories.find(
-          (cat: any) => cat.category === "daily"
-        );
 
-        const matchingWorkout = dailyCategory.workouts.find(
-          (workout: any) => workout.sys.id === this.lastWatched.sys.id
-        );
-        if (matchingWorkout) {
-          workoutType = "daily";
-        } else {
-          workoutType = "archived";
+    if (this.lastWatched !== undefined || this.lastWatched !== null) {
+      switch (this.lastWatched.sys.contentType.sys.id) {
+        case "accessoryWorkout": {
+          workoutType = "accessories";
+          this.hasInsideCategories = true;
+          break;
         }
-        this.hasInsideCategories = false;
-        break;
+        case "dailyWorkout": {
+          // check if the workout is active (dailyWorkouts) or archived
+          const dailyCategory = this.$store.getters.workoutCategories.find(
+            (cat: any) => cat.category === "daily"
+          );
+
+          const matchingWorkout = dailyCategory.workouts.find(
+            (workout: any) => workout.sys.id === this.lastWatched.sys.id
+          );
+          if (matchingWorkout) {
+            workoutType = "daily";
+          } else {
+            workoutType = "archived";
+          }
+          this.hasInsideCategories = false;
+          break;
+        }
+        case "warmUp": {
+          workoutType = "warm-up";
+          this.hasInsideCategories = true;
+          break;
+        }
+        default:
+          workoutType = this.lastWatched.sys.contentType.sys.id;
       }
-      case "warmUp": {
-        workoutType = "warm-up";
-        this.hasInsideCategories = true;
-        break;
-      }
-      default:
-        workoutType = this.lastWatched.sys.contentType.sys.id;
     }
     return workoutType;
   }

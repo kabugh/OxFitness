@@ -2,7 +2,7 @@
   <section class="hello">
     <div class="hello__container">
       <div class="greetings__container">
-        <h1>{{ greeting }} {{ user.name }}!</h1>
+        <h1>{{ greeting }} {{ name }}!</h1>
         <p>{{ description }}</p>
       </div>
       <div class="illustration__wrapper">
@@ -33,6 +33,11 @@ export default class HelloSection extends Vue {
 
   get user() {
     return this.$store.getters.user;
+  }
+
+  get name(): string {
+    if (this.user) return this.user.name;
+    else return "";
   }
 
   randomText(array: Array<String>) {

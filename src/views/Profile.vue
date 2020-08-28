@@ -51,10 +51,11 @@
               <span>Dostęp do treningów wygasa:</span>
               {{ user.premiumAccount.validUntil | date }}
             </h3>
-            <h3 v-else>
+            <h3 v-else-if="user.transactions">
               <span>Dostęp do treningów wygasł:</span>
               {{ user.premiumAccount.validUntil | date }}
             </h3>
+            <h3 v-else><span>Brak dostępu do treningów</span></h3>
             <q-circular-progress
               v-if="
                 daysLeft >= 0 && user.premiumAccount.isActive && accountExpiry
@@ -94,7 +95,7 @@
                 >
                   <q-separator />
                   <q-card>
-                    <q-card-section v-if="daysLeft >= 0"
+                    <q-card-section v-if="daysLeft >= 0 && user.transactions"
                       >Płatność uregulowana</q-card-section
                     >
                     <q-card-section v-else>

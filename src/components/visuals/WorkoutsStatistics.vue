@@ -22,8 +22,11 @@ export default class WorkoutsStatistics extends Vue {
   }
 
   get finishedDailyWorkouts() {
-    if (this.user.workouts) return Object.keys(this.user.workouts).length;
-    else return 0;
+    if (this.user && "workouts" in this.user) {
+      if (this.user.workouts !== undefined)
+        return Object.keys(this.user.workouts).length;
+      else return 0;
+    } else return 0;
   }
 }
 </script>
