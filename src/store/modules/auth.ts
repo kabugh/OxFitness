@@ -11,7 +11,7 @@ const state = {
   usernameDialog: false,
   deleteDialog: false,
 
-  user: null,
+  user: null as User | null,
   loading: false,
   authError: null,
   error: null
@@ -69,7 +69,10 @@ const actions = {
       firebase.database().ref(`/users/${getters.user.id}`)
     );
   }),
-  signUserUp({ commit }: any, payload: { email: string; password: string }) {
+  signUserUp(
+    { commit, dispatch }: any,
+    payload: { email: string; password: string }
+  ) {
     commit("setLoading", true);
     commit("clearError");
     firebase
@@ -100,9 +103,12 @@ const actions = {
             .database()
             .ref("/users/" + newUser.id)
             .update(newUser);
-          router.push("/dashboard").catch(e => {
-            console.log(e);
-          });
+          router
+            .push("/dashboard")
+            // .then(() => dispatch("verifyAccount"))
+            .catch(e => {
+              console.log(e);
+            });
         }
       })
       .catch(e => {
@@ -427,6 +433,11 @@ const getters = {
   },
   error(state: { error: String }) {
     return state.error;
+  },
+  isVerfied() {
+    const user = firebase.auth().currentUser;
+    if (user) return user.emailVerified;
+    else return false;
   }
 };
 

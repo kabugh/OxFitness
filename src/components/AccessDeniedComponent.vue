@@ -9,9 +9,25 @@
         <h2>
           Aby kontynuować, musisz wykupić 1-miesięczny dostęp.
         </h2>
-        <button type="button" class="dark" @click="checkout">Zapłać</button>
+        <button type="button" class="dark" @click="checkout">
+          Wykup dostęp
+        </button>
         <p>
           Jeśli opłaciłeś już dostęp, poczekaj kilka sekund, pracujemy nad tym!
+        </p>
+      </div>
+      <div class="verification__container" v-show="false">
+        <h3>
+          Najpierw zweryfikuj konto klikając w link aktywacyjny wysłany na
+          adres:
+          <strong>{{ user.email }}</strong>
+        </h3>
+        <p>
+          Nie otrzymałeś wiadomości z linkiem? Sprawdź SPAM lub kliknij
+          <span @click="reSendVerificationEmail" class="text-primary"
+            >tutaj</span
+          >
+          aby ponowić wysłanie wiadomości.
         </p>
       </div>
     </div>
@@ -51,6 +67,18 @@ export default class AccessDeniedComponent extends Vue {
       sessionId: this.sessionId
     });
   }
+
+  get isVerified() {
+    return this.$store.getters.isVerified;
+  }
+
+  get user() {
+    return this.$store.getters.user;
+  }
+
+  reSendVerificationEmail() {
+    this.$store.dispatch("verifyAccount");
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -65,11 +93,13 @@ export default class AccessDeniedComponent extends Vue {
       max-width: 40vw;
     }
   }
-  h2 {
+  h2,
+  h3 {
     margin-top: 2vh;
     font-weight: 500;
     font-size: 1.25rem;
   }
+
   a {
     color: black;
     text-decoration: underline;
@@ -78,7 +108,19 @@ export default class AccessDeniedComponent extends Vue {
   p {
     margin-top: 4vh;
     font-weight: 500;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .verification__container {
+    h3 {
+      font-size: 1rem;
+    }
+    span {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
   }
 }
 </style>
