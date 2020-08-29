@@ -9,6 +9,9 @@
       />
       <q-skeleton class="hero__skeleton" v-if="!isLoaded" />
       <section v-else class="hero shadow-box shadow-14">
+        <div class="back__arrow" @click="$router.push('/dashboard')">
+          <div class="arrow"></div>
+        </div>
         <div class="hero__container">
           <div class="avatar__container">
             <q-avatar color="primary" text-color="white" size="4rem">{{
@@ -104,7 +107,7 @@
                         v-if="isOnline"
                         @click="$router.push('/dashboard')"
                         class="bg-primary text-white"
-                        >Opłać konto</q-btn
+                        >Wykup dostęp</q-btn
                       >
                     </q-card-section>
                   </q-card>
@@ -139,88 +142,87 @@
         </q-tab-panel>
         <q-tab-panel name="settings">
           <div class="details__container">
-            <div class="button__wrapper">
-              <div class="wrapper">
-                <q-list padding>
-                  <q-item-label header>Ustawienia ogólne</q-item-label>
-                  <q-item tag="label">
-                    <q-item-section side top>
-                      <q-checkbox v-model="user.settings.notifications" />
-                    </q-item-section>
+            <div class="details__content">
+              <q-list padding>
+                <q-item-label header>Ustawienia ogólne</q-item-label>
+                <q-item tag="label">
+                  <q-item-section side top>
+                    <q-checkbox v-model="user.settings.notifications" />
+                  </q-item-section>
 
-                    <q-item-section>
-                      <q-item-label>Powiadomienia</q-item-label>
-                      <q-item-label caption>
-                        Wyświetlaj powiadomienia o nowych treningach, postach
-                        trenerów.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                  <q-item-section>
+                    <q-item-label>Powiadomienia</q-item-label>
+                    <q-item-label caption>
+                      Wyświetlaj powiadomienia o nowych treningach, postach
+                      trenerów.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-item tag="label">
-                    <q-item-section side top>
-                      <q-checkbox v-model="user.settings.displayResults" />
-                    </q-item-section>
+                <q-item tag="label">
+                  <q-item-section side top>
+                    <q-checkbox v-model="user.settings.displayResults" />
+                  </q-item-section>
 
-                    <q-item-section>
-                      <q-item-label>Wyświetlanie rezultatów</q-item-label>
-                      <q-item-label caption>
-                        Zezwalaj na wyświetlanie Twoich rezultatów z treningów w
-                        tabeli wszystkich wyników.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                  <q-item-section>
+                    <q-item-label>Wyświetlanie rezultatów</q-item-label>
+                    <q-item-label caption>
+                      Zezwalaj na wyświetlanie Twoich rezultatów z treningów w
+                      tabeli wszystkich wyników.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-separator spaced />
+                <q-separator spaced />
 
-                  <q-item-label header>Szczegóły konta</q-item-label>
-                  <q-item>
-                    <q-item-section>
-                      <q-item-label>ID konta</q-item-label>
-                      <q-item-label caption>
-                        {{ user.id }}
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-item-label header>Szczegóły konta</q-item-label>
+                <q-item>
+                  <q-item-section>
+                    <q-item-label>ID konta</q-item-label>
+                    <q-item-label caption>
+                      {{ user.id }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-item clickable @click="changeUsername" v-if="isOnline">
-                    <q-item-section>
-                      <q-item-label>Zmień nazwę</q-item-label>
-                      <q-item-label caption>
-                        Kliknij, aby zmienić nazwę użytkownika.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-item clickable @click="changeUsername" v-if="isOnline">
+                  <q-item-section>
+                    <q-item-label>Zmień nazwę</q-item-label>
+                    <q-item-label caption>
+                      Kliknij, aby zmienić nazwę użytkownika.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-item
-                    clickable
-                    @click="changePassword"
-                    v-if="isOnline && isVerified"
-                  >
-                    <q-item-section>
-                      <q-item-label>Zmień hasło</q-item-label>
-                      <q-item-label caption>
-                        Kliknij, aby zmienić hasło. Link zostanie wysłany na
-                        powiązany adres email.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-item
+                  clickable
+                  @click="changePassword"
+                  v-if="isOnline && isVerified"
+                >
+                  <q-item-section>
+                    <q-item-label>Zmień hasło</q-item-label>
+                    <q-item-label caption>
+                      Kliknij, aby zmienić hasło. Link zostanie wysłany na
+                      powiązany adres email.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-item
-                    clickable
-                    @click="verifyAccount"
-                    v-if="!isVerified && isOnline"
-                  >
-                    <q-item-section>
-                      <q-item-label>Zweryfikuj konto</q-item-label>
-                      <q-item-label caption>
-                        Otrzymasz wiadomość na powiązany adres email z linkiem
-                        aktywacyjnym.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-item
+                  clickable
+                  @click="verifyAccount"
+                  v-if="!isVerified && isOnline"
+                >
+                  <q-item-section>
+                    <q-item-label>Zweryfikuj konto</q-item-label>
+                    <q-item-label caption>
+                      Otrzymasz wiadomość na powiązany adres email z linkiem
+                      aktywacyjnym.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <!-- <q-item clickable @click="changeEmail" v-if="isOnline">
+                <!-- <q-item clickable @click="changeEmail" v-if="isOnline">
                     <q-item-section>
                       <q-item-label>Zmień adres email</q-item-label>
                       <q-item-label caption>
@@ -230,28 +232,27 @@
                     </q-item-section>
                   </q-item> -->
 
-                  <q-item clickable @click="logOut">
-                    <q-item-section>
-                      <q-item-label>Wyloguj się</q-item-label>
-                      <q-item-label caption>
-                        Kliknij, aby wylogować się.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-item clickable @click="logOut">
+                  <q-item-section>
+                    <q-item-label>Wyloguj się</q-item-label>
+                    <q-item-label caption>
+                      Kliknij, aby wylogować się.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
-                  <q-item clickable @click="deleteAccount">
-                    <q-item-section>
-                      <q-item-label>Usuń konto</q-item-label>
-                      <q-item-label caption>
-                        Kliknij, aby bezpowrotnie usunąć swoje konto.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-                <ChangeEmail />
-                <ChangeUsername />
-                <DeleteConfirmation :user="user" />
-              </div>
+                <q-item clickable @click="deleteAccount">
+                  <q-item-section>
+                    <q-item-label>Usuń konto</q-item-label>
+                    <q-item-label caption>
+                      Kliknij, aby bezpowrotnie usunąć swoje konto.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+              <ChangeEmail />
+              <ChangeUsername />
+              <DeleteConfirmation :user="user" />
             </div>
           </div>
         </q-tab-panel>
@@ -415,7 +416,13 @@ export default class Profile extends Vue {
     }
     .hero {
       width: 100%;
-      height: 30vh;
+      height: 40vh;
+      @media (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+        min-height: 40vh;
+      }
+      @media (min-width: 360px) {
+        height: 30vh;
+      }
       @media (min-height: 1100px) {
         height: 15vh;
       }
@@ -427,6 +434,26 @@ export default class Profile extends Vue {
       color: white;
       position: relative;
       z-index: 2;
+
+      .back__arrow {
+        position: absolute;
+        top: 2vh;
+        left: 2vh;
+        @media (min-width: 450px) {
+          top: 4vh;
+          left: 4vh;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+        .arrow {
+          background-image: url("../assets/icons/arrow.png");
+          @include backgroundDefault;
+          width: 36px;
+          height: 36px;
+          transform: rotate(180deg);
+        }
+      }
       .hero__container {
         display: grid;
         column-gap: 5vw;
@@ -457,6 +484,9 @@ export default class Profile extends Vue {
           border-radius: 50%;
         }
       }
+    }
+    .q-panel {
+      overflow: hidden;
     }
     .details__container {
       display: grid;
@@ -502,17 +532,15 @@ export default class Profile extends Vue {
         max-width: 80%;
         margin: 0 auto;
       }
-      .button__wrapper {
-        .wrapper {
-          @include flex;
-          flex-direction: column;
-          align-items: center;
-          .q-list {
-            text-align: left;
-          }
-          button {
-            margin-top: 2vh;
-          }
+      .details__content {
+        @include flex;
+        flex-direction: column;
+        align-items: center;
+        .q-list {
+          text-align: left;
+        }
+        button {
+          margin-top: 2vh;
         }
       }
       @media (min-width: 360px) {

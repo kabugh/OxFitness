@@ -219,6 +219,10 @@ export default class WorkoutPage extends Vue {
       this.onRouteChange(this.$route);
       this.$store.dispatch("updateLastWatched", this.currentWorkout);
     }
+
+    if (window.scrollY !== 0) {
+      this.$scrollTo(".topView", 1500);
+    }
   }
 
   @Watch("$route", { immediate: false, deep: true })
