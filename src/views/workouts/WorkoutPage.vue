@@ -1,152 +1,167 @@
 <template>
   <section class="workoutPage topView">
     <div class="workoutPage__container container" v-if="currentWorkout.fields">
-      <div class="title__container">
-        <h1
-          v-if="currentWorkout.fields.dayOfTheWeek"
+      <div class="titleAndVideo__container">
+        <div class="title__container">
+          <h1
+            v-if="currentWorkout.fields.dayOfTheWeek"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="800"
+          >
+            {{ currentWorkout.fields.dayOfTheWeek }}
+          </h1>
+          <h1
+            v-if="currentWorkout.fields.title"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="800"
+          >
+            {{ currentWorkout.fields.title }}
+          </h1>
+          <h2
+            v-if="currentWorkout.fields.date"
+            data-aos="fade-up"
+            data-aos-delay="300"
+            data-aos-duration="800"
+          >
+            {{ currentWorkout.fields.date }}
+          </h2>
+        </div>
+        <vue-plyr
+          class="video__wrapper"
+          v-if="isOnline && currentWorkout.fields.videoId"
           data-aos="fade-up"
-          data-aos-delay="200"
+          data-aos-delay="600"
           data-aos-duration="800"
+          ref="plyr"
         >
-          {{ currentWorkout.fields.dayOfTheWeek }}
-        </h1>
-        <h1
-          v-if="currentWorkout.fields.title"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          data-aos-duration="800"
-        >
-          {{ currentWorkout.fields.title }}
-        </h1>
-        <h2
-          v-if="currentWorkout.fields.date"
-          data-aos="fade-up"
-          data-aos-delay="300"
-          data-aos-duration="800"
-        >
-          {{ currentWorkout.fields.date }}
-        </h2>
-      </div>
-      <vue-plyr
-        class="video__wrapper"
-        v-if="isOnline && currentWorkout.fields.videoId"
-        data-aos="fade-up"
-        data-aos-delay="600"
-        data-aos-duration="800"
-      >
+          <div
+            data-plyr-provider="vimeo"
+            :data-plyr-embed-id="currentWorkout.fields.videoId"
+            allowfullscreen
+          ></div>
+        </vue-plyr>
         <div
-          data-plyr-provider="vimeo"
-          :data-plyr-embed-id="currentWorkout.fields.videoId"
-          allowfullscreen
-        ></div>
-      </vue-plyr>
-      <div
-        class="image__wrapper"
-        v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
-        data-aos="fade-up"
-        data-aos-delay="600"
-        data-aos-duration="800"
-      >
-        <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
+          class="image__wrapper"
+          v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
+          data-aos="fade-up"
+          data-aos-delay="600"
+          data-aos-duration="800"
+        >
+          <img :src="currentWorkout.fields.image.fields.file.url" alt="image" />
+        </div>
       </div>
-      <div class="routines__container">
+      <div class="workout__content">
         <div
-          class="editor__container"
-          v-html="receivedData"
-          v-if="hasInsideCategories || $attrs.hasInsideCategories"
+          class="routines__container rich--text__content"
+          id="rich--text__content"
           data-aos="fade-up"
           data-aos-delay="800"
           data-aos-duration="800"
-        ></div>
-      </div>
-      <q-list
-        bordered
-        v-if="
-          Object.keys(this.accordionItems).length > 0 &&
-            !(hasInsideCategories || $attrs.hasInsideCategories)
-        "
-        data-aos="fade-up"
-        data-aos-delay="800"
-        data-aos-duration="800"
-        data-aos-offset="-500"
-      >
-        <q-expansion-item
-          group="accordion"
-          icon="emoji_events"
-          :label="buildTitle(index)"
-          header-class="text-primary"
-          v-for="(item, index) in accordionItems"
-          :key="index"
+          data-aos-offset="-2000"
         >
-          <q-card>
-            <q-card-section>
-              <div id="rich--text__content" class="rich--text__content">
-                <RichTextRenderer
-                  :document="item"
-                  :nodeRenderers="renderNodes()"
-                />
-              </div>
-            </q-card-section>
-          </q-card>
-        </q-expansion-item>
-        <q-separator />
-      </q-list>
-
-      <div
-        class="results__container"
-        v-if="$attrs.workoutType === 'daily'"
-        data-aos="fade-up"
-        data-aos-delay="800"
-        data-aos-duration="800"
-        data-aos-offset="-500"
-      >
-        <div class="results__wrapper" v-if="!isFinished && isOnline">
-          <h2>
-            Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!
-          </h2>
-          <q-btn
-            label="Dodaj swój wynik"
-            color="primary"
-            @click="card = true"
+          <RichTextRenderer
+            v-if="hasInsideCategories || $attrs.hasInsideCategories"
+            :document="currentWorkout.fields.description"
+            :nodeRenderers="renderNodes()"
           />
         </div>
-        <div class="results__wrapper" v-else-if="isFinished && isOnline">
-          <h2>Ukończyłeś juz ten trening. Edytuj podany przez siebie wynik.</h2>
-          <q-btn label="Edytuj wynik" color="secondary" @click="card = true" />
-        </div>
-        <q-dialog v-model="card" v-if="isOnline">
-          <q-card class="my-card q-p-xl">
-            <q-card-section>
-              <div class="row no-wrap items-center">
-                <div class="col text-h6 ellipsis">
-                  {{
-                    `${currentWorkout.fields.title} - ${currentWorkout.fields.date}`
-                  }}
+        <q-list
+          bordered
+          v-if="
+            Object.keys(this.accordionItems).length > 0 &&
+              !(hasInsideCategories || $attrs.hasInsideCategories)
+          "
+          data-aos="fade-up"
+          data-aos-delay="800"
+          data-aos-duration="800"
+          data-aos-offset="-500"
+        >
+          <q-expansion-item
+            group="accordion"
+            icon="emoji_events"
+            :label="buildTitle(index)"
+            header-class="text-primary"
+            v-for="(item, index) in accordionItems"
+            :key="index"
+          >
+            <q-card>
+              <q-card-section>
+                <div id="rich--text__content" class="rich--text__content">
+                  <RichTextRenderer
+                    :document="item"
+                    :nodeRenderers="renderNodes()"
+                  />
                 </div>
-                <div
-                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-                ></div>
-              </div>
-            </q-card-section>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+          <q-separator />
+        </q-list>
 
-            <q-card-section class="q-pt-none">
-              <WorkoutForm
-                :isFinished="isFinished"
-                :user="user"
-                :resultKey="currentWorkout.fields.resultKey"
-                :currentWorkout="currentWorkout"
-                @removed="onResultRemoval"
-              />
-              <div class="text-caption text-grey"></div>
-            </q-card-section>
-          </q-card>
-        </q-dialog>
-        <LeaderboardComponent
-          :currentWorkout="currentWorkout"
-          :user="user"
-          :isFinished="isFinished"
-          v-if="user.workouts !== undefined && user.workouts !== null"
-        />
+        <div
+          class="results__container"
+          v-if="$attrs.workoutType === 'daily'"
+          data-aos="fade-up"
+          data-aos-delay="800"
+          data-aos-duration="800"
+          data-aos-offset="-500"
+        >
+          <div class="results__wrapper" v-if="!isFinished && isOnline">
+            <h2>
+              Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!
+            </h2>
+            <q-btn
+              label="Dodaj swój wynik"
+              color="primary"
+              @click="card = true"
+            />
+          </div>
+          <div class="results__wrapper" v-else-if="isFinished && isOnline">
+            <h2>
+              Ukończyłeś juz ten trening. Edytuj podany przez siebie wynik.
+            </h2>
+            <q-btn
+              label="Edytuj wynik"
+              color="secondary"
+              @click="card = true"
+            />
+          </div>
+          <q-dialog v-model="card" v-if="isOnline">
+            <q-card class="my-card q-p-xl">
+              <q-card-section>
+                <div class="row no-wrap items-center">
+                  <div class="col text-h6 ellipsis">
+                    {{
+                      `${currentWorkout.fields.title} - ${currentWorkout.fields.date}`
+                    }}
+                  </div>
+                  <div
+                    class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
+                  ></div>
+                </div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <WorkoutForm
+                  :isFinished="isFinished"
+                  :user="user"
+                  :resultKey="currentWorkout.fields.resultKey"
+                  :currentWorkout="currentWorkout"
+                  @removed="onResultRemoval"
+                />
+                <div class="text-caption text-grey"></div>
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+          <LeaderboardComponent
+            :currentWorkout="currentWorkout"
+            :user="user"
+            :isFinished="isFinished"
+            v-if="user.workouts !== undefined && user.workouts !== null"
+          />
+        </div>
       </div>
     </div>
     <div class="workoutPage__container container" v-else>
@@ -174,12 +189,6 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { User, WorkoutContent, Workout } from "@/store/models";
 import { Route } from "vue-router";
 
-const options = {
-  renderNode: {
-    [BLOCKS.HR]: (node: any, next: any) => `<br />`
-  }
-};
-
 @Component({
   components: {
     LeaderboardComponent,
@@ -191,10 +200,8 @@ const options = {
 })
 export default class WorkoutPage extends Vue {
   hasInsideCategories = false;
-  nodes = options.renderNode;
   card = false;
   accordionItems = {};
-  receivedData = {};
   isFinished = false;
 
   created() {
@@ -204,12 +211,11 @@ export default class WorkoutPage extends Vue {
       this.$store.dispatch("fetchWorkout", this.$route.params);
     }
 
-    this.initialiseAccordionItems();
+    if (window.scrollY !== 0) {
+      this.$scrollTo(".topView", 1500);
+    }
 
-    this.receivedData = documentToHtmlString(
-      this.currentWorkout.fields.description,
-      options
-    );
+    this.initialiseAccordionItems();
   }
 
   mounted() {
@@ -246,11 +252,10 @@ export default class WorkoutPage extends Vue {
 
     this.hasInsideCategories = foundCategory.hasInsideCategories;
     this.initialiseAccordionItems();
-
-    this.receivedData = documentToHtmlString(
-      this.currentWorkout.fields.description,
-      options
-    );
+    this.player.source = {
+      type: "video",
+      sources: [{ src: this.currentWorkout.fields.videoId, provider: "vimeo" }]
+    };
   }
 
   renderNodes() {
@@ -284,12 +289,14 @@ export default class WorkoutPage extends Vue {
           },
           next(node.content)
         );
-      }
+      },
+      [BLOCKS.PARAGRAPH]: (node: any, key: any, h: any, next: any) =>
+        h(
+          "p",
+          { style: "margin: 1vh 0", key: key },
+          next(node.content, key, h, next)
+        )
     };
-  }
-
-  richTextData(program: any) {
-    return documentToHtmlString(program, options);
   }
 
   initialiseAccordionItems() {
@@ -333,6 +340,10 @@ export default class WorkoutPage extends Vue {
     if (this.user.workouts === undefined) this.isFinished = false;
   }
 
+  get player() {
+    return (this.$refs.plyr as any).player;
+  }
+
   get loading() {
     return this.$store.getters.loading;
   }
@@ -363,16 +374,20 @@ export default class WorkoutPage extends Vue {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    .title__container {
-      padding: 2vh 0 4vh 0;
-      text-align: center;
-      text-transform: capitalize;
-      h1 {
-        font-size: 2rem;
-        font-weight: bolder;
-      }
-      h2 {
-        font-size: 1.25rem;
+    .titleAndVideo__container {
+      @include flex;
+      flex-direction: column;
+      .title__container {
+        padding: 2vh 0 4vh 0;
+        text-align: center;
+        text-transform: capitalize;
+        h1 {
+          font-size: 2rem;
+          font-weight: bolder;
+        }
+        h2 {
+          font-size: 1.25rem;
+        }
       }
     }
 
@@ -403,18 +418,20 @@ export default class WorkoutPage extends Vue {
     }
     .routines__container {
       padding: 4vh 0;
-      h3 {
-        font-size: 1.5rem;
-      }
-      ul,
-      ol {
-        padding-left: 3vh;
-        li {
-          list-style-type: square;
+      .editor__container {
+        h3 {
+          font-size: 1.5rem;
         }
-      }
-      a {
-        color: black;
+        ul,
+        ol {
+          padding-left: 3vh;
+          li {
+            list-style-type: square;
+          }
+        }
+        a {
+          color: black;
+        }
       }
     }
     .q-item__label {
@@ -428,7 +445,31 @@ export default class WorkoutPage extends Vue {
       h5,
       h6 {
         margin: 1vh 0;
+        line-height: 1.25;
       }
+      h1 {
+        font-size: 2.25rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      h3 {
+        font-size: 1.75rem;
+      }
+      h4 {
+        font-size: 1.5rem;
+      }
+      h5 {
+        font-size: 1.25rem;
+      }
+      h6 {
+        font-size: 1rem;
+      }
+
+      a {
+        color: $primary;
+      }
+
       p {
         padding: 1vh 0;
         &:first-of-type {
@@ -439,13 +480,17 @@ export default class WorkoutPage extends Vue {
         }
       }
       ul {
+        margin-top: 3vh;
         margin-left: 20px;
         li {
-          list-style-type: initial;
+          list-style-type: inherit;
           margin: 10px 0;
           p {
             padding: 0;
           }
+        }
+        ul {
+          margin-top: 0;
         }
       }
       hr {
