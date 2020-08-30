@@ -122,7 +122,7 @@
                 :key="index"
               >
                 <img
-                  src="@/assets/sample.jpg"
+                  :src="workout.fields.frontImage.fields.file.url"
                   alt="video thumbnail"
                   class="thumbnail unselectable"
                   @click="
