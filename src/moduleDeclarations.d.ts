@@ -4,3 +4,4 @@ declare module "aos";
 declare module "vue-plyr";
 declare module "vue-password-strength-meter";
 declare module "vue-offline";
+declare module "rellax";

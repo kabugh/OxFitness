@@ -71,10 +71,21 @@
             </button>
           </div>
         </div>
-        <div class="heroImage__wrapper" data-aos="fade-down">
+        <div class="heroImage__container" data-aos="fade-down">
           <img
-            src="@/assets/illustrations/fitness3.svg"
-            class="unselectable"
+            src="@/assets/images/prototypes/iphone1.png"
+            class="unselectable rellax"
+            data-rellax-percentage="0.5"
+            data-rellax-speed="-2"
+            data-rellax-tablet-speed="-1"
+            alt="logo"
+          />
+          <img
+            src="@/assets/images/prototypes/iphone2.png"
+            class="unselectable rellax"
+            data-rellax-percentage="0.5"
+            data-rellax-speed="2"
+            data-rellax-tablet-speed="1"
             alt="logo"
           />
         </div>
@@ -202,6 +213,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Contact from "@/components/Contact.vue";
+import Rellax from "rellax";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -220,6 +232,9 @@ interface IntroductionItem {
 
 @Component({ components: { Contact } })
 export default class Home extends Vue {
+  mounted() {
+    const rellax = new Rellax(".rellax");
+  }
   navItems = [
     { name: "Treningi", slug: "/features" },
     { name: "FAQ", slug: "/faq" },
@@ -269,7 +284,42 @@ $secondaryColor: #666;
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: $backgroundColor;
+    background: #958efa;
+
+    @media (min-width: 1280px) {
+      background: -webkit-linear-gradient(
+        174deg,
+        #958efa,
+        #958efa 75%,
+        #9618c7 calc(75% + 1px),
+        #9618c7 100%
+      );
+      background: linear-gradient(
+        174deg,
+        #958efa,
+        #958efa 75%,
+        #9618c7 calc(75% + 1px),
+        #9618c7 100%
+      );
+    }
+
+    @media (min-width: 1450px) {
+      background: -webkit-linear-gradient(
+        174deg,
+        #958efa,
+        #958efa 65%,
+        #9618c7 calc(65% + 1px),
+        #9618c7 100%
+      );
+      background: linear-gradient(
+        174deg,
+        #958efa,
+        #958efa 65%,
+        #9618c7 calc(65% + 1px),
+        #9618c7 100%
+      );
+    }
+
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -322,7 +372,7 @@ $secondaryColor: #666;
           }
         }
       }
-      .heroImage__wrapper {
+      .heroImage__container {
         @include flex;
         align-items: center;
         display: none;
@@ -355,11 +405,14 @@ $secondaryColor: #666;
         }
         .nav__items {
           display: none;
-          grid-template-columns: 1.5fr 1fr;
+          grid-template-columns: repeat(2, auto);
+          column-gap: $horizontalPadding / 2;
           .separated__items,
           .items__grid {
             @include flex;
             align-items: center;
+            width: max-content;
+            margin: 0 auto;
           }
           .separated__items {
             justify-content: flex-end;
@@ -369,6 +422,10 @@ $secondaryColor: #666;
             height: 100%;
             margin: 0 12px;
             font-weight: 500;
+            &:not(.highlighted) {
+              font-weight: 600;
+              font-size: 1rem;
+            }
             @include flex;
             align-items: center;
             &:first-child {
@@ -429,10 +486,10 @@ $secondaryColor: #666;
           flex-direction: column;
           text-align: left;
           h1 {
-            font-size: 3.25rem !important;
+            font-size: 3rem !important;
           }
           p {
-            font-size: 1.25em;
+            font-size: 1.125em;
             font-weight: 500;
             margin: 3vh 0;
           }
@@ -444,8 +501,14 @@ $secondaryColor: #666;
             }
           }
         }
-        .heroImage__wrapper {
+        .heroImage__container {
           display: flex;
+          img:first-of-type {
+            margin: 0;
+          }
+          img:last-of-type {
+            display: none;
+          }
         }
       }
     }
@@ -488,41 +551,90 @@ $secondaryColor: #666;
         }
       }
     }
-    @media (min-width: 1000px) and (orientation: landscape) {
-      .static__nav .nav__container .nav__items .items__grid {
-        display: flex;
-      }
-    }
     @media (min-width: 768px) and (min-height: 1024px) and (max-width: 1000px) and (orientation: portrait) {
       .hero__container {
         grid-template-columns: 1fr;
         column-gap: 0;
         row-gap: 4vh;
-        .heroImage__wrapper {
+        padding-bottom: 0;
+        .heroImage__container {
           grid-row: 1;
           img {
-            max-width: 45vw;
+            max-height: 40vh;
           }
         }
       }
     }
-    @media (min-width: 1024px) and (min-height: 1360px) and (orientation: portrait) {
+    @media (min-width: 1024px) {
+      .static__nav .nav__container .nav__items {
+        grid-template-columns: 1.5fr 0.5fr;
+        margin: 0 $horizontalPadding / 2;
+        .separated__items {
+          grid-column: auto;
+        }
+        .items__grid {
+          display: flex;
+        }
+      }
+      .hero__container {
+        grid-template-columns: repeat(2, auto);
+        .heroImage__container {
+          img {
+            max-width: 50vw;
+            min-height: 60vh;
+            max-height: 60vh;
+          }
+        }
+      }
+    }
+    @media (min-width: 1024px) and (max-width: 1300px) and (min-height: 1080px) and (orientation: portrait) {
       height: 75vh;
       .hero__container {
-        grid-template-columns: 1fr;
-        column-gap: 0;
-        row-gap: 4vh;
+        grid-template-columns: repeat(2, auto);
+        column-gap: 4vh;
         .hero__wrapper {
+          h1 {
+            font-size: 3.25rem !important;
+          }
+          p {
+            font-size: 1.25rem;
+          }
           button {
             font-size: 20px !important;
           }
         }
-        .heroImage__wrapper {
-          grid-row: 1;
+        .heroImage__container {
           img {
             max-width: 45vw;
+            min-height: auto;
+            max-height: 45vh;
           }
         }
+      }
+    }
+    @media (min-width: 1280px) and (min-height: 500px) {
+      .hero__container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1450px) and (min-height: 500px) {
+      .hero__container .heroImage__container img {
+        min-height: auto;
+        max-height: 55vh;
+        margin-left: 1vw;
+        margin-right: 1vw;
+        &:first-of-type {
+          margin-top: -10vh;
+        }
+        &:last-of-type {
+          margin-top: 10vh;
+          display: block;
+        }
+      }
+    }
+    @media (min-width: 1650px) and (min-height: 1024px) {
+      .hero__container .hero__wrapper h1 {
+        font-size: 3.75rem !important;
       }
     }
   }

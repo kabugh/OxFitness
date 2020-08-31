@@ -24,7 +24,7 @@
       v-if="$route.meta.displayNav || $route.path === '/dashboard'"
     >
       <div class="logo" @click="$router.push('/dashboard')">
-        <h3>OxFitness</h3>
+        <h3 v-scroll-to="'.topNav'">OxFitness</h3>
       </div>
       <ul class="nav__items"></ul>
       <div class="avatar__container">
@@ -115,9 +115,10 @@ export default class BottomTabs extends Vue {
           font-weight: 600;
           font-size: 1.75rem;
           text-transform: uppercase;
-        }
-        &:hover {
-          cursor: pointer;
+          width: max-content;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
       .avatar__container {

@@ -88,9 +88,7 @@ nav.topNavbar {
     justify-content: center;
     text-align: center;
     flex: 1;
-    &:hover {
-      cursor: pointer;
-    }
+
     h3 {
       text-transform: uppercase;
       font-size: 18px;
