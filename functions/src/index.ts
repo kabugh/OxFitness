@@ -6,8 +6,7 @@ const stripe = require("stripe")(functions.config().stripe.secret);
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
   databaseURL: functions.config().database.url
-}); // When user's account is created, the function updates user's premiumAccount Object
-
+});
 // pure function - currying
 const addDays = (days: number) => (date: string | number | Date) => {
   const result = new Date(date);
@@ -49,7 +48,9 @@ export const checkAccess = functions.https.onCall((data, context) => {
   user
     .once("value")
     .then(snapshot => {
-      premiumAccount = snapshot.val().premiumAccount;
+      const receivedData = snapshot.val();
+      if ("premiumAccount" in receivedData)
+        premiumAccount = receivedData.premiumAccount;
       if (new Date(premiumAccount.validUntil) < currentTime) {
         premiumAccount = {
           activationDate: premiumAccount.activationDate,
@@ -59,7 +60,7 @@ export const checkAccess = functions.https.onCall((data, context) => {
         user
           .child("premiumAccount")
           .update(premiumAccount)
-          .catch(e => console.log(e));
+          .catch((e: any) => console.log(e));
       }
     })
     .catch(e => console.log(e));
@@ -74,7 +75,6 @@ export const payment = functions.https.onRequest((request, response) => {
       "Access-Control-Allow-Origin",
       "https://oxfitness.netlify.app"
     ); // to be changed on https://oxfitness.pl on production
-    console.log(response.headersSent);
     await stripe.checkout.sessions.create(
       {
         payment_method_types: ["card"],
@@ -141,7 +141,6 @@ export const successfulPayment = functions.https.onRequest(
               isActive: true,
               validUntil: accessTime
             };
-            console.log(access.validUntil);
             foundUser.premiumAccount = access;
             foundUser.transactions[session.payment_intent] = "succeeded";
             admin
