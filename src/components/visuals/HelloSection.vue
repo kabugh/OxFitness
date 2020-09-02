@@ -105,10 +105,8 @@ export default class HelloSection extends Vue {
       }
     }
     @media (min-width: 768px) {
-      grid-template-columns: repeat(2, auto);
       .greetings__container {
         @include flex;
-        align-items: flex-start;
         flex-direction: column;
         padding: 2vh;
         text-align: left;
@@ -116,8 +114,24 @@ export default class HelloSection extends Vue {
           font-size: 2rem;
         }
       }
-      .illustration__wrapper {
-        display: block;
+      @media (min-height: 700px) {
+        .illustration__wrapper .illustration {
+          max-height: 20vh;
+        }
+      }
+      @media (min-height: 768px) {
+        grid-template-columns: repeat(2, auto);
+        .greetings__container {
+          align-items: flex-start;
+        }
+        .illustration__wrapper {
+          display: block;
+        }
+      }
+      @media (min-width: 1650px) and (min-height: 768px) {
+        .illustration__wrapper .illustration {
+          max-height: 30vh;
+        }
       }
     }
   }
