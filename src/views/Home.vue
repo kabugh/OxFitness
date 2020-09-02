@@ -1,6 +1,7 @@
 <template>
   <section class="homePage">
     <div class="hero">
+      <BackgroundGradient :width="1000" :height="1000" />
       <nav class="static__nav">
         <div class="nav__container">
           <div class="logo" data-aos="fade-down" data-aos-delay="100">
@@ -58,6 +59,7 @@
               class="homeButton"
               v-scroll-to="{ element: '.introduction' }"
               data-aos="fade-left"
+              data-aos-offset="-500"
             >
               Zacznij przygodę
             </button>
@@ -65,6 +67,7 @@
               type="button"
               class="homeButton login"
               data-aos="fade-left"
+              data-aos-offset="-500"
               @click="$router.push('/authentication')"
             >
               Zaloguj się
@@ -212,7 +215,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import BackgroundGradient from "@/components/visuals/BackgroundGradient.vue";
 import Contact from "@/components/Contact.vue";
+
 import Rellax from "rellax";
 
 import AOS from "aos";
@@ -230,11 +235,12 @@ interface IntroductionItem {
   image: string;
 }
 
-@Component({ components: { Contact } })
+@Component({ components: { BackgroundGradient, Contact } })
 export default class Home extends Vue {
   mounted() {
     const rellax = new Rellax(".rellax");
   }
+
   navItems = [
     { name: "Treningi", slug: "/features" },
     { name: "FAQ", slug: "/faq" },
@@ -280,45 +286,45 @@ $secondaryColor: #666;
   p {
     line-height: 1.75;
   }
+
   .hero {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: #958efa;
 
-    @media (min-width: 1280px) {
-      background: -webkit-linear-gradient(
-        174deg,
-        #958efa,
-        #958efa 75%,
-        #9618c7 calc(75% + 1px),
-        #9618c7 100%
-      );
-      background: linear-gradient(
-        174deg,
-        #958efa,
-        #958efa 75%,
-        #9618c7 calc(75% + 1px),
-        #9618c7 100%
-      );
-    }
+    // @media (min-width: 1280px) {
+    //   background: -webkit-linear-gradient(
+    //     174deg,
+    //     #958efa,
+    //     #958efa 75%,
+    //     #9618c7 calc(75% + 1px),
+    //     #9618c7 100%
+    //   );
+    //   background: linear-gradient(
+    //     174deg,
+    //     #958efa,
+    //     #958efa 75%,
+    //     #9618c7 calc(75% + 1px),
+    //     #9618c7 100%
+    //   );
+    // }
 
-    @media (min-width: 1450px) {
-      background: -webkit-linear-gradient(
-        174deg,
-        #958efa,
-        #958efa 65%,
-        #9618c7 calc(65% + 1px),
-        #9618c7 100%
-      );
-      background: linear-gradient(
-        174deg,
-        #958efa,
-        #958efa 65%,
-        #9618c7 calc(65% + 1px),
-        #9618c7 100%
-      );
-    }
+    // @media (min-width: 1450px) {
+    //   background: -webkit-linear-gradient(
+    //     174deg,
+    //     #958efa,
+    //     #958efa 65%,
+    //     #9618c7 calc(65% + 1px),
+    //     #9618c7 100%
+    //   );
+    //   background: linear-gradient(
+    //     174deg,
+    //     #958efa,
+    //     #958efa 65%,
+    //     #9618c7 calc(65% + 1px),
+    //     #9618c7 100%
+    //   );
+    // }
 
     background-size: cover;
     background-repeat: no-repeat;
@@ -327,7 +333,21 @@ $secondaryColor: #666;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    .bgGradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      @media (min-width: 768px) {
+        height: 90%;
+        margin-top: -7%;
+        transform: skewY(174deg);
+      }
+    }
     .hero__container {
+      z-index: 1;
       display: grid;
       grid-template-columns: 1fr;
       column-gap: 6vw;
@@ -514,6 +534,9 @@ $secondaryColor: #666;
     }
     @media (min-width: 550px) and (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
       display: block;
+      .bgGradient {
+        z-index: -1;
+      }
       .hero__container {
         padding: $verticalPadding * 2 $horizontalPadding;
         .hero__wrapper {
