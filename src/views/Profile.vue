@@ -302,7 +302,7 @@ export default class Profile extends Vue {
     if (user && this.user.premiumAccount.validUntil.length !== 0) {
       this.isVerified = user.emailVerified;
       this.calculateDaysLeft();
-    } else {
+    } else if (!user) {
       this.logOut();
     }
   }
