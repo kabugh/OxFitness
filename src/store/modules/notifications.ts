@@ -63,10 +63,17 @@ const actions = {
   },
 
   saveToken(token: any) {
+    const headers = {
+      headers: {
+        "Access-Control-Allow-Origin": "https://oxfitness.pl",
+        "Access-Control-Allow-Credentials": "true"
+      }
+    };
     axios
       .post(
         "https://us-central1-oxfit-0001.cloudfunctions.net/generalSubscription",
-        { token }
+        { token },
+        headers
       )
       .then(response => {
         window.localStorage.setItem("messagingToken", token);
