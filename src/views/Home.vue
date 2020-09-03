@@ -84,8 +84,8 @@
             alt="logo"
           />
           <img
-            src="@/assets/images/prototypes/iphone2.png"
-            class="unselectable rellax"
+            src="@/assets/images/prototypes/iPadVer.webp"
+            class="unselectable ipad rellax"
             data-rellax-percentage="0.5"
             data-rellax-speed="2"
             data-rellax-tablet-speed="1"
