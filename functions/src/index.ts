@@ -28,3 +28,12 @@ export const successfulPayment = functions.https.onRequest(
     );
   }
 );
+
+export const generalSubscription = functions.https.onRequest(
+  async (request, response) => {
+    await (await import("./notifications/generalSubscription")).default(
+      request,
+      response
+    );
+  }
+);

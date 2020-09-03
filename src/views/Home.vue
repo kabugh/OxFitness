@@ -7,8 +7,8 @@
           <div class="logo" data-aos="fade-down" data-aos-delay="100">
             <h3>OxFitness</h3>
           </div>
-          <ul class="nav__items">
-            <div class="items__grid" data-aos="fade-down" data-aos-delay="200">
+          <div class="nav__items">
+            <ul class="items__grid" data-aos="fade-down" data-aos-delay="200">
               <li
                 v-for="(item, i) in navItems"
                 @click="$router.push(item.slug)"
@@ -17,8 +17,8 @@
                 {{ item.name }}
               </li>
               <li v-scroll-to="'.contact'">Kontakt</li>
-            </div>
-            <div
+            </ul>
+            <ul
               class="separated__items"
               data-aos="fade-down"
               data-aos-delay="300"
@@ -37,8 +37,8 @@
               >
                 Rejestracja
               </li>
-            </div>
-          </ul>
+            </ul>
+          </div>
         </div>
       </nav>
       <div class="hero__container">
@@ -154,8 +154,12 @@
           data-aos="fade-up"
           data-aos-delay="200"
           src="@/assets/team.jpg"
+          :srcset="
+            `${require('@/assets/images/team/teamMobile.jpg')} 1x,
+            ${require('@/assets/images/team/team2x.jpg')} 2x`
+          "
           alt="coaches"
-          class="coaches__image unselectable"
+          class="coaches__image "
         />
         <h1 data-aos="fade-up" data-aos-delay="200">
           Poznaj naszych trenerów.

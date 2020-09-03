@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import auth from "./modules/auth";
 import workouts from "./modules/workouts";
 import features from "./modules/features";
+import notifications from "./modules/notifications";
 
 import { vuexfireMutations } from "vuexfire";
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
   modules: {
     auth,
     workouts,
-    features
+    features,
+    notifications
   },
   mutations: {
     ...vuexfireMutations

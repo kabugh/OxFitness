@@ -16,7 +16,11 @@ module.exports = {
     themeColor: "#6b108e",
     msTileColor: "#6b108e",
     appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "#6b108e"
+    appleMobileWebAppStatusBarStyle: "#6b108e",
+    workboxPluginMode: "InjectManifest",
+    workboxOptions: {
+      swSrc: "src/firebase-messaging-sw.js"
+    }
   },
 
   transpileDependencies: ["quasar"]

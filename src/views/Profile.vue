@@ -72,6 +72,7 @@
               color="primary"
               track-color="grey-3"
               class="q-ma-md"
+              @click="notificationsPermission"
             >
               {{ daysLeft | daysFilter }}
             </q-circular-progress>
@@ -305,6 +306,14 @@ export default class Profile extends Vue {
     } else if (!user) {
       this.logOut();
     }
+  }
+
+  mounted() {
+    this.$store.dispatch("monitorTokenRefresh");
+  }
+
+  notificationsPermission() {
+    this.$store.dispatch("getMessagingToken");
   }
 
   findDaysBetween(startDate: Date, endDate: Date) {
