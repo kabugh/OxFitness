@@ -13,7 +13,10 @@ module.exports = {
 
   pwa: {
     name: "OxFitness",
-    themeColor: "#000000"
+    themeColor: "#6b108e",
+    msTileColor: "#6b108e",
+    appleMobileWebAppCapable: "yes",
+    appleMobileWebAppStatusBarStyle: "#6b108e"
   },
 
   transpileDependencies: ["quasar"]
