@@ -16,7 +16,7 @@ const actions = {
           );
           console.log("Token will be updated", currentMessageToken != token);
           if (currentMessageToken != token) {
-            await dispatch.saveToken(token);
+            await dispatch("saveToken", token);
           }
         } else {
           console.log(
