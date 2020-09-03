@@ -23,12 +23,11 @@
               data-aos-duration="800"
               :data-aos-delay="200 + index * 50"
             >
-              <img
+              <div
                 v-if="isOnline"
-                :src="workout.fields.frontImage.fields.file.url"
-                alt="video
-          thumbnail"
-                class="thumbnail unselectable"
+                :style="{
+                  backgroundImage: `url(${workout.fields.frontImage.fields.file.url})`
+                }"
                 @click="
                   $router.push({
                     name: 'workoutPage',
@@ -40,32 +39,30 @@
                     }
                   })
                 "
-              />
-              <div class="title__container">
-                <h2>
-                  {{ workout.fields.title }}
-                </h2>
-
-                <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
-              </div>
-              <div class="button__wrapper">
-                <button
-                  type="button"
-                  class="dark"
-                  @click="
-                    $router.push({
-                      name: 'workoutPage',
-                      params: {
-                        workoutType: $attrs.workoutType,
-                        id: workout.sys.id,
-                        workout: workout,
-                        hasInsideCategories: categoryDetails.hasInsideCategories
-                      }
-                    })
-                  "
-                >
-                  Zobacz więcej
-                </button>
+                class="thumbnail"
+              >
+                <div class="logo__container">
+                  <div class="logo__image--wrapper">
+                    <img
+                      src="@/assets/images/logos/ox.png"
+                      alt="ox"
+                      class="unselectable"
+                    />
+                  </div>
+                  <div class="text__container">
+                    <h4>Ox Fitness</h4>
+                    <span v-if="workout.fields.date">{{
+                      workout.fields.date
+                    }}</span>
+                  </div>
+                </div>
+                <div class="title__container">
+                  <h2>
+                    {{ workout.fields.title }}
+                  </h2>
+                  <span>Trening codzienny</span>
+                </div>
+                <div class="backgroundFilter"></div>
               </div>
             </div>
           </div>
@@ -121,10 +118,11 @@
                 v-for="(workout, index) in workouts"
                 :key="index"
               >
-                <img
-                  :src="workout.fields.frontImage.fields.file.url"
-                  alt="video thumbnail"
-                  class="thumbnail unselectable"
+                <div
+                  v-if="isOnline"
+                  :style="{
+                    backgroundImage: `url(${workout.fields.frontImage.fields.file.url})`
+                  }"
                   @click="
                     $router.push({
                       name: 'workoutPage',
@@ -136,32 +134,35 @@
                       }
                     })
                   "
-                />
-                <div class="title__container">
-                  <h2>
-                    {{ workout.fields.title }}
-                  </h2>
-                  <h3 v-if="workout.fields.date">{{ workout.fields.date }}</h3>
-                </div>
-                <div class="button__wrapper">
-                  <button
-                    type="button"
-                    class="dark"
-                    @click="
-                      $router.push({
-                        name: 'workoutPage',
-                        params: {
-                          workoutType: $attrs.workoutType,
-                          id: workout.sys.id,
-                          workout: workout,
-                          hasInsideCategories:
-                            categoryDetails.hasInsideCategories
-                        }
-                      })
-                    "
-                  >
-                    Zobacz więcej
-                  </button>
+                  class="thumbnail"
+                >
+                  <div class="logo__container">
+                    <div class="logo__image--wrapper">
+                      <img
+                        src="@/assets/images/logos/ox.png"
+                        alt="ox"
+                        class="unselectable"
+                      />
+                    </div>
+                    <div class="text__container">
+                      <h4>Ox Fitness</h4>
+                      <span v-if="workout.fields.date">{{
+                        workout.fields.date
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="title__container">
+                    <h2 v-if="$attrs.workoutType !== 'accessories'">
+                      {{ workout.fields.title }}
+                    </h2>
+                    <h3 v-else>{{ workout.fields.title }}</h3>
+                    <span>{{
+                      $attrs.workoutType === "accessories"
+                        ? "Akcesoria"
+                        : "Rozgrzewka"
+                    }}</span>
+                  </div>
+                  <div class="backgroundFilter"></div>
                 </div>
               </div>
             </div>
@@ -286,7 +287,10 @@ export default class Workouts extends Vue {
         .videos__container {
           max-width: 100%;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          @media (min-width: 360px) {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          }
           @media only screen and (orientation: landscape) and (min-width: 500px) and (max-height: 450px) {
             grid-template-columns: 100%;
             grid-gap: 10vh;
@@ -303,25 +307,116 @@ export default class Workouts extends Vue {
             @include flex;
             align-items: center;
             flex-direction: column;
-            .title__container {
-              text-transform: capitalize;
-              text-align: center;
-              h2 {
-                padding: 2vh 0;
-                font-size: 1.5rem;
-                font-weight: bolder;
-              }
-              h3 {
-                font-size: 1.25rem;
-              }
-            }
             .thumbnail {
               width: 100%;
               max-width: 400px;
+              @include backgroundDefault;
+              height: 30vh;
               margin: 0 auto;
               border-radius: 10px;
+              position: relative;
+              width: 100%;
+              opacity: 0.99;
+              padding: 4vh;
+              display: flex;
+              align-items: flex-start;
+              justify-content: flex-end;
+              flex-direction: column;
+              position: relative;
+
               &:hover {
                 cursor: pointer;
+              }
+              .logo__container {
+                z-index: 1;
+                position: absolute;
+                top: 2vh;
+                left: 4vh;
+                display: grid;
+                align-items: center;
+                grid-template-columns: repeat(2, auto);
+                column-gap: 8px;
+                .logo__image--wrapper {
+                  width: 32px;
+                  height: 32px;
+                  img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                  }
+                }
+                .text__container {
+                  color: white;
+                  h4 {
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    line-height: 1;
+                  }
+                  span {
+                    font-size: 0.75rem;
+                  }
+                }
+              }
+              .title__container {
+                z-index: 1;
+                color: white;
+                text-transform: capitalize;
+                text-align: left;
+                h2,
+                h3 {
+                  padding: 0;
+                  font-weight: bolder;
+                  font-size: 1.25rem;
+                  text-align: left;
+                }
+                h3 {
+                  font-size: 1.125rem;
+                }
+                span {
+                  font-size: 1.125rem;
+                  font-weight: 500;
+                }
+                @media (min-width: 360px) {
+                  h2 {
+                    font-size: 1.75rem;
+                  }
+                }
+              }
+              .backgroundFilter {
+                z-index: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+              }
+
+              @media (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+                height: 40vh;
+                .title__container {
+                  h2 {
+                    font-size: 1.125rem;
+                  }
+                  span {
+                    font-size: 1rem;
+                  }
+                }
+              }
+              @media (max-width: 700px) and (max-height: 375px) and (orientation: landscape) {
+                height: 40vh;
+                .title__container {
+                  h2 {
+                    font-size: 1rem;
+                  }
+                  span {
+                    font-size: 0.875rem;
+                  }
+                }
               }
             }
 
