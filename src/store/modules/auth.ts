@@ -157,6 +157,14 @@ const actions = {
             workouts: [],
             lastWatched: {} as any
           };
+          commit("setUser", newUser);
+          firebase
+            .database()
+            .ref("/users/" + newUser.id)
+            .update(newUser);
+          router.push("/dashboard").catch(e => {
+            console.log(e);
+          });
         }
       })
       .catch(e => {
@@ -166,59 +174,6 @@ const actions = {
         // const email = error.email;
         // // The firebase.auth.AuthCredential type that was used.
         // const credential = error.credential;
-      });
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(payload.email, payload.password)
-      .then(response => {
-        if (response && response.user) {
-          commit("setLoading", false);
-          const newUser: User = {
-            id: response.user.uid,
-            email: payload.email,
-            name: "",
-            premiumAccount: {
-              isActive: false,
-              activationDate: "",
-              validUntil: ""
-            },
-            settings: {
-              notifications: true,
-              displayResults: true
-            },
-            transactions: [],
-            workouts: [],
-            lastWatched: {} as any
-          };
-          commit("setUser", newUser);
-          firebase
-            .database()
-            .ref("/users/" + newUser.id)
-            .update(newUser);
-          router
-            .push("/dashboard")
-            // .then(() => dispatch("verifyAccount"))
-            .catch(e => {
-              console.log(e);
-            });
-        }
-      })
-      .catch(e => {
-        commit("setLoading", false);
-        commit("setError", e);
-        if (e.code === "auth/email-already-in-use") {
-          Notify.create({
-            type: "negative",
-            message: "Podany email jest już zajęty."
-          });
-        } else {
-          Notify.create({
-            type: "negative",
-            message:
-              "Wystąpił błąd. Spróbuj ponownie później lub skontaktuj się z Administratorem."
-          });
-        }
       });
   },
   signUserIn({ commit }: any, payload: { email: string; password: string }) {
