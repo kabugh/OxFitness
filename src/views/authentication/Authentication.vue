@@ -15,6 +15,9 @@
           :class="{ active: passwordRecoveryTab }"
         />
       </transition>
+      <div class="auth__providers--contai">
+        <button type="button" @click="google">Google</button>
+      </div>
       <div class="status" v-if="passwordRecoveryTab">
         <h4>Pamiętasz hasło?</h4>
         <h4
@@ -90,6 +93,10 @@ export default class Authentication extends Vue {
       this.loginTab = false;
       this.signUpTab = true;
     }
+  }
+
+  google() {
+    this.$store.dispatch("signUserUpWithGoogle");
   }
 }
 </script>
