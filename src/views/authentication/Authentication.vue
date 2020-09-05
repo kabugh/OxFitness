@@ -15,9 +15,9 @@
           :class="{ active: passwordRecoveryTab }"
         />
       </transition>
-      <div class="auth__providers--contai">
+      <!-- <div class="auth__providers--contai">
         <button type="button" @click="google">Google</button>
-      </div>
+      </div> -->
       <div class="status" v-if="passwordRecoveryTab">
         <h4>Pamiętasz hasło?</h4>
         <h4

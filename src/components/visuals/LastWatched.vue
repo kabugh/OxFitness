@@ -68,6 +68,11 @@ export default class lastWatched extends Vue {
           this.hasInsideCategories = true;
           break;
         }
+        case "stretching": {
+          workoutType = "stretching";
+          this.hasInsideCategories = true;
+          break;
+        }
         default:
           workoutType = this.lastWatched.sys.contentType.sys.id;
       }
