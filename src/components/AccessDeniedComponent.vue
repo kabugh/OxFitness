@@ -13,8 +13,9 @@
           class="bg-primary text-white"
           @click="checkout"
           :loading="loading"
-          >Wykup dostęp</q-btn
         >
+          Wykup dostęp
+        </q-btn>
         <p>
           Jeśli opłaciłeś już dostęp, poczekaj kilka sekund, pracujemy nad tym!
         </p>

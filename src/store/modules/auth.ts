@@ -331,13 +331,13 @@ const actions = {
     commit("setSettings", payload);
     commit("setLoading", false);
   },
-  updateUserTransactions({ commit, getters }: any, payload: string) {
+  updateUserTransactions({ commit, getters }: any, payload: any) {
     commit("setLoading", true);
     if (!getters.user.transactions) {
       getters.user.transactions = {};
     }
     const userTransactions = getters.user.transactions;
-    userTransactions[payload] = "incomplete";
+    userTransactions[payload.payment_intent] = payload;
     commit("setUserTransactions", userTransactions);
 
     firebase

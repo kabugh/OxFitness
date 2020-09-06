@@ -31,7 +31,8 @@ export default async (request: any, response: any) => {
         foundUser = Object.values(users).find((user: any) => {
           if (user.transactions)
             return Object.keys(user.transactions).find(
-              key => key === session.payment_intent
+              (transaction: any) =>
+                transaction.payment_intent === session.payment_intent
             );
           else return undefined;
         });
@@ -43,8 +44,13 @@ export default async (request: any, response: any) => {
             isActive: true,
             validUntil: accessTime
           };
+          console.log(session);
           foundUser.premiumAccount = access;
-          foundUser.transactions[session.payment_intent] = "succeeded";
+          foundUser.transactions[session.payment_intent] = {
+            ...foundUser.transactions[session.payment_intent],
+            status: session.status,
+            name: session.line_item_group.line_items[0].price.product.name
+          };
           admin
             .database()
             .ref(`/users/${foundUser.id}/`)

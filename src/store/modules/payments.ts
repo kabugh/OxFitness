@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import * as firebase from "firebase";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -25,7 +24,12 @@ const actions = {
       .then((response: any) => {
         commit("setLoading", false);
         sessionId = response.data.id;
-        dispatch("updateUserTransactions", response.data.payment_intent);
+        const transaction = {
+          payment_intent: response.data.payment_intent,
+          amount: response.data.amount_total,
+          status: response.data.payment_status
+        };
+        dispatch("updateUserTransactions", transaction);
       })
       .catch(e => commit("setLoading", false));
     const stripe: any = await loadStripe(process.env.VUE_APP_stripePublicKey);

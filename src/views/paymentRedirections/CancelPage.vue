@@ -12,14 +12,14 @@
         Coś poszło nie tak. Płatność została anulowana. Spróbuj ponownie lub
         skontaktuj się z administratorem OxFitness.
       </h1>
-      <button
+      <q-btn
+        class="bg-primary text-white"
         data-aos="fade-up"
         data-aos-delay="700"
-        type="button"
+        size="lg"
         @click="$router.replace('/dashboard')"
+        >Powrót</q-btn
       >
-        Powrót
-      </button>
     </div>
   </section>
 </template>
