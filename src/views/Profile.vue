@@ -223,15 +223,19 @@
                   </q-item-section>
                 </q-item>
 
-                <!-- <q-item clickable @click="changeEmail" v-if="isOnline">
-                    <q-item-section>
-                      <q-item-label>Zmień adres email</q-item-label>
-                      <q-item-label caption>
-                        Otrzymasz wiadomość na powiązany adres email - musisz
-                        potwierdzić swój wybór.
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item> -->
+                <q-item
+                  clickable
+                  @click="changeEmail && isVerified"
+                  v-if="isOnline"
+                >
+                  <q-item-section>
+                    <q-item-label>Zmień adres email</q-item-label>
+                    <q-item-label caption>
+                      Otrzymasz wiadomość informacyjną na powiązany adres email
+                      - nie musisz na nią odpowiadać.
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
 
                 <q-item clickable @click="logOut">
                   <q-item-section>
@@ -253,6 +257,7 @@
               </q-list>
               <ChangeEmail />
               <ChangeUsername />
+              <Reauthentication :action="triggerAction" />
               <DeleteConfirmation :user="user" />
             </div>
           </div>
@@ -265,6 +270,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import ChangeEmail from "@/components/authentication/ChangeEmail.vue";
 import ChangeUsername from "@/components/authentication/ChangeUsername.vue";
+import Reauthentication from "@/components/authentication/Reauthentication.vue";
 import DeleteConfirmation from "@/components/authentication/DeleteConfirmation.vue";
 
 import { User } from "@/store/models";
@@ -275,6 +281,7 @@ import { VueOfflineMixin } from "vue-offline";
   components: {
     ChangeEmail,
     ChangeUsername,
+    Reauthentication,
     DeleteConfirmation
   },
   mixins: [VueOfflineMixin],
@@ -292,6 +299,7 @@ export default class Profile extends Vue {
   ];
 
   currentTab = this.tabs[0].name;
+  triggerAction = "";
 
   isLoaded = false;
   isVerified = false;
@@ -362,14 +370,17 @@ export default class Profile extends Vue {
   }
 
   changeEmail() {
+    this.triggerAction = "setEmailDialog";
     this.emailDialog = true;
   }
 
   changeUsername() {
+    this.triggerAction = "setUsernameDialog";
     this.usernameDialog = true;
   }
 
   deleteAccount() {
+    this.triggerAction = "setDeleteDialog";
     this.deleteDialog = true;
   }
 

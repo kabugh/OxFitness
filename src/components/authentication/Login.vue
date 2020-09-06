@@ -84,8 +84,8 @@ import { required, email, minLength } from "vuelidate/lib/validators";
   }
 })
 export default class Login extends Vue {
-  email: string = "";
-  password: string = "";
+  email = "";
+  password = "";
 
   get user(): User {
     return this.$store.getters.user;

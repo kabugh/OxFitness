@@ -9,6 +9,7 @@ const state = {
   isNavOpen: false,
   emailDialog: false,
   usernameDialog: false,
+  reauthenticationDialog: false,
   deleteDialog: false,
 
   user: null as User | null,
@@ -28,6 +29,12 @@ const mutations = {
   },
   setUsernameDialog(state: { usernameDialog: boolean }, payload: boolean) {
     state.usernameDialog = payload;
+  },
+  setReauthenticationDialog(
+    state: { reauthenticationDialog: boolean },
+    payload: boolean
+  ) {
+    state.reauthenticationDialog = payload;
   },
   setDeleteDialog(state: { deleteDialog: boolean }, payload: boolean) {
     state.deleteDialog = payload;
@@ -373,6 +380,9 @@ const actions = {
         .catch(e => {
           commit("setLoading", false);
           commit("setError", e);
+          if (e.code === "auth/requires-recent-login") {
+            commit("setReauthenticationDialog", true);
+          }
         });
     } else if ((user as firebase.User).emailVerified) {
       Notify.create({
@@ -382,27 +392,44 @@ const actions = {
     }
     commit("setLoading", false);
   },
-  changeEmail({ commit, dispatch, state }: any, payload: string) {
+  changeEmail({ commit, dispatch, getters }: any, payload: string) {
     commit("setLoading", true);
     let user = firebase.auth().currentUser;
     if (user)
       user
         .updateEmail(payload)
-        .then(() => {
+        .then(async () => {
+          await firebase
+            .database()
+            .ref(`/users/${getters.user.id}/`)
+            .update({ email: payload })
+            .catch(e => {
+              commit("setLoading", false);
+              commit("setError", e);
+            });
           commit("setLoading", false);
-          if (state.user) {
+          if (getters.user) {
             dispatch("signUserOut");
           } else {
             router.push("/");
           }
           Notify.create({
             type: "positive",
-            message: `Email zmieniony. Zaloguj się i zweryfikuj swoje konto.`
+            message: "Email zmieniony. Zaloguj się i zweryfikuj swoje konto."
           });
         })
         .catch(e => {
           commit("setLoading", false);
           commit("setError", e);
+          console.log(e);
+          if (e.code === "auth/email-already-in-use") {
+            Notify.create({
+              type: "negative",
+              message: "Podany email jest zajęty. Proszę wybrać inny."
+            });
+          } else if (e.code === "auth/requires-recent-login") {
+            commit("setReauthenticationDialog", true);
+          }
         });
   },
   changePassword({ commit, dispatch, state }: any, payload: string) {
@@ -425,6 +452,9 @@ const actions = {
       .catch(e => {
         commit("setLoading", false);
         commit("setError", e);
+        if (e.code === "auth/requires-recent-login") {
+          commit("setReauthenticationDialog", true);
+        }
       });
   },
   deleteAccount({ commit, dispatch }: any) {
@@ -455,6 +485,47 @@ const actions = {
         .catch(e => {
           commit("setLoading", false);
           commit("setError", e);
+          if (e.code === "auth/requires-recent-login") {
+            commit("setReauthenticationDialog", true);
+          }
+        });
+    }
+  },
+  reauthenticateUser(
+    { commit }: any,
+    payload: { action: string; password: string }
+  ) {
+    commit("setLoading", true);
+    const user = firebase.auth().currentUser;
+    let credentials = null;
+    if (user && user.email) {
+      credentials = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        payload.password
+      );
+
+      user
+        .reauthenticateWithCredential(credentials)
+        .then(() => {
+          commit("setLoading", false);
+          commit("setReauthenticationDialog", false);
+          commit(payload.action, true);
+        })
+        .catch(e => {
+          commit("setLoading", false);
+          commit("setError", e);
+          if (e.code === "auth/wrong-password") {
+            Notify.create({
+              type: "negative",
+              message: "Podane hasło jest niepoprawne."
+            });
+          } else {
+            Notify.create({
+              type: "negative",
+              message:
+                "Wystąpił błąd. Spróbuj ponownie później lub skontaktuj się z Administratorem."
+            });
+          }
         });
     }
   }
@@ -469,6 +540,9 @@ const getters = {
   },
   usernameDialog(state: { usernameDialog: boolean }) {
     return state.usernameDialog;
+  },
+  reauthenticationDialog(state: { reauthenticationDialog: boolean }) {
+    return state.reauthenticationDialog;
   },
   deleteDialog(state: { deleteDialog: boolean }) {
     return state.deleteDialog;

@@ -9,7 +9,7 @@
         <q-card-section class="q-pt-none">
           <q-input
             dense
-            v-model="email"
+            v-model.trim="email"
             autofocus
             @keyup.enter="prompt = false"
           />
@@ -22,7 +22,7 @@
             @click="emailDialog = false"
             v-close-popup
           />
-          <q-btn flat label="Zmien email" @click="confirm = true" />
+          <q-btn flat label="Zmien email" @click="changeEmail" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -44,14 +44,15 @@
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-black">
-          <q-btn flat label="Nie" @click="confirm = false" v-close-popup />
-          <q-btn flat label="Tak" @click="changeEmail" v-close-popup />
+          <q-btn flat label="Nie" @click="cancelChange" v-close-popup />
+          <q-btn flat label="Tak" @click="confirmEmailChange" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
   </section>
 </template>
 <script lang="ts">
+import { Notify } from "quasar";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
@@ -67,8 +68,33 @@ export default class ChangeEmail extends Vue {
     this.$store.commit("setEmailDialog", value);
   }
 
+  get user() {
+    return this.$store.getters.user;
+  }
+
+  cancelChange() {
+    this.confirm = false;
+    this.emailDialog = false;
+    this.email = "";
+  }
+
   changeEmail() {
+    if (this.email === this.user.email) {
+      Notify.create({
+        type: "negative",
+        message: "Podany email jest już przypisany do Twojego konta."
+      });
+      this.confirm = false;
+      this.email = "";
+    } else {
+      this.confirm = true;
+    }
+  }
+
+  confirmEmailChange() {
     this.$store.dispatch("changeEmail", this.email);
+    this.emailDialog = false;
+    this.email = "";
   }
 }
 </script>

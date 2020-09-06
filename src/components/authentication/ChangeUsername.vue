@@ -3,7 +3,7 @@
     <q-dialog v-model="usernameDialog" persistent>
       <q-card style="min-width: 320px">
         <q-card-section>
-          <div class="text-h6">Podaj nowy nazwę</div>
+          <div class="text-h6">Podaj nową nazwę</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
