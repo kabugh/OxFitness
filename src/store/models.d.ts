@@ -41,3 +41,12 @@ export interface WorkoutContent {
   programB?: Object;
   description?: Object;
 }
+
+export interface Transaction {
+  payment_intent: string;
+  amount: number;
+  status: string;
+  date?: number;
+  name?: string;
+  customer?: string;
+}

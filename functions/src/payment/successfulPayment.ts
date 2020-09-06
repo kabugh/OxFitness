@@ -4,10 +4,19 @@ const stripe = require("stripe")(functions.config().stripe.secret);
 /* eslint-disable no-console */
 import addDays from "../utils/addDays";
 
+export interface Transaction {
+  payment_intent: string;
+  amount: number;
+  status: string;
+  date?: number;
+  name?: string;
+  customer?: string;
+}
+
 const endpointSecret = functions.config().stripe.whsecret;
 export default async (request: any, response: any) => {
   const sig = request.headers["stripe-signature"];
-  let event;
+  let event: any;
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -31,11 +40,11 @@ export default async (request: any, response: any) => {
         foundUser = Object.values(users).find((user: any) => {
           if (user.transactions)
             return Object.keys(user.transactions).find(
-              (transaction: any) =>
-                transaction.payment_intent === session.payment_intent
+              key => key === session.payment_intent
             );
           else return undefined;
         });
+        console.log(foundUser);
         if (foundUser && foundUser.premiumAccount) {
           const currentTime = new Date();
           const accessTime: Date = addDays(30)(currentTime);
@@ -44,19 +53,20 @@ export default async (request: any, response: any) => {
             isActive: true,
             validUntil: accessTime
           };
-          console.log(session);
           foundUser.premiumAccount = access;
           foundUser.transactions[session.payment_intent] = {
             ...foundUser.transactions[session.payment_intent],
-            status: session.status,
-            name: session.line_item_group.line_items[0].price.product.name
-          };
+            status: session.payment_status,
+            name: "OxFitness - 1 miesiąc",
+            date: event.created,
+            customer: session.customer
+          } as Transaction;
           admin
             .database()
             .ref(`/users/${foundUser.id}/`)
             .update({
               premiumAccount: foundUser.premiumAccount,
-              transactions: foundUser.transactions
+              transactions: foundUser.transactions as Transaction[]
             })
             .catch((e: Error) => {
               console.log(e);

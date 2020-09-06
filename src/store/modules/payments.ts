@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
+import { Transaction } from "../models";
 
 const state = {};
 const mutations = {};
@@ -24,7 +25,7 @@ const actions = {
       .then((response: any) => {
         commit("setLoading", false);
         sessionId = response.data.id;
-        const transaction = {
+        const transaction: Transaction = {
           payment_intent: response.data.payment_intent,
           amount: response.data.amount_total,
           status: response.data.payment_status
