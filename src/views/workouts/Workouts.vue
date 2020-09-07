@@ -159,6 +159,8 @@
                     <span>{{
                       $attrs.workoutType === "accessories"
                         ? "Akcesoria"
+                        : $attrs.workoutType === "archived"
+                        ? "Trening Codzienny"
                         : "Rozgrzewka"
                     }}</span>
                   </div>
