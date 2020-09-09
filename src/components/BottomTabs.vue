@@ -8,6 +8,9 @@
       switch-indicator
       align="justify"
       dense
+      :class="{
+        hidden: $route.path !== '/dashboard' && $route.path !== '/profile'
+      }"
     >
       <q-route-tab
         v-for="(item, index) in navItems"
@@ -21,9 +24,9 @@
     </q-tabs>
     <nav
       class="topNav bg-grey-10 text-white"
-      v-if="$route.meta.displayNav || $route.path === '/dashboard'"
+      v-if="$route.path === '/dashboard'"
     >
-      <div class="logo" @click="$router.push('/dashboard')">
+      <div class="logo">
         <h3 v-scroll-to="'.topNav'">OxFitness</h3>
       </div>
       <ul class="nav__items"></ul>
@@ -87,6 +90,12 @@ export default class BottomTabs extends Vue {
   z-index: 99;
 
   nav {
+    display: none;
+  }
+}
+
+@media (max-width: 850px) and (max-height: 450px) and (orientation: landscape) {
+  .q-gutter-y-md .bottom__tabs.hidden {
     display: none;
   }
 }

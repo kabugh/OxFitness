@@ -216,6 +216,7 @@ export default class WorkoutPage extends Vue {
     }
 
     this.initialiseAccordionItems();
+    this.$store.dispatch("updateLastWatched", this.currentWorkout);
   }
 
   mounted() {
@@ -223,12 +224,13 @@ export default class WorkoutPage extends Vue {
 
     if (this.currentWorkout) {
       this.onRouteChange(this.$route);
-      this.$store.dispatch("updateLastWatched", this.currentWorkout);
     }
 
     if (window.scrollY !== 0) {
       this.$scrollTo(".topView", 1500);
     }
+    if (this.user.lastWatched !== this.currentWorkout)
+      this.$store.dispatch("updateLastWatched", this.currentWorkout);
   }
 
   @Watch("$route", { immediate: false, deep: true })
