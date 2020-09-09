@@ -295,41 +295,6 @@ $secondaryColor: #666;
     position: relative;
     width: 100%;
     height: 100vh;
-
-    // @media (min-width: 1280px) {
-    //   background: -webkit-linear-gradient(
-    //     174deg,
-    //     #958efa,
-    //     #958efa 75%,
-    //     #9618c7 calc(75% + 1px),
-    //     #9618c7 100%
-    //   );
-    //   background: linear-gradient(
-    //     174deg,
-    //     #958efa,
-    //     #958efa 75%,
-    //     #9618c7 calc(75% + 1px),
-    //     #9618c7 100%
-    //   );
-    // }
-
-    // @media (min-width: 1450px) {
-    //   background: -webkit-linear-gradient(
-    //     174deg,
-    //     #958efa,
-    //     #958efa 65%,
-    //     #9618c7 calc(65% + 1px),
-    //     #9618c7 100%
-    //   );
-    //   background: linear-gradient(
-    //     174deg,
-    //     #958efa,
-    //     #958efa 65%,
-    //     #9618c7 calc(65% + 1px),
-    //     #9618c7 100%
-    //   );
-    // }
-
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -411,7 +376,7 @@ $secondaryColor: #666;
       position: absolute;
       top: 0;
       padding: 4vh $horizontalPadding;
-      z-index: 99;
+      z-index: 98;
       display: flex;
       justify-content: flex-start;
       align-items: center;

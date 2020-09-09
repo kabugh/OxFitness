@@ -29,15 +29,96 @@
         </div>
       </section>
     </div>
+    <footer>
+      <div class="footer__container">
+        <div class="contact__container">
+          <div class="logo__wrapper">
+            <img
+              src="@/assets/images/logos/ox.png"
+              class="unselectable"
+              alt="logo"
+            />
+            <h3>OxFitness</h3>
+          </div>
+          <address class="contact__wrapper">
+            <p>Leśna 2</p>
+            <p>56-100 Wołów, Polska</p>
+            <a href="mailto:kontakt@oxfitness.pl">kontakt@oxfitness.pl</a>
+
+            <a href="tel:+48726423924">+48 726 423 924</a>
+          </address>
+        </div>
+        <ul class="menu__container">
+          <li class="menu__item" v-for="(item, i) in filteredNavItems" :key="i">
+            <span @click="$router.push(item.link)">{{ item.title }}</span>
+          </li>
+        </ul>
+        <div class="links__container">
+          <div class="auth__container">
+            <span>Logowanie</span>
+            <span>Rejestracja</span>
+          </div>
+          <div class="socials__container">
+            <div
+              class="icon__wrapper"
+              v-for="(icon, index) in icons"
+              :key="index"
+            >
+              <div
+                :style="{
+                  backgroundImage:
+                    'url(' + require(`../assets/icons/${icon}`) + ')'
+                }"
+                class="icon"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyrights__wrapper">
+        <div class="termsOfUse__wrapper">
+          <span><a>Polityka prywatności</a> - <a>Warunki korzystania</a></span>
+        </div>
+        <span>&copy; 2020 OxFitness. Wszelkie prawa zastrzeżone.</span>
+      </div>
+    </footer>
   </section>
 </template>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 
+interface MenuItem {
+  title: string;
+  link: string;
+}
+
 @Component
 export default class Contact extends Vue {
   navigateOutside(link: string) {
     window.open(link, "_blank");
+  }
+
+  menuItems: MenuItem[] = [
+    {
+      title: "Home",
+      link: "/"
+    },
+    {
+      title: "Treningi",
+      link: "/features"
+    },
+    {
+      title: "FAQ",
+      link: "/faq"
+    },
+    {
+      title: "Trenerzy",
+      link: "/coaches"
+    }
+  ];
+
+  get filteredNavItems() {
+    return this.menuItems.filter(item => item.link !== this.$route.path);
   }
 
   socialsItems = [
@@ -51,13 +132,12 @@ export default class Contact extends Vue {
 </script>
 <style lang="scss">
 @import "@/assets/styles/global.scss";
+$hoverColor: #958efa;
 .contact {
   width: 100%;
-  padding: $verticalPadding / 2 0 $verticalPadding 0;
   .contact__container {
     color: black;
-    padding: $verticalPadding / 4 $horizontalPadding;
-    padding-bottom: 0;
+    padding: $verticalPadding $horizontalPadding;
     @include flex;
     flex-direction: column;
     h1 {
@@ -126,6 +206,115 @@ export default class Contact extends Vue {
             }
           }
         }
+      }
+    }
+  }
+
+  footer {
+    padding: 4vh;
+    min-height: 20vh;
+    background-color: black;
+    color: white;
+    .footer__container {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: 4rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      .contact__container {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        .logo__wrapper {
+          display: grid;
+          grid-template-columns: repeat(2, auto);
+          align-items: center;
+          column-gap: 4rem;
+          img {
+            width: 4rem;
+            // min-height: 2vh;
+            // max-height: clamp(3vh, 5vh);
+          }
+          h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+          }
+        }
+        .contact__wrapper {
+          color: white;
+          @include flex;
+          flex-direction: column;
+          text-align: left;
+          display: none;
+          margin-top: $verticalPadding / 2;
+          @media (min-width: 800px) {
+            display: block;
+          }
+          p,
+          a {
+            line-height: 1.75;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 1rem;
+            color: white;
+            width: max-content;
+          }
+          a {
+            text-decoration: none;
+            display: block;
+            &:hover {
+              color: $hoverColor;
+            }
+          }
+        }
+      }
+      .menu__container {
+        display: grid;
+        grid-template-rows: repeat(auto-fill, minmax(5vh, 1fr));
+        row-gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        .menu__item {
+          text-align: center;
+          span {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1.25em;
+            &:hover {
+              cursor: pointer;
+              color: $hoverColor;
+            }
+          }
+        }
+      }
+      .links__container {
+        .auth__container {
+          @include flex;
+          text-align: left;
+          span {
+            font-weight: 500;
+            padding: 2rem;
+            font-size: 1rem;
+          }
+          @media (min-width: 800px) {
+            flex-direction: column;
+            span {
+              padding: 0.5rem 0;
+            }
+          }
+        }
+      }
+    }
+    .copyrights__wrapper {
+      font-weight: 500;
+      color: $secondaryColor;
+      text-align: left;
+      .termsOfUse__wrapper {
+        padding: 0.5rem 0;
       }
     }
   }

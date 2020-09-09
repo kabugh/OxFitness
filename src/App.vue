@@ -6,9 +6,10 @@
     <transition name="topNav">
       <TopNavbar />
     </transition>
-    <transition name="theOverlay">
-      <TheOverlay v-if="isNavOpen" :user="user" />
+    <transition name="navOverlay">
+      <NavOverlay v-if="isNavOpen" :user="user" />
     </transition>
+    <div class="overlay__mask" :class="{ visible: isNavOpen }"></div>
     <TransitionComponent>
       <keep-alive include="Dashboard">
         <router-view />
@@ -19,15 +20,6 @@
         $route.meta.unauthenticatedAccess && $route.path !== '/authentication'
       "
     />
-
-    <!-- an error occurs because conentful-vue-render components are rendered as TheFooter template -->
-    <!-- <TheFooter
-      v-if="
-        $route.path == '/' ||
-          $route.path == '/features' ||
-          $route.path == '/faq'
-      "
-    /> -->
     <q-ajax-bar ref="bar" position="top" color="accent" size="5px" />
   </div>
 </template>
@@ -37,16 +29,17 @@ import { VueOfflineMixin } from "vue-offline";
 
 import TopNavbar from "./components/TopNavbar.vue";
 import BottomTabs from "./components/BottomTabs.vue";
-import TheOverlay from "./components/TheOverlay.vue";
+import NavOverlay from "./components/NavOverlay.vue";
 import TransitionComponent from "./components/util/TransitionComponent.vue";
 import Contact from "./components/Contact.vue";
+
 import { User } from "./store/models";
 
 @Component({
   components: {
     TopNavbar,
     BottomTabs,
-    TheOverlay,
+    NavOverlay,
     TransitionComponent,
     Contact
   },
@@ -100,3 +93,25 @@ export default class App extends Vue {
   }
 }
 </script>
+<style lang="scss">
+@import "@/assets/styles/global.scss";
+@media (min-width: 1280px) and (min-height: 500px) {
+  .overlay__mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+    transition: background-color 0.3s ease-in-out 0.3s,
+      opacity 0.3s ease-in-out 0.3s;
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+</style>
