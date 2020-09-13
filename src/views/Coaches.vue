@@ -95,6 +95,7 @@ export default class Coaches extends Vue {
       background-color: white;
       @include flex;
       align-items: center;
+      overflow: hidden;
       .coaches__wrapper {
         flex-direction: column;
         text-align: left;

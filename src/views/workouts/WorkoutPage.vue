@@ -60,6 +60,7 @@
           data-aos-delay="800"
           data-aos-duration="800"
           data-aos-offset="-2000"
+          v-if="currentWorkout.fields.description"
         >
           <RichTextRenderer
             v-if="hasInsideCategories || $attrs.hasInsideCategories"
@@ -71,7 +72,8 @@
           bordered
           v-if="
             Object.keys(this.accordionItems).length > 0 &&
-              !(hasInsideCategories || $attrs.hasInsideCategories)
+              (!(hasInsideCategories || $attrs.hasInsideCategories) ||
+                $attrs.workoutType === 'archived')
           "
           data-aos="fade-up"
           data-aos-delay="800"
@@ -102,13 +104,18 @@
 
         <div
           class="results__container"
-          v-if="$attrs.workoutType === 'daily'"
+          v-if="
+            $attrs.workoutType === 'daily' || $attrs.workoutType === 'archived'
+          "
           data-aos="fade-up"
           data-aos-delay="800"
           data-aos-duration="800"
           data-aos-offset="-500"
         >
-          <div class="results__wrapper" v-if="!isFinished && isOnline">
+          <div
+            class="results__wrapper"
+            v-if="!isFinished && isOnline && $attrs.workoutType === 'daily'"
+          >
             <h2>
               Ukończyłeś ten trening? Podziel się wynikiem z resztą klubowiczów!
             </h2>
@@ -118,7 +125,10 @@
               @click="card = true"
             />
           </div>
-          <div class="results__wrapper" v-else-if="isFinished && isOnline">
+          <div
+            class="results__wrapper"
+            v-else-if="isFinished && isOnline && $attrs.workoutType === 'daily'"
+          >
             <h2>
               Ukończyłeś juz ten trening. Edytuj podany przez siebie wynik.
             </h2>
@@ -128,7 +138,10 @@
               @click="card = true"
             />
           </div>
-          <q-dialog v-model="card" v-if="isOnline">
+          <q-dialog
+            v-model="card"
+            v-if="isOnline && $attrs.workoutType === 'daily'"
+          >
             <q-card class="my-card q-p-xl">
               <q-card-section>
                 <div class="row no-wrap items-center">
@@ -391,6 +404,10 @@ export default class WorkoutPage extends Vue {
           font-size: 1.25rem;
         }
       }
+    }
+
+    .workout__content > .q-list {
+      margin-top: $verticalPadding;
     }
 
     @media (min-width: 1300px) {
