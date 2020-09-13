@@ -80,7 +80,7 @@
         filled
         v-model="workoutResults.note"
         label="Notatka"
-        hint="Twoje uwagi"
+        hint="Uwagi dla siebie na przyszłość"
         :rules="[val => val.length < 100 || 'Maksymalnie 100 znaków']"
         autogrow
       />
@@ -162,7 +162,7 @@
         filled
         v-model="workoutResults.note"
         label="Notatka"
-        hint="Twoje uwagi"
+        hint="Uwagi dla siebie na przyszłość"
         :rules="[val => val.length < 100 || 'Maksymalnie 100 znaków']"
         autogrow
       />
