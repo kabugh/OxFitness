@@ -124,16 +124,9 @@
                   "
                 >
                   <q-separator />
-                  <q-card>
+                  <q-card style="max-width: 100%">
                     <q-card-section>
-                      <ul>
-                        <li
-                          v-for="(transaction, i) in user.transactions"
-                          :key="i"
-                        >
-                          <strong>{{ i }}</strong> - {{ transaction }}
-                        </li>
-                      </ul>
+                      <PaymentsTable :transactions="user.transactions" />
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -225,8 +218,8 @@
 
                 <q-item
                   clickable
-                  @click="changeEmail && isVerified"
-                  v-if="isOnline"
+                  @click="changeEmail"
+                  v-if="isOnline && isVerified"
                 >
                   <q-item-section>
                     <q-item-label>Zmień adres email</q-item-label>
@@ -273,7 +266,9 @@ import ChangeUsername from "@/components/authentication/ChangeUsername.vue";
 import Reauthentication from "@/components/authentication/Reauthentication.vue";
 import DeleteConfirmation from "@/components/authentication/DeleteConfirmation.vue";
 
-import { User } from "@/store/models";
+import PaymentsTable from "@/components/visuals/PaymentsTable.vue";
+
+import { Transaction, User } from "@/store/models";
 import * as firebase from "firebase";
 import { VueOfflineMixin } from "vue-offline";
 
@@ -282,7 +277,8 @@ import { VueOfflineMixin } from "vue-offline";
     ChangeEmail,
     ChangeUsername,
     Reauthentication,
-    DeleteConfirmation
+    DeleteConfirmation,
+    PaymentsTable
   },
   mixins: [VueOfflineMixin],
   filters: {
@@ -318,6 +314,14 @@ export default class Profile extends Vue {
 
   mounted() {
     this.$store.dispatch("monitorTokenRefresh");
+  }
+
+  get transactionsType() {
+    const transactions = Object.values(this.user.transactions);
+    const transactionsLastItem = transactions[transactions.length - 1];
+    // eslint-disable-next-line no-console
+    console.log(!(typeof transactionsLastItem === "string"));
+    return !(typeof transactionsLastItem === "string");
   }
 
   notificationsPermission() {

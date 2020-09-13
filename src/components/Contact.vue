@@ -29,7 +29,7 @@
         </div>
       </section>
     </div>
-    <footer>
+    <footer v-show="false">
       <div class="footer__container">
         <div class="contact__container">
           <div class="logo__wrapper">

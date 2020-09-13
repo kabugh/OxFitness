@@ -242,6 +242,7 @@ export default class WorkoutPage extends Vue {
     if (window.scrollY !== 0) {
       this.$scrollTo(".topView", 1500);
     }
+
     if (this.user.lastWatched !== this.currentWorkout)
       this.$store.dispatch("updateLastWatched", this.currentWorkout);
   }
@@ -271,6 +272,9 @@ export default class WorkoutPage extends Vue {
       type: "video",
       sources: [{ src: this.currentWorkout.fields.videoId, provider: "vimeo" }]
     };
+    if (window.scrollY !== 0) {
+      this.$scrollTo(".topView", 1500);
+    }
   }
 
   renderNodes() {

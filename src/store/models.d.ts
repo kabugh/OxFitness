@@ -11,7 +11,7 @@ export interface User {
     notifications: boolean;
     displayResults: boolean;
   };
-  transactions: string[];
+  transactions: Transaction[] | string[];
   imageURL?: string;
   workouts: [];
   lastWatched: Workout;
