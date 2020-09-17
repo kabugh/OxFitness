@@ -33,7 +33,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
           val =>
-            (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość powtórzeń'
+            (val > 0 && val < 500) || 'Podaj poprawną, możliwą ilość powtórzeń'
         ]"
       />
       <q-input
@@ -58,7 +58,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ciężar',
           val =>
-            (val > 0 && val < 250) || 'Podaj poprawną, możliwą wartość ciężaru'
+            (val > 0 && val < 300) || 'Podaj poprawną, możliwą wartość ciężaru'
         ]"
       />
       <q-input
@@ -71,7 +71,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj wartość dystansu',
           val =>
-            (val > 0 && val < 1000) ||
+            (val > 0 && val < 10000) ||
             'Podaj poprawną, możliwą wartość dystansu'
         ]"
       />
@@ -115,7 +115,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ilość powtórzeń',
           val =>
-            (val > 0 && val < 100) || 'Podaj poprawną, możliwą ilość powtórzeń'
+            (val > 0 && val < 500) || 'Podaj poprawną, możliwą ilość powtórzeń'
         ]"
       />
       <q-input
@@ -140,7 +140,7 @@
         :rules="[
           val => (val !== null && val !== '') || 'Podaj ciężar',
           val =>
-            (val > 0 && val < 250) || 'Podaj poprawną, możliwą wartość ciężaru'
+            (val > 0 && val < 300) || 'Podaj poprawną, możliwą wartość ciężaru'
         ]"
       />
       <q-input
