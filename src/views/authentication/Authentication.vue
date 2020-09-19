@@ -1,5 +1,5 @@
 <template>
-  <section class="authentication">
+  <section class="authentication" :class="{ 'body--dark': $q.dark.isActive }">
     <div class="logo__container">
       <div class="text__wrapper">
         <h1 @click="$router.push('/')">OxFitness</h1>
@@ -21,12 +21,12 @@
       <div class="status" v-if="passwordRecoveryTab">
         <h4>Pamiętasz hasło?</h4>
         <h4
-          class="highlighted"
           @click="
             loginTab = true;
             signUpTab = false;
             passwordRecoveryTab = false;
           "
+          class="highlighted"
         >
           zaloguj się
         </h4>
@@ -34,23 +34,23 @@
       <div class="status" v-if="loginTab">
         <h4>Nie masz konta?</h4>
         <h4
-          class="highlighted"
           @click="
             loginTab = false;
             signUpTab = true;
           "
+          class="highlighted"
         >
           Zarejestruj się
         </h4>
         <div class="passwordStatus__container">
           <h4>Zapomniałeś hasło?</h4>
           <h4
-            class="highlighted"
             @click="
               loginTab = false;
               signUpTab = false;
               passwordRecoveryTab = true;
             "
+            class="highlighted"
           >
             przypomnij
           </h4>
@@ -59,11 +59,11 @@
       <div class="status" v-if="signUpTab">
         <h4>Masz konto?</h4>
         <h4
-          class="highlighted"
           @click="
             loginTab = true;
             signUpTab = false;
           "
+          class="highlighted"
         >
           Zaloguj się
         </h4>
@@ -132,6 +132,9 @@ export default class Authentication extends Vue {
       font-size: 1.15rem;
     }
   }
+  &.body--dark .logo__container {
+    color: $dark-color;
+  }
   .authentication__container {
     width: 80%;
     margin: 0 auto;
@@ -167,10 +170,7 @@ export default class Authentication extends Vue {
       flex-direction: column;
       text-align: center;
       margin-top: 40px;
-      // position: absolute;
       bottom: 10vh;
-      // left: 50%;
-      // transform: translate(-50%, 0);
       h4 {
         color: $secondaryColor;
         text-transform: uppercase;
@@ -204,6 +204,11 @@ export default class Authentication extends Vue {
           margin-top: 20px;
         }
       }
+    }
+  }
+  &.body--dark {
+    .authentication__container .status h4.highlighted {
+      color: $brand-dark;
     }
   }
   @media (min-width: 500px) and (max-width: 1100px) and (min-height: 320px) and (max-height: 800px) and (orientation: landscape) {

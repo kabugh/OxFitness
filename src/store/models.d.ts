@@ -10,6 +10,7 @@ export interface User {
   settings: {
     notifications: boolean;
     displayResults: boolean;
+    darkMode: boolean;
   };
   transactions: Transaction[] | string[];
   imageURL?: string;

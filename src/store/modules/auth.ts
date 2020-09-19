@@ -47,7 +47,11 @@ const mutations = {
   },
   setSettings(
     state: { user: User },
-    payload: { notifications: boolean; displayResults: boolean }
+    payload: {
+      notifications: boolean;
+      displayResults: boolean;
+      darkMode: boolean;
+    }
   ) {
     state.user.settings = payload;
   },
@@ -96,7 +100,8 @@ const actions = {
             },
             settings: {
               notifications: true,
-              displayResults: true
+              displayResults: true,
+              darkMode: false
             },
             transactions: [],
             workouts: [],
@@ -158,7 +163,8 @@ const actions = {
             },
             settings: {
               notifications: true,
-              displayResults: true
+              displayResults: true,
+              darkMode: false
             },
             transactions: [],
             workouts: [],
@@ -202,7 +208,8 @@ const actions = {
             },
             settings: {
               notifications: true,
-              displayResults: true
+              displayResults: true,
+              darkMode: false
             },
             transactions: [],
             workouts: [],
@@ -264,7 +271,8 @@ const actions = {
       },
       settings: {
         notifications: true,
-        displayResults: true
+        displayResults: true,
+        darkMode: false
       },
       transactions: payload.transactions,
       workouts: payload.workouts,

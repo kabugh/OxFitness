@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">
+  <div class="loading" :class="{ 'body--dark': $q.dark.isActive }">
     <h2>Wczytywanie..</h2>
     <div class="spinner">
       <div class="mask">

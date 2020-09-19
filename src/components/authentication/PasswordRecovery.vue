@@ -1,5 +1,5 @@
 <template>
-  <section class="passwordRecovery">
+  <section class="passwordRecovery" :class="{ 'body--dark': $q.dark.isActive }">
     <div class="passwordRecovery__container">
       <div class="form__wrapper">
         <form

@@ -19,7 +19,7 @@
             />
           </div>
         </div>
-        <div class="contact__items">
+        <div class="contact__items" :class="{ 'body--dark': $q.dark.isActive }">
           <div class="contact__item">
             <a href="mailto:kontakt@oxfitness.pl">kontakt@oxfitness.pl</a>
           </div>
@@ -58,7 +58,7 @@
             <span>Logowanie</span>
             <span>Rejestracja</span>
           </div>
-          <div class="socials__container">
+          <!-- <div class="socials__container">
             <div
               class="icon__wrapper"
               v-for="(icon, index) in icons"
@@ -72,7 +72,7 @@
                 class="icon"
               ></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="copyrights__wrapper">
@@ -173,6 +173,7 @@ $hoverColor: #958efa;
           @include flex;
           align-items: center;
           text-align: center;
+          transition: color 0.5s ease-in-out;
           a {
             font-size: 1.25rem;
             font-weight: 500;
@@ -183,6 +184,9 @@ $hoverColor: #958efa;
               color: #6b108e;
             }
           }
+        }
+        &.body--dark .contact__item a {
+          color: white;
         }
       }
       .socials__items {
@@ -358,6 +362,13 @@ $hoverColor: #958efa;
         font-size: 1.5rem;
       }
     }
+  }
+}
+
+.body--dark .contact .contact__container {
+  color: white;
+  .contact__items--container .socials__items .socials__item img {
+    filter: invert(1);
   }
 }
 </style>

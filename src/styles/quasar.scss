@@ -1,6 +1,14 @@
 @import './quasar.variables.scss';
 @import '~quasar-styl';
 
+.text-dark {
+  color: #ebf4f1;
+}
+
+.bg-dark {
+  background: $dark-teritary;
+}
+
 body {
   margin: 0;
   padding: 0;

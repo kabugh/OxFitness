@@ -2,14 +2,16 @@
   <div class="q-gutter-y-md">
     <q-tabs
       v-model="tab"
-      class="bg-grey-10 text-grey-6 shadow-2 bottom__tabs"
+      class="text-grey-6 shadow-2 bottom__tabs"
       active-color="grey-2"
       indicator-color="primary"
       switch-indicator
       align="justify"
       dense
       :class="{
-        hidden: $route.path !== '/dashboard' && $route.path !== '/profile'
+        hidden: $route.path !== '/dashboard' && $route.path !== '/profile',
+        'bg-dark': $q.dark.isActive,
+        'bg-grey-10': !$q.dark.isActive
       }"
     >
       <q-route-tab

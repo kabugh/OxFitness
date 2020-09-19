@@ -12,6 +12,7 @@
             v-model.trim="email"
             autofocus
             @keyup.enter="prompt = false"
+            :rules="[val => !!val || 'Proszę podać adres email', isValidEmail]"
           />
         </q-card-section>
 
@@ -43,7 +44,7 @@
           Czy napewno zmienić adres email przypisany do konta?
         </q-card-section>
 
-        <q-card-actions align="right" class="bg-white text-black">
+        <q-card-actions align="right" class="text-white">
           <q-btn flat label="Nie" @click="cancelChange" v-close-popup />
           <q-btn flat label="Tak" @click="confirmEmailChange" v-close-popup />
         </q-card-actions>
@@ -70,6 +71,11 @@ export default class ChangeEmail extends Vue {
 
   get user() {
     return this.$store.getters.user;
+  }
+
+  isValidEmail(val: string) {
+    const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+    return emailPattern.test(val) || "Proszę podać poprawny adres email";
   }
 
   cancelChange() {

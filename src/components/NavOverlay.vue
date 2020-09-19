@@ -128,6 +128,7 @@ export default class NavOverlay extends Vue {
     width: 100%;
     color: white;
     background-color: #454545;
+    transition: background-color 0.3s cubic-bezier(0.77, 0, 0.175, 1);
     .overlay__wrapper {
       padding: $verticalPadding * 2 4vh 4vh 4vh;
       @include flex;
@@ -259,6 +260,10 @@ export default class NavOverlay extends Vue {
       }
     }
   }
+}
+.body--dark .overlay .overlay__container {
+  color: $dark-color;
+  background-color: $bg-dark-secondary;
 }
 @media (min-width: 1280px) and (min-height: 500px) {
   .overlay {

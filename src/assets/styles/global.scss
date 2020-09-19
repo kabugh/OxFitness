@@ -10,6 +10,7 @@ body {
   padding: 0;
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
+  transition: background 0.3s cubic-bezier(0.65, 0, 0.35, 1), color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
 }
 h1,
 h2,
@@ -167,6 +168,32 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 }
+
+.body--dark {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px $bg-dark-secondary inset;
+    -webkit-box-shadow: 0 0 0px 1000px $bg-dark-secondary inset;
+    font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
+    -webkit-text-fill-color: $secondaryColor;
+  }
+  .q-card { 
+    .text-h6, .text-subtitle1 {
+      color: $dark-color;
+    }
+  } 
+  .q-btn {
+    color: $dark-color;
+  }
+}
+
 
 @media (min-width: 700px) and (min-height: 1024px) {
   section{

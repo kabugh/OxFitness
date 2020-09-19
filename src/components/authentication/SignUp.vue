@@ -1,5 +1,5 @@
 <template>
-  <section class="signUp">
+  <section class="signUp" :class="{ 'body--dark': $q.dark.isActive }">
     <div class="signUp__container">
       <div class="form__wrapper">
         <form
@@ -244,6 +244,32 @@ $error: #c10015;
           > input {
             margin-top: 20px;
           }
+        }
+      }
+    }
+  }
+  &.body--dark {
+    .signUp__container,
+    .login__container,
+    .passwordRecovery__container {
+      .form__wrapper form {
+        > input {
+          background-color: $bg-dark-secondary;
+          color: $secondaryColor;
+          border-color: $primary;
+        }
+        .Password .Password__strength-meter {
+          background-color: $secondaryColor;
+          &:before,
+          &:after {
+            border-color: $bg-dark;
+          }
+        }
+
+        button {
+          background-color: $primary;
+          color: $dark-color;
+          border-color: $primary;
         }
       }
     }

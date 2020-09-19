@@ -1,7 +1,19 @@
-$detailsColor: #f78c7c;
-$brandColor: #282727; // this is used in authentication components
+$brandColor: #282727;
 $secondaryColor: #b3b2b2;
 $primary: #6b108e;
 
+$bg-dark: #091a28;
+$bg-dark-secondary: #071521;
+$bg-dark-light: #123450;
+$brand-dark: #acacac;
+$dark-color: #ebf4f1;
+
+.body--light {
+    background: white;
+}
+.body--dark {
+    background: $bg-dark !important;
+    color: $dark-color !important;
+}
 $verticalPadding: 6vh;
 $horizontalPadding: 12vw;

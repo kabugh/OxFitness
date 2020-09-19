@@ -292,6 +292,7 @@ $secondaryColor: #666;
   }
 
   .hero {
+    background-color: white;
     position: relative;
     width: 100%;
     height: 100vh;

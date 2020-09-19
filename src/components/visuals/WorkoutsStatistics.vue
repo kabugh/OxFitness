@@ -1,5 +1,9 @@
 <template>
-  <section class="workoutsStatistics" v-if="finishedDailyWorkouts > 0">
+  <section
+    class="workoutsStatistics"
+    :class="{ 'body--dark': $q.dark.isActive }"
+    v-if="finishedDailyWorkouts > 0"
+  >
     <div class="workoutsStatistics__container">
       <div class="statisticsItem__container">
         <h1>{{ finishedDailyWorkouts }}</h1>
@@ -67,6 +71,10 @@ export default class WorkoutsStatistics extends Vue {
         }
       }
     }
+  }
+  &.body--dark .workoutsStatistics__container .statisticsItem__container {
+    background-color: $bg-dark-light;
+    color: $dark-color;
   }
 }
 </style>

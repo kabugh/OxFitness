@@ -1,5 +1,5 @@
 <template>
-  <section class="hello">
+  <section class="hello" :class="{ 'body--dark': $q.dark.isActive }">
     <div class="hello__container">
       <div class="greetings__container">
         <h1>{{ greeting }} {{ name }}!</h1>
@@ -63,6 +63,10 @@ export default class HelloSection extends Vue {
   border-radius: 10px;
   max-height: 30vh;
   overflow: hidden;
+  &.body--dark {
+    background-color: $bg-dark-light !important;
+    color: $dark-color;
+  }
   .hello__container {
     display: grid;
     column-gap: 2vw;

@@ -41,6 +41,8 @@ export default class TopNavbar extends Vue {
 }
 </script>
 <style lang="scss">
+@import "@/assets/styles/global.scss";
+
 nav.topNavbar {
   width: 100%;
   min-height: 8vh;

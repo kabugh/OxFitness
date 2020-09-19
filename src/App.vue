@@ -85,6 +85,10 @@ export default class App extends Vue {
     }
   }
 
+  @Watch("$q.dark.isActive")
+  darkModeStatus(value: boolean) {
+    if (this.user) this.user.settings.darkMode = !value;
+  }
   get isNavOpen(): boolean {
     return this.$store.getters.isNavOpen;
   }

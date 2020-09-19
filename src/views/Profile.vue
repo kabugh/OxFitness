@@ -167,6 +167,21 @@
                   </q-item-section>
                 </q-item>
 
+                <q-item tag="label" @click="$q.dark.toggle">
+                  <q-item-section avatar>
+                    <q-toggle
+                      color="primary"
+                      v-model="user.settings.darkMode"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label v-if="!user.settings.darkMode"
+                      >Włącz tryb ciemny 🌒</q-item-label
+                    >
+                    <q-item-label v-else>Włącz tryb jasny ☀️</q-item-label>
+                  </q-item-section>
+                </q-item>
+
                 <q-separator spaced />
 
                 <q-item-label header>Szczegóły konta</q-item-label>
@@ -511,6 +526,13 @@ export default class Profile extends Vue {
     }
     .q-panel {
       overflow: hidden;
+    }
+    .tab-panels {
+      transition: background 0.3s cubic-bezier(0.65, 0, 0.35, 1),
+        color 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0s !important;
+      .q-item {
+        transition: none !important;
+      }
     }
     .details__container {
       display: grid;

@@ -1,5 +1,5 @@
 <template>
-  <section class="login">
+  <section class="login" :class="{ 'body--dark': $q.dark.isActive }">
     <div class="login__container">
       <div class="form__wrapper">
         <form
