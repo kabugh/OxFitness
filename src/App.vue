@@ -54,6 +54,24 @@ export default class App extends Vue {
         message: "Brak połączenia z internetem"
       });
     });
+
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
+    darkModeMediaQuery.addListener(e => {
+      const darkModeOn = e.matches;
+      if (this.user.settings.darkMode) {
+        this.user.settings.darkMode = darkModeOn;
+      }
+      this.$q.dark.set(darkModeOn);
+      // eslint-disable-next-line no-console
+      console.log(
+        "$q.dark",
+        this.$q.dark.isActive,
+        "user",
+        this.user.settings.darkMode
+      );
+    });
   }
 
   @Watch("isNavOpen")
@@ -85,10 +103,11 @@ export default class App extends Vue {
     }
   }
 
-  @Watch("$q.dark.isActive")
+  @Watch("user.settings.darkMode")
   darkModeStatus(value: boolean) {
-    if (this.user) this.user.settings.darkMode = !value;
+    if (this.user) this.$q.dark.set(value);
   }
+
   get isNavOpen(): boolean {
     return this.$store.getters.isNavOpen;
   }

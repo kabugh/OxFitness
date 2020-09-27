@@ -167,7 +167,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-item tag="label" @click="$q.dark.toggle">
+                <q-item tag="label">
                   <q-item-section avatar>
                     <q-toggle
                       color="primary"
@@ -175,10 +175,10 @@
                     />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label v-if="!user.settings.darkMode"
-                      >Włącz tryb ciemny 🌒</q-item-label
+                    <q-item-label v-if="user.settings.darkMode"
+                      >Tryb ciemny 🌒</q-item-label
                     >
-                    <q-item-label v-else>Włącz tryb jasny ☀️</q-item-label>
+                    <q-item-label v-else>Tryb jasny ☀️</q-item-label>
                   </q-item-section>
                 </q-item>
 
