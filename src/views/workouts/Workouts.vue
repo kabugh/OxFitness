@@ -334,7 +334,7 @@ export default class Workouts extends Vue {
     this.groupedWorkouts = this.groupWorkouts(this.workouts, "category");
 
     if (this.$attrs.workoutType === "archived") {
-      this.workoutsDates(this.workouts);
+      this.dates = this.workoutsDates(this.workouts);
     }
   }
 
@@ -343,7 +343,7 @@ export default class Workouts extends Vue {
     if (window.scrollY !== 0) {
       this.$scrollTo(".topView", 1500);
     }
-    this.workoutsDates(this.workouts);
+    this.dates = this.workoutsDates(this.workouts);
   }
 
   chooseWorkout(value: string) {
