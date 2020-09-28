@@ -325,10 +325,31 @@ export default class Profile extends Vue {
     } else if (!user) {
       this.logOut();
     }
+    if (!this.user.settings.darkMode) {
+      this.triggerDarkModeNotification();
+    }
   }
 
   mounted() {
     this.$store.dispatch("monitorTokenRefresh");
+  }
+
+  triggerDarkModeNotification() {
+    this.$q.notify({
+      icon: "nights_stay",
+      message: `Zadbaj o wzrok i wypróbuj tryb ciemny`,
+      color: "primary",
+      actions: [
+        {
+          label: "Włącz 🌒",
+          color: "white",
+          handler: () => {
+            if (!this.user.settings.darkMode)
+              this.user.settings.darkMode = !this.user.settings.darkMode;
+          }
+        }
+      ]
+    });
   }
 
   get transactionsType() {

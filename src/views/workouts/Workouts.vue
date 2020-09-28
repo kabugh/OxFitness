@@ -343,11 +343,15 @@ export default class Workouts extends Vue {
     if (window.scrollY !== 0) {
       this.$scrollTo(".topView", 1500);
     }
-    this.dates = this.workoutsDates(this.workouts);
+    if (this.$attrs.workoutType === "archived") {
+      this.dates = this.workoutsDates(this.workouts);
+    }
   }
 
   chooseWorkout(value: string) {
-    const replaceSlashWithHyphen = (date: string) => date.replace(/\//g, "-");
+    const replaceSlashWithHyphen = (date: string) => {
+      if (date) return date.replace(/\//g, "-");
+    };
     this.chosenWorkout = this.workouts.find(
       (workout: Workout) =>
         workout.fields.date === replaceSlashWithHyphen(value)
