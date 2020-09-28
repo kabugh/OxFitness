@@ -345,7 +345,7 @@ export default class Profile extends Vue {
           color: "white",
           handler: () => {
             if (!this.user.settings.darkMode)
-              this.user.settings.darkMode = !this.user.settings.darkMode;
+              this.user.settings.darkMode = true;
           }
         }
       ]
