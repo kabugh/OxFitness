@@ -77,6 +77,89 @@
           </div>
         </div>
       </div>
+      <div
+        v-else-if="
+          categoryDetails.hasInsideCategories &&
+            $attrs.workoutType === 'archived'
+        "
+        class="videos__section__container dateSplitter"
+        data-aos="fade-up"
+        data-aos-duration="800"
+        data-aos-delay="200"
+      >
+        <q-date
+          v-model="datePicker.currentDate"
+          today-btn
+          :options="dates"
+          :navigation-min-year-month="datePicker.startingDate"
+          :navigation-max-year-month="datePicker.endingDate"
+          :locale="localePl"
+          @input="chooseWorkout"
+        />
+        <div class="videos__section__wrapper">
+          <div class="videos__container" v-if="!loading">
+            <div class="video__wrapper" v-if="chosenWorkout">
+              <div
+                v-if="isOnline"
+                :style="{
+                  backgroundImage: `url(${chosenWorkout.fields.frontImage.fields.file.url})`
+                }"
+                @click="
+                  $router.push({
+                    name: 'workoutPage',
+                    params: {
+                      workoutType: $attrs.workoutType,
+                      id: chosenWorkout.sys.id,
+                      workout: chosenWorkout,
+                      hasInsideCategories: categoryDetails.hasInsideCategories
+                    }
+                  })
+                "
+                class="thumbnail"
+              >
+                <div class="logo__container">
+                  <div class="logo__image--wrapper">
+                    <img
+                      src="@/assets/images/logos/ox.png"
+                      alt="ox"
+                      class="unselectable"
+                    />
+                  </div>
+                  <div class="text__container">
+                    <h4>Ox Fitness</h4>
+                    <span v-if="chosenWorkout.fields.date">{{
+                      chosenWorkout.fields.date
+                    }}</span>
+                  </div>
+                </div>
+                <div class="title__container">
+                  <h2 v-if="$attrs.workoutType !== 'accessories'">
+                    {{ chosenWorkout.fields.title }}
+                  </h2>
+                  <h3 v-else>{{ chosenWorkout.fields.title }}</h3>
+                  <span>{{
+                    $attrs.workoutType === "accessories"
+                      ? "Akcesoria"
+                      : $attrs.workoutType === "archived"
+                      ? "Trening Codzienny"
+                      : "Rozgrzewka"
+                  }}</span>
+                </div>
+                <div class="backgroundFilter"></div>
+              </div>
+            </div>
+          </div>
+          <div class="videos__container" v-else>
+            <div
+              class="video__wrapper skeleton"
+              v-for="mockItem in mockItems"
+              :key="mockItem"
+            >
+              <q-skeleton class="thumbnail" type="rect" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="videos__section__container" v-else>
         <q-tabs
           v-model="tab"
@@ -189,6 +272,12 @@ import { VueOfflineMixin } from "vue-offline";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import { Workout } from "@/store/models";
 
+interface DatePicker {
+  currentDate: string;
+  startingDate: string;
+  endingDate: string;
+}
+
 @Component({
   components: {
     LoadingComponent
@@ -199,6 +288,27 @@ export default class Workouts extends Vue {
   mockItems = 6;
   tab = "";
   categoryDetails = {};
+  chosenWorkout = null as any;
+  dates = this.workoutsDates(this.workouts);
+  datePicker: DatePicker = {
+    currentDate: "2020/09/28",
+    startingDate: "2020/09/01",
+    endingDate: "2021/11/01"
+  };
+
+  localePl = {
+    days: "Niedziela_Poniedziałek_Wtorek_Środa_Czwartek_Piątek_Sobota".split(
+      "_"
+    ),
+    daysShort: "Nd_Pon_Wt_Śr_Czw_Pt_Sob".split("_"),
+    months: "Styczeń_Luty_Marzec_Kwiecień_Maj_Czerwiec_Lipiec_Sierpień_Wrzesień_Październik_Listopad_Grudzień".split(
+      "_"
+    ),
+    monthsShort: "Sty_Lut_Mar_Kwi_Maj_Cze_Lip_Sie_Wrz_Paź_Lis_Gru".split("_"),
+    firstDayOfWeek: 1, // 0-6, 0 - Sunday, 1 Monday, ...
+    format24h: true,
+    pluralDay: "dni"
+  };
 
   groupedWorkouts = this.groupWorkouts(this.workouts, "category");
 
@@ -222,6 +332,10 @@ export default class Workouts extends Vue {
       this.$store.dispatch("fetchWorkoutType", this.$route.params.workoutType);
     }
     this.groupedWorkouts = this.groupWorkouts(this.workouts, "category");
+
+    if (this.$attrs.workoutType === "archived") {
+      this.workoutsDates(this.workouts);
+    }
   }
 
   mounted() {
@@ -229,6 +343,24 @@ export default class Workouts extends Vue {
     if (window.scrollY !== 0) {
       this.$scrollTo(".topView", 1500);
     }
+    this.workoutsDates(this.workouts);
+  }
+
+  chooseWorkout(value: string) {
+    const replaceSlashWithHyphen = (date: string) => date.replace(/\//g, "-");
+    this.chosenWorkout = this.workouts.find(
+      (workout: Workout) =>
+        workout.fields.date === replaceSlashWithHyphen(value)
+    );
+    this.$scrollTo(".videos__section__wrapper", 1500);
+  }
+
+  workoutsDates(workouts: Workout[]): string[] {
+    const replaceHyphenWithSlash = (date: string) => date.replace(/-/g, "/");
+    const dates = workouts.map(workout =>
+      replaceHyphenWithSlash(workout.fields.date)
+    );
+    return dates.sort((a, b) => a.localeCompare(b));
   }
 
   get workouts() {
@@ -279,6 +411,16 @@ export default class Workouts extends Vue {
       }
     }
     .videos__section__container {
+      &.dateSplitter {
+        margin-top: $verticalPadding;
+        @include flex;
+        align-items: center;
+        flex-direction: column;
+        @media (min-width: 1280px) {
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
+      }
       .videos__section__wrapper {
         > h2 {
           font-size: 1.75rem;
