@@ -86,7 +86,7 @@ export default class NavOverlay extends Vue {
   socialsItems: SocialItem[] = [
     {
       icon: "insta.png",
-      link: "https://www.instagram.com/tenis_planet/"
+      link: "https://www.instagram.com/ox_fitness_program/"
     },
     {
       icon: "fb.png",
@@ -127,7 +127,7 @@ export default class NavOverlay extends Vue {
     height: 100%;
     width: 100%;
     color: white;
-    background-color: #454545;
+    background-color: $text-secondary;
     transition: background-color 0.3s cubic-bezier(0.77, 0, 0.175, 1);
     .overlay__wrapper {
       padding: $verticalPadding * 2 4vh 4vh 4vh;
@@ -262,7 +262,7 @@ export default class NavOverlay extends Vue {
   }
 }
 .body--dark .overlay .overlay__container {
-  color: $dark-color;
+  color: $text-dark;
   background-color: $bg-dark-secondary;
 }
 @media (min-width: 1280px) and (min-height: 500px) {

@@ -58,14 +58,14 @@ export default class HelloSection extends Vue {
 
 .hello {
   width: 100%;
-  background-color: #f5f5f7;
+  background-color: $bg-cards;
   color: black;
   border-radius: 10px;
   max-height: 30vh;
   overflow: hidden;
   &.body--dark {
     background-color: $bg-dark-light !important;
-    color: $dark-color;
+    color: $text-dark;
   }
   .hello__container {
     display: grid;

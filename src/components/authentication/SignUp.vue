@@ -169,7 +169,7 @@ $error: #c10015;
           margin-top: 10px;
           min-height: 5vh;
           &:disabled {
-            color: $brandColor;
+            color: $text-secondary;
           }
           &.form--error {
             border-color: $error;
@@ -191,12 +191,12 @@ $error: #c10015;
         button {
           margin-top: 3vh;
           display: inline-block;
-          color: $brandColor;
+          color: $text-secondary;
           font-weight: bold;
-          border-color: $brandColor;
+          border-color: $text-secondary;
           transition: all 0.3s ease-in-out;
           &:hover {
-            background-color: $brandColor;
+            background-color: $text-secondary;
             color: white;
           }
           &.loading {
@@ -255,11 +255,11 @@ $error: #c10015;
       .form__wrapper form {
         > input {
           background-color: $bg-dark-secondary;
-          color: $secondaryColor;
+          color: $text-teritary;
           border-color: $primary;
         }
         .Password .Password__strength-meter {
-          background-color: $secondaryColor;
+          background-color: $text-teritary;
           &:before,
           &:after {
             border-color: $bg-dark;
@@ -268,7 +268,7 @@ $error: #c10015;
 
         button {
           background-color: $primary;
-          color: $dark-color;
+          color: $text-dark;
           border-color: $primary;
         }
       }

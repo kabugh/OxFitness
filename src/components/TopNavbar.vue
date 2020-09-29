@@ -1,5 +1,9 @@
 <template>
-  <nav class="topNavbar bg-grey-10" v-if="$route.meta.displayNav || isNavOpen">
+  <nav
+    class="topNavbar"
+    v-if="$route.meta.displayNav || isNavOpen"
+    :class="{ 'bg-dark-secondary': $q.dark.isActive }"
+  >
     <div
       class="back__wrapper"
       v-if="$route.path !== '/' && $route.path !== '/dashboard'"
@@ -47,6 +51,11 @@ nav.topNavbar {
   width: 100%;
   min-height: 8vh;
   position: fixed;
+  background-color: $neutral;
+  &.bg-dark-secondary {
+    background-color: $bg-dark-secondary;
+    color: $text-dark !important;
+  }
   padding: 15px 6vw;
   z-index: 100;
   transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);

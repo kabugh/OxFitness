@@ -1,6 +1,6 @@
 <template>
   <section class="faq topView">
-    <div class="hero">
+    <div class="faq__hero">
       <h1>Najczęściej zadawane pytania</h1>
     </div>
     <div class="faq__container container" v-if="faqItems.length > 0">
@@ -51,7 +51,7 @@ export default class Faq extends Vue {
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
 .faq {
-  .hero {
+  .faq__hero {
     @include flex;
     justify-content: center;
     align-items: center;
@@ -81,5 +81,14 @@ export default class Faq extends Vue {
       }
     }
   }
+}
+.body--dark
+  .faq
+  .faq__container
+  .faq__wrapper
+  .q-list
+  .q-expansion-item
+  .q-item__label {
+  color: $text-dark;
 }
 </style>

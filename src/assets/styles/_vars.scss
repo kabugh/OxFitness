@@ -1,19 +1,21 @@
-$brandColor: #282727;
-$secondaryColor: #b3b2b2;
 $primary: #6b108e;
+$primaryAccent: #9c27b0;
 
+$text: rgb(21, 21, 21);
+$text-secondary: rgb(39, 39, 39);
+$text-teritary: rgb(178, 178, 178);
+
+$neutral: rgb(32, 32, 32);
+$bg-cards: #f5f5f7;
+
+$text-dark: rgb(235, 244, 241);
 $bg-dark: #091a28;
 $bg-dark-secondary: #071521;
 $bg-dark-light: #123450;
-$brand-dark: #acacac;
-$dark-color: #ebf4f1;
 
-.body--light {
-    background: white;
-}
 .body--dark {
     background: $bg-dark !important;
-    color: $dark-color !important;
+    color: $text-dark !important;
 }
 $verticalPadding: 6vh;
 $horizontalPadding: 12vw;

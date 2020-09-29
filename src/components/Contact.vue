@@ -3,7 +3,8 @@
     <div class="contact__container">
       <h1 data-aos="fade-up" data-aos-delay="300">
         Zaobserwuj na instagramie
-        <span @click="navigateOutside('https://instagram.com/oxfitnessprogram')"
+        <span
+          @click="navigateOutside('https://instagram.com/ox_fitness_program')"
           >@oxfitnessprogram</span
         >
       </h1>
@@ -124,7 +125,7 @@ export default class Contact extends Vue {
   socialsItems = [
     {
       icon: "instagram.svg",
-      link: "https://instagram.com/alicjadebek_fotografia"
+      link: "https://instagram.com/ox_fitness_program"
     },
     { icon: "fb.svg", link: "https://www.facebook.com/oxfitnessprogram/" }
   ];
@@ -136,7 +137,7 @@ $hoverColor: #958efa;
 .contact {
   width: 100%;
   .contact__container {
-    color: black;
+    color: $text;
     padding: $verticalPadding $horizontalPadding;
     @include flex;
     flex-direction: column;
@@ -149,7 +150,7 @@ $hoverColor: #958efa;
         transition: color 0.5s ease-in-out;
         &:hover {
           cursor: pointer;
-          color: #6b108e;
+          color: $primary;
         }
       }
     }
@@ -169,6 +170,7 @@ $hoverColor: #958efa;
         display: grid;
         grid-template-rows: repeat(2, 1fr);
         row-gap: 2vh;
+        transition: none;
         .contact__item {
           @include flex;
           align-items: center;
@@ -178,15 +180,18 @@ $hoverColor: #958efa;
             font-size: 1.25rem;
             font-weight: 500;
             text-decoration: none;
-            color: black;
+            color: $text;
             transition: color 0.5s ease-in-out;
             &:hover {
-              color: #6b108e;
+              color: $primary;
             }
           }
         }
         &.body--dark .contact__item a {
-          color: white;
+          color: $text-dark;
+          &:hover {
+            color: $primary;
+          }
         }
       }
       .socials__items {
@@ -315,7 +320,7 @@ $hoverColor: #958efa;
     }
     .copyrights__wrapper {
       font-weight: 500;
-      color: $secondaryColor;
+      color: $text-dark;
       text-align: left;
       .termsOfUse__wrapper {
         padding: 0.5rem 0;
@@ -366,7 +371,7 @@ $hoverColor: #958efa;
 }
 
 .body--dark .contact .contact__container {
-  color: white;
+  color: $text-dark;
   .contact__items--container .socials__items .socials__item img {
     filter: invert(1);
   }

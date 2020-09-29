@@ -44,7 +44,7 @@ export default class WorkoutsStatistics extends Vue {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 4vh;
     .statisticsItem__container {
-      background-color: #f5f5f7;
+      background-color: $bg-cards;
       color: black;
       border-radius: 10px;
       max-height: 30vh;
@@ -74,7 +74,7 @@ export default class WorkoutsStatistics extends Vue {
   }
   &.body--dark .workoutsStatistics__container .statisticsItem__container {
     background-color: $bg-dark-light;
-    color: $dark-color;
+    color: $text-dark;
   }
 }
 </style>

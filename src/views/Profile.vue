@@ -72,7 +72,6 @@
               color="primary"
               track-color="grey-3"
               class="q-ma-md"
-              @click="notificationsPermission"
             >
               {{ daysLeft | daysFilter }}
             </q-circular-progress>
@@ -330,9 +329,9 @@ export default class Profile extends Vue {
     }
   }
 
-  mounted() {
-    this.$store.dispatch("monitorTokenRefresh");
-  }
+  // mounted() {
+  //   this.$store.dispatch("monitorTokenRefresh");
+  // }
 
   triggerDarkModeNotification() {
     this.$q.notify({
@@ -356,13 +355,12 @@ export default class Profile extends Vue {
     const transactions = Object.values(this.user.transactions);
     const transactionsLastItem = transactions[transactions.length - 1];
     // eslint-disable-next-line no-console
-    console.log(!(typeof transactionsLastItem === "string"));
     return !(typeof transactionsLastItem === "string");
   }
 
-  notificationsPermission() {
-    this.$store.dispatch("getMessagingToken");
-  }
+  // notificationsPermission() {
+  //   this.$store.dispatch("getMessagingToken");
+  // }
 
   findDaysBetween(startDate: Date, endDate: Date) {
     // The number of milliseconds in all UTC days (no DST)
@@ -395,6 +393,7 @@ export default class Profile extends Vue {
 
   @Watch("user.settings.displayResults")
   @Watch("user.settings.notifications")
+  @Watch("user.settings.darkMode")
   updateSettings() {
     this.$store.dispatch("updateUserSettings", this.user.settings);
   }

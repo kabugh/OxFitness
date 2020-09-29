@@ -11,7 +11,7 @@
       :class="{
         hidden: $route.path !== '/dashboard' && $route.path !== '/profile',
         'bg-dark': $q.dark.isActive,
-        'bg-grey-10': !$q.dark.isActive
+        'bg-color': !$q.dark.isActive
       }"
     >
       <q-route-tab
@@ -25,7 +25,8 @@
       />
     </q-tabs>
     <nav
-      class="topNav bg-grey-10 text-white"
+      class="topNav text-white"
+      :class="{ 'bg-dark-secondary': $q.dark.isActive }"
       v-if="$route.path === '/dashboard'"
     >
       <div class="logo">
@@ -58,11 +59,6 @@ export default class BottomTabs extends Vue {
       icon: "home",
       link: "/dashboard"
     },
-    // {
-    //   title: "Workouts",
-    //   icon: "fitness_center",
-    //   link: "/dashboard"
-    // },
     {
       title: "Profil",
       icon: "account_circle",
@@ -84,6 +80,9 @@ export default class BottomTabs extends Vue {
   .q-gutter-y-md .q-tabs {
     padding-bottom: 20px;
   }
+}
+.q-tabs.bg-color {
+  background-color: $neutral;
 }
 .q-gutter-y-md {
   position: fixed;
@@ -113,6 +112,11 @@ export default class BottomTabs extends Vue {
       width: 100%;
       min-height: 6vh;
       position: fixed;
+      background-color: $neutral;
+      &.bg-dark-secondary {
+        background-color: $bg-dark-secondary;
+        color: $text-dark !important;
+      }
       padding: 15px 6vw;
       z-index: 100;
       transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);

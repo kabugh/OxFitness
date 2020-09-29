@@ -10,6 +10,7 @@ body {
   padding: 0;
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
+  color: $text;
   transition: background 0.3s cubic-bezier(0.65, 0, 0.35, 1), color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
 }
 h1,
@@ -108,9 +109,9 @@ input:not([type="range"]) {
   font-family: inherit;
   letter-spacing: inherit;
   &:disabled {
-    color: $secondaryColor;
+    color: $text-teritary;
     border-bottom-style: dotted;
-    border-bottom-color: $secondaryColor;
+    border-bottom-color: $text-teritary;
   }
   ::placeholder {
     @include placeholder();
@@ -182,15 +183,15 @@ select:-webkit-autofill:focus {
     box-shadow: 0 0 0px 1000px $bg-dark-secondary inset;
     -webkit-box-shadow: 0 0 0px 1000px $bg-dark-secondary inset;
     font-family: "Martel", -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
-    -webkit-text-fill-color: $secondaryColor;
+    -webkit-text-fill-color: $text-teritary;
   }
   .q-card { 
     .text-h6, .text-subtitle1 {
-      color: $dark-color;
+      color: $text-dark;
     }
   } 
   .q-btn {
-    color: $dark-color;
+    color: $text-dark;
   }
 }
 

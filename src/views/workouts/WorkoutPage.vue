@@ -538,14 +538,14 @@ export default class WorkoutPage extends Vue {
   .titleAndVideo__container .title__container,
   .results__container,
   .videos__section__container .videos__section__wrapper > h2 {
-    color: $dark-color;
+    color: $text-dark;
   }
   .workout__content {
     .q-expansion-item .q-item__label,
     #rich--text__content {
-      color: $dark-color;
+      color: $text-dark;
       a {
-        color: $dark-color;
+        color: $text-dark;
       }
     }
   }

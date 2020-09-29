@@ -696,7 +696,7 @@ $secondaryColor: #666;
 
   .introduction {
     background-color: white;
-    color: black;
+    color: $text;
     overflow: hidden;
     .introduction__container {
       display: grid;
@@ -708,7 +708,7 @@ $secondaryColor: #666;
         row-gap: $verticalPadding;
         &:first-of-type {
           h1 span {
-            color: #6b108e;
+            color: $primary;
           }
         }
         &:nth-of-type(2) button {
@@ -784,7 +784,7 @@ $secondaryColor: #666;
 
   .coaches {
     background-color: white;
-    color: black;
+    color: $text;
     .coaches__container {
       .coaches__image {
         max-width: 50vw;
@@ -907,7 +907,7 @@ $secondaryColor: #666;
   }
   .brands {
     width: 100%;
-    color: black;
+    color: $text;
     padding: $verticalPadding $horizontalPadding;
     @include flex;
     flex-direction: column;

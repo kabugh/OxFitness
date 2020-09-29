@@ -109,7 +109,7 @@ export default class Coaches extends Vue {
           font-size: 1.25rem;
         }
         p {
-          color: $secondaryColor;
+          color: $text-teritary;
           line-height: 1.5;
           font-size: 0.875rem;
         }

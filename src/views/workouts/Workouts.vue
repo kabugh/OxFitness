@@ -360,7 +360,8 @@ export default class Workouts extends Vue {
   }
 
   workoutsDates(workouts: Workout[]): string[] {
-    const replaceHyphenWithSlash = (date: string) => date.replace(/-/g, "/");
+    const replaceHyphenWithSlash = (date: string) =>
+      date ? date.replace(/-/g, "/") : date;
     const dates = workouts.map(workout =>
       replaceHyphenWithSlash(workout.fields.date)
     );
@@ -598,6 +599,20 @@ export default class Workouts extends Vue {
         }
       }
     }
+  }
+}
+
+.body--dark
+  .workouts
+  .workouts__container
+  .videos__section__container
+  .videos__section__wrapper
+  .videos__container
+  .video__wrapper
+  .thumbnail {
+  .logo__container .text__container,
+  .title__container {
+    color: $text-dark;
   }
 }
 </style>

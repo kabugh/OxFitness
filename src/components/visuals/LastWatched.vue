@@ -86,7 +86,7 @@ export default class lastWatched extends Vue {
 
 .lastWatched {
   width: 100%;
-  background-color: #f5f5f7;
+  background-color: $bg-cards;
   color: white;
   border-radius: 10px;
   min-height: 20vh;
@@ -132,5 +132,10 @@ export default class lastWatched extends Vue {
   .lastWatched {
     max-height: 45vh;
   }
+}
+
+.body--dark .lastWatched {
+  background-color: $bg-dark-light;
+  color: $text-dark;
 }
 </style>

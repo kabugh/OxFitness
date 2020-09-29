@@ -240,4 +240,12 @@ export default class Dashboard extends Vue {
     }
   }
 }
+.body--dark
+  .dashboard
+  .dashboard__container
+  .workouts__sections--container
+  .components__container
+  .workout__container {
+  color: $text-dark;
+}
 </style>

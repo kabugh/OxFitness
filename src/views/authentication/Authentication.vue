@@ -113,7 +113,7 @@ export default class Authentication extends Vue {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: $brandColor;
+    color: $text-secondary;
     text-transform: uppercase;
     padding-top: 4vh;
     h1 {
@@ -133,7 +133,7 @@ export default class Authentication extends Vue {
     }
   }
   &.body--dark .logo__container {
-    color: $dark-color;
+    color: $text-dark;
   }
   .authentication__container {
     width: 80%;
@@ -172,7 +172,7 @@ export default class Authentication extends Vue {
       margin-top: 40px;
       bottom: 10vh;
       h4 {
-        color: $secondaryColor;
+        color: $text-teritary;
         text-transform: uppercase;
         letter-spacing: 2px;
         font-size: 0.8rem;
@@ -181,7 +181,7 @@ export default class Authentication extends Vue {
         font-weight: bolder;
 
         &.highlighted {
-          color: $brandColor;
+          color: $text-secondary;
           font-size: 0.8rem;
           text-decoration: underline;
           &:hover {
@@ -208,7 +208,7 @@ export default class Authentication extends Vue {
   }
   &.body--dark {
     .authentication__container .status h4.highlighted {
-      color: $brand-dark;
+      color: $text-teritary;
     }
   }
   @media (min-width: 500px) and (max-width: 1100px) and (min-height: 320px) and (max-height: 800px) and (orientation: landscape) {
