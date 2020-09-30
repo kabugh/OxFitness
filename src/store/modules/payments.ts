@@ -12,7 +12,7 @@ const actions = {
       headers: {
         "Access-Control-Allow-Headers":
           "Content-Type, Accept, Origin, Authorization",
-        "Access-Control-Allow-Origin": "https://oxfitness.netlify.app",
+        "Access-Control-Allow-Origin": "https://oxfitness.pl",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Method": "POST, OPTIONS",
         "Access-Control-Max-Age": 86400,

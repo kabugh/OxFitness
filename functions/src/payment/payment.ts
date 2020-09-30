@@ -8,10 +8,7 @@ export default async (request: any, response: any) => {
     response.set("Access-Control-Allow-Headers", "Content-Type, Origin");
     response.set("Access-Control-Allow-Credentials", "true");
     response.set("Access-Control-Allow-Method", "POST");
-    response.set(
-      "Access-Control-Allow-Origin",
-      "https://oxfitness.netlify.app"
-    ); // to be changed on https://oxfitness.pl on production
+    response.set("Access-Control-Allow-Origin", "https://oxfitness.pl"); // to be changed on https://oxfitness.pl on production
     await stripe.checkout.sessions.create(
       {
         payment_method_types: ["card"],
@@ -28,8 +25,8 @@ export default async (request: any, response: any) => {
           }
         ],
         mode: "payment",
-        success_url: "https://oxfitness.netlify.app/success",
-        cancel_url: "https://oxfitness.netlify.app/cancel"
+        success_url: "https://oxfitness.pl/success",
+        cancel_url: "https://oxfitness.pl/cancel"
       },
       function(err: Error, session: any) {
         response.send(session);
