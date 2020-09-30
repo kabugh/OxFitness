@@ -257,6 +257,9 @@ $error: #c10015;
           background-color: $bg-dark-secondary;
           color: $text-teritary;
           border-color: $primary;
+          &:disabled {
+            color: $bg-dark-light;
+          }
         }
         .Password .Password__strength-meter {
           background-color: $text-teritary;
