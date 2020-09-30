@@ -14,17 +14,15 @@ export default async (request: any, response: any) => {
     await stripe.checkout.sessions.create(
       {
         payment_method_types: ["card"],
-        customer_email: response.data.email,
         line_items: [
           {
-            // price_data: {
-            //   currency: "PLN",
-            //   product_data: {
-            //     name: response.data.membershipName
-            //   },
-            //   unit_amount: 4000
-            // },
-            price: response.data.priceId,
+            price_data: {
+              currency: "PLN",
+              product_data: {
+                name: "OxFitness 1 miesiąc"
+              },
+              unit_amount: 4000
+            },
             quantity: 1
           }
         ],
