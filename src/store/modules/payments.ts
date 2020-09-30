@@ -6,8 +6,16 @@ import { Transaction } from "../models";
 const state = {};
 const mutations = {};
 const actions = {
-  async checkout({ commit, dispatch }: any) {
+  async checkout(
+    { commit, dispatch }: any,
+    payload: { email: string; priceId: string; membershipName: string }
+  ) {
     commit("setLoading", true);
+    const data = {
+      email: payload.email,
+      priceId: payload.priceId,
+      membershipName: payload.membershipName
+    };
     const headers = {
       headers: {
         "Access-Control-Allow-Headers":
@@ -21,7 +29,7 @@ const actions = {
     };
     let sessionId = "";
     await axios
-      .post(process.env.VUE_APP_cloudFunctionUrl, headers)
+      .post(process.env.VUE_APP_cloudFunctionUrl, data, headers)
       .then((response: any) => {
         commit("setLoading", false);
         sessionId = response.data.id;

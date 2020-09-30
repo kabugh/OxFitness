@@ -43,7 +43,11 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class AccessDeniedComponent extends Vue {
   checkout() {
-    this.$store.dispatch("checkout");
+    this.$store.dispatch("checkout", {
+      email: this.user.email,
+      priceId: "price_1HX4dIIoGuaNqlfQd4JSPyDl",
+      membershipName: "OxFitness Karnet 1 Miesiąc"
+    });
   }
   get isVerified() {
     return this.$store.getters.isVerified;

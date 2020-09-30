@@ -8,23 +8,28 @@ export default async (request: any, response: any) => {
     response.set("Access-Control-Allow-Headers", "Content-Type, Origin");
     response.set("Access-Control-Allow-Credentials", "true");
     response.set("Access-Control-Allow-Method", "POST");
-    response.set("Access-Control-Allow-Origin", "https://oxfitness.pl"); // to be changed on https://oxfitness.pl on production
+    response.set("Access-Control-Allow-Origin", "https://oxfitness.pl");
+    console.log(request);
+    console.log(response.data);
     await stripe.checkout.sessions.create(
       {
         payment_method_types: ["card"],
+        customer_email: response.data.email,
         line_items: [
           {
-            price_data: {
-              currency: "PLN",
-              product_data: {
-                name: "OxFitness karnet"
-              },
-              unit_amount: 4000
-            },
+            // price_data: {
+            //   currency: "PLN",
+            //   product_data: {
+            //     name: response.data.membershipName
+            //   },
+            //   unit_amount: 4000
+            // },
+            price: response.data.priceId,
             quantity: 1
           }
         ],
         mode: "payment",
+        allow_promotion_codes: true,
         success_url: "https://oxfitness.pl/success",
         cancel_url: "https://oxfitness.pl/cancel"
       },

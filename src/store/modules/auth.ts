@@ -137,58 +137,58 @@ const actions = {
         }
       });
   },
-  signUserUpWithGoogle({ commit }: any) {
-    commit("setLoading", true);
-    commit("clearError");
+  // signUserUpWithGoogle({ commit }: any) {
+  //   commit("setLoading", true);
+  //   commit("clearError");
 
-    const provider: any = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().languageCode = "pl";
+  //   const provider: any = new firebase.auth.GoogleAuthProvider();
+  //   firebase.auth().languageCode = "pl";
 
-    firebase.auth().signInWithRedirect(provider);
+  //   firebase.auth().signInWithRedirect(provider);
 
-    firebase
-      .auth()
-      .getRedirectResult()
-      .then(result => {
-        commit("setLoading", false);
-        if (result && result.user) {
-          console.log(result.user, result.credential);
-          const newUser = {
-            id: result.user.uid,
-            name: "",
-            premiumAccount: {
-              isActive: false,
-              activationDate: "",
-              validUntil: ""
-            },
-            settings: {
-              notifications: true,
-              displayResults: true,
-              darkMode: false
-            },
-            transactions: [],
-            workouts: [],
-            lastWatched: {} as any
-          };
-          commit("setUser", newUser);
-          firebase
-            .database()
-            .ref("/users/" + newUser.id)
-            .update(newUser);
-          router.push("/dashboard").catch(e => {
-            console.log(e);
-          });
-        }
-      })
-      .catch(e => {
-        commit("setLoading", false);
-        commit("setError", e.message);
-        // // The email of the user's account used.
-        // const email = error.email;
-        // // The firebase.auth.AuthCredential type that was used.
-        // const credential = error.credential;
-      });
-  },
+  //   firebase
+  //     .auth()
+  //     .getRedirectResult()
+  //     .then(result => {
+  //       commit("setLoading", false);
+  //       if (result && result.user) {
+  //         console.log(result.user, result.credential);
+  //         const newUser = {
+  //           id: result.user.uid,
+  //           name: "",
+  //           premiumAccount: {
+  //             isActive: false,
+  //             activationDate: "",
+  //             validUntil: ""
+  //           },
+  //           settings: {
+  //             notifications: true,
+  //             displayResults: true,
+  //             darkMode: false
+  //           },
+  //           transactions: [],
+  //           workouts: [],
+  //           lastWatched: {} as any
+  //         };
+  //         commit("setUser", newUser);
+  //         firebase
+  //           .database()
+  //           .ref("/users/" + newUser.id)
+  //           .update(newUser);
+  //         router.push("/dashboard").catch(e => {
+  //           console.log(e);
+  //         });
+  //       }
+  //     })
+  //     .catch(e => {
+  //       commit("setLoading", false);
+  //       commit("setError", e.message);
+  //       // // The email of the user's account used.
+  //       // const email = error.email;
+  //       // // The firebase.auth.AuthCredential type that was used.
+  //       // const credential = error.credential;
+  //     });
+  // },
   signUserIn({ commit }: any, payload: { email: string; password: string }) {
     commit("setLoading", true);
     commit("clearError");
