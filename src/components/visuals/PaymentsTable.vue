@@ -46,7 +46,10 @@ export default class PaymentsTable extends Vue {
       required: true,
       align: "left",
       field: "date",
-      sortable: true
+      sortable: true,
+      format: (val: any) => {
+        return new Date(val * 1000).toLocaleString();
+      }
     },
     {
       name: "id",

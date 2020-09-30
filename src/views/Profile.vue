@@ -77,7 +77,7 @@
             </q-circular-progress>
             <q-list>
               <div class="expansionItem__wrapper">
-                <q-expansion-item
+                <!-- <q-expansion-item
                   group="accordion"
                   popup
                   icon="receipt"
@@ -89,7 +89,7 @@
                       Umowa OxFitness na czas nieokreslony
                     </q-card-section>
                   </q-card>
-                </q-expansion-item>
+                </q-expansion-item> -->
                 <q-expansion-item
                   group="accordion"
                   popup
@@ -113,18 +113,18 @@
                   </q-card>
                 </q-expansion-item>
                 <q-expansion-item
-                  group="accordion"
-                  popup
-                  icon="card_membership"
-                  label="Historia płatności"
                   v-if="
                     user.transactions &&
                       Object.values(user.transactions).length > 0
                   "
+                  group="accordion"
+                  popup
+                  icon="card_membership"
+                  label="Historia płatności"
                 >
                   <q-separator />
                   <q-card style="max-width: 100%">
-                    <q-card-section>
+                    <q-card-section class="payments__wrapper">
                       <PaymentsTable :transactions="user.transactions" />
                     </q-card-section>
                   </q-card>
@@ -566,6 +566,9 @@ export default class Profile extends Vue {
         .q-list .q-card__section .q-btn {
           margin-top: 2vh;
         }
+        .q-list {
+          max-width: 100vw;
+        }
         @media (min-width: 768px) {
           .q-list {
             padding: 0 4vw;
@@ -597,6 +600,9 @@ export default class Profile extends Vue {
       .expansionItem__wrapper {
         max-width: 80%;
         margin: 0 auto;
+        .payments__wrapper {
+          width: 100%;
+        }
       }
       .details__content {
         @include flex;
