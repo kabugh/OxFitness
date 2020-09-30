@@ -185,7 +185,8 @@
             Najlepsi w swojej dziedzinie.
           </h1>
           <p data-aos="fade-down" data-aos-delay="200">
-            Always fast. Always online. Always effective.
+            Nie jest to tylko zwykle programowanie, lecz cała baza materiałów
+            treningowych w formie video!
           </p>
         </div>
         <div class="data__container">
@@ -271,9 +272,9 @@ export default class Home extends Vue {
   ];
 
   statistics = [
-    { value: 120, description: "nowych użytkowników" },
-    { value: 50, description: "unikalnych workoutów" },
-    { value: 8, description: "treningów na żywo" }
+    { value: 20, description: "treningów codziennych" },
+    { value: 10, description: "różnorodnych rozgrzewek" },
+    { value: 12, description: "treningów akcesoryjnych" }
   ];
 }
 </script>
