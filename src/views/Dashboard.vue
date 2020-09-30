@@ -40,7 +40,9 @@
           <div class="workout__container" v-else>
             <div
               class="workout__wrapper"
-              v-for="(item, index) in workoutCategories"
+              v-for="(item, index) in workoutCategories.filter(
+                category => category.category !== 'freeWeek'
+              )"
               :key="index"
               data-aos="fade-in"
             >
@@ -86,7 +88,7 @@
   </section>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { VueOfflineMixin } from "vue-offline";
 
 import HelloSection from "../components/visuals/HelloSection.vue";
@@ -130,13 +132,22 @@ export default class Dashboard extends Vue {
   isComponentReady = false;
 
   created() {
-    this.$store.dispatch("fetchWorkoutTypes").then(() => {
-      this.isComponentReady = true;
-    });
+    this.fetchWorkoutTypes();
   }
 
   mounted() {
     this.$store.dispatch("bindUser");
+  }
+
+  @Watch("user.premiumAccount.isActive")
+  fetchWorkoutTypes() {
+    if (this.user.premiumAccount.isActive) {
+      this.$store.dispatch("fetchWorkoutTypes").then(() => {
+        this.isComponentReady = true;
+      });
+    } else {
+      this.$store.dispatch("fetchWorkoutType", "freeWeek");
+    }
   }
 
   get user(): User {

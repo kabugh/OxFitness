@@ -70,7 +70,6 @@ const actions = {
         (item: { category: any }) => item.category === payload
       );
       commit("setWorkouts", foundCategory.workouts);
-      // state.workouts = [] ?
     }
   },
   // TODO - fetch direct workout page

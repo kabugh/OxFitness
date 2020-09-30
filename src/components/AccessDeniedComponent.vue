@@ -1,7 +1,10 @@
 <template>
   <div class="noAccess">
     <div class="noAccess__container">
-      <img src="@/assets/illustrations/track.svg" class="illustration" />
+      <img
+        src="@/assets/illustrations/track.svg"
+        class="illustration unselectable"
+      />
       <h2>
         Niestety nie masz możliwości wyświetlenia naszych treningów OxFitness 😥
       </h2>
@@ -16,8 +19,29 @@
         >
           Wykup dostęp
         </q-btn>
-        <p>
+        <p v-if="user.transactions">
           Jeśli opłaciłeś już dostęp, poczekaj kilka sekund, pracujemy nad tym!
+        </p>
+        <p v-else-if="freeWeekCategory && !user.transactions">
+          Przed zakupem zachęcamy wypróbować
+          <span
+            @click="
+              $router.push({
+                name: 'workouts',
+                params: {
+                  workoutType: freeWeekCategory.category,
+                  workouts: freeWeekCategory.workouts,
+                  categoryDetails: {
+                    title: freeWeekCategory.title,
+                    description: freeWeekCategory.description,
+                    hasInsideCategories: freeWeekCategory.hasInsideCategories
+                  }
+                }
+              })
+            "
+            >darmowy tydzień</span
+          >
+          z OxFitness
         </p>
       </div>
       <div class="verification__container" v-show="false">
@@ -45,8 +69,15 @@ export default class AccessDeniedComponent extends Vue {
   checkout() {
     this.$store.dispatch("checkout");
   }
+
   get isVerified() {
     return this.$store.getters.isVerified;
+  }
+
+  get freeWeekCategory() {
+    return this.$store.getters.workoutCategories.find(
+      (category: { category: string }) => category.category === "freeWeek"
+    );
   }
 
   get user() {
@@ -70,13 +101,15 @@ export default class AccessDeniedComponent extends Vue {
     max-width: 60vw;
     max-height: 40vh;
     margin: 0 auto;
-    @media (min-width: 700px) {
+    @media (min-width: 768px) {
       max-width: 40vw;
+    }
+    @media (min-width: 960px) {
+      max-width: 30vw;
     }
   }
   h2,
   h3 {
-    margin-top: 2vh;
     font-weight: 500;
     font-size: 1.25rem;
   }
@@ -90,6 +123,13 @@ export default class AccessDeniedComponent extends Vue {
     margin-top: 4vh;
     font-weight: 500;
     font-size: 0.875rem;
+    span {
+      text-decoration: underline;
+      font-weight: 600;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   .verification__container {

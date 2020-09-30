@@ -169,10 +169,15 @@
             </q-card>
           </q-dialog>
           <LeaderboardComponent
+            v-if="
+              user.workouts !== undefined &&
+                user.workouts !== null &&
+                ($attrs.workoutType === 'daily' ||
+                  $attrs.workoutType === 'archived')
+            "
             :currentWorkout="currentWorkout"
             :user="user"
             :isFinished="isFinished"
-            v-if="user.workouts !== undefined && user.workouts !== null"
           />
         </div>
       </div>
@@ -290,6 +295,8 @@ export default class WorkoutPage extends Vue {
             ? "accessories"
             : linkDetails.entryType === "warmUp"
             ? "warm-up"
+            : linkDetails.entryType === "dailyWorkout"
+            ? "daily"
             : linkDetails.entryType;
 
         return h(
