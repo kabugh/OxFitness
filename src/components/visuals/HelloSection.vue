@@ -25,7 +25,9 @@ export default class HelloSection extends Vue {
   descriptions = [
     "Dobrze znów Cię widzieć.",
     "Co u Ciebie słychać?",
-    "Czas na mocny trening!"
+    "Czas na mocny trening!",
+    "Może czas na rekordy?",
+    "Dziś jest Twój dzień!"
   ];
 
   greeting = this.randomText(this.greetings);

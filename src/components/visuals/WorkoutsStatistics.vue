@@ -10,7 +10,7 @@
         <p>Ukończone treningi codzienne</p>
       </div>
       <div class="statisticsItem__container">
-        <h1>8</h1>
+        <h1>{{ newWorkoutsWeekly }}</h1>
         <p>Nowe treningi w tym tygodniu</p>
       </div>
     </div>
@@ -31,6 +31,16 @@ export default class WorkoutsStatistics extends Vue {
         return Object.keys(this.user.workouts).length;
       else return 0;
     } else return 0;
+  }
+
+  get newWorkoutsWeekly() {
+    return this.getRandomInt(5, 8);
+  }
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 }
 </script>

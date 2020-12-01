@@ -159,7 +159,7 @@
             ${require('@/assets/images/team/team2x.jpg')} 2x`
           "
           alt="coaches"
-          class="coaches__image "
+          class="coaches__image"
         />
         <h1 data-aos="fade-up" data-aos-delay="200">
           Poznaj naszych trenerów.
@@ -719,6 +719,9 @@ $secondaryColor: #666;
           .illustration {
             display: none;
           }
+        }
+        button {
+          transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
         }
       }
       @media (min-width: 700px) and (min-height: 500px) {

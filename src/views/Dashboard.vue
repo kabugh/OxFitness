@@ -250,6 +250,15 @@ export default class Dashboard extends Vue {
       max-width: 50vw;
     }
   }
+  @media (min-height: 1100px) {
+    .dashboard__container
+      .workouts__sections--container
+      .components__container
+      .workout__container
+      .workout__wrapper {
+      max-height: 20vh;
+    }
+  }
 }
 .body--dark
   .dashboard

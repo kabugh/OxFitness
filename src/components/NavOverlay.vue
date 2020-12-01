@@ -94,7 +94,7 @@ export default class NavOverlay extends Vue {
     },
     {
       icon: "yt.png",
-      link: "https://www.youtube.com/channel/UCKD_wDLcAK9FTLmjDOAyHhQ"
+      link: "https://oxfitness.wod.guru/user/login"
     }
   ];
 }
