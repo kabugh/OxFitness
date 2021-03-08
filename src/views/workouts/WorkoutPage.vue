@@ -43,6 +43,13 @@
           ></div>
         </vue-plyr>
         <div
+          v-else-if="isOnline && !currentWorkout.fields.videoId"
+          class="backgroundImage"
+          :style="{
+            backgroundImage: `url(${currentWorkout.fields.frontImage.fields.file.url})`
+          }"
+        ></div>
+        <div
           class="image__wrapper"
           v-else-if="isOnline && currentWorkout.fields.image.fields.file.url"
           data-aos="fade-up"
@@ -414,6 +421,11 @@ export default class WorkoutPage extends Vue {
         h2 {
           font-size: 1.25rem;
         }
+      }
+      .backgroundImage {
+        width: 100%;
+        height: 30vh;
+        @include backgroundDefault;
       }
     }
 
