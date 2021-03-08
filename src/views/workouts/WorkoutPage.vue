@@ -45,6 +45,9 @@
         <div
           v-else-if="isOnline && !currentWorkout.fields.videoId"
           class="backgroundImage"
+          data-aos="fade-up"
+          data-aos-delay="600"
+          data-aos-duration="800"
           :style="{
             backgroundImage: `url(${currentWorkout.fields.frontImage.fields.file.url})`
           }"
